@@ -199,20 +199,37 @@ async fn main() {
         let new_pos = player.pos.clone().add(move_player).to_owned();
         let crate_at_new_pos = crates.iter_mut().find(|c| c.pos == new_pos);
 
-        match crate_at_new_pos {
+        let new_player_pos = player.pos.clone().add(move_player).to_owned();
+        let crate_at_new_player_pos = crates.iter().find(|c| c.pos == new_player_pos);
+        let mut move_crate = false;
+
+        match crate_at_new_player_pos {
             Some(c) => {
-                c.pos.add(move_player);
+                let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                let wall_at_new_crate_pos = level.walls.iter().find(|w| *w == &new_crate_pos);
+                let other_crate_at_new_crate_pos = crates.iter().find(|c| c.pos == new_crate_pos);
+
+                if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
+                    move_crate = true;
+                }
             }
             None => {
-                let wall_at_new_pos = level.walls.iter().find(|w| *w == &new_pos);
-                match wall_at_new_pos {
+                let wall_at_new_player_pos = level.walls.iter().find(|w| *w == &new_player_pos);
+                match wall_at_new_player_pos {
                     None => {
-                        player.pos = new_pos;
+                        player.pos = new_player_pos;
                     }
                     Some(_) => (),
                 };
             }
         };
+
+        // this feels bad and duplicative to get around borrow checker
+        if move_crate {
+            let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
+            let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+            c.pos = new_crate_pos;
+        }
 
         clear_background(DARKGRAY);
         level.draw();
