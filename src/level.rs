@@ -50,7 +50,7 @@ impl Level {
                         crates.push(pos);
                     }
                     '.' => storage_locations.push(pos),
-                    ' ' => grounds.push(pos),
+                    ' ' | '-' | '_' => grounds.push(pos),
                     _ => panic!("unexpected char in level at {}, {}", x, y),
                 }
             }
