@@ -202,8 +202,8 @@ async fn main() {
         if beat_level {
             draw_text(
                 "Nice job! Press J to go to next level.",
-                420.,
-                48.,
+                VIRTUAL_WIDTH / 2. - 280.,
+                VIRTUAL_HEIGHT - 92.,
                 32.,
                 WHITE,
             );
@@ -215,17 +215,15 @@ async fn main() {
             32.,
             WHITE,
         );
+        draw_text(level.name.as_str(), 48., 32., 32., WHITE);
         draw_text(
-            format!("Steps: {}", level_play_data.steps).as_str(),
+            format!(
+                "Steps: {} | Pushes: {}",
+                level_play_data.steps, level_play_data.pushes
+            )
+            .as_str(),
             48.,
-            48.,
-            32.,
-            WHITE,
-        );
-        draw_text(
-            format!("Pushes: {}", level_play_data.pushes).as_str(),
-            48.,
-            88.,
+            72.,
             32.,
             WHITE,
         );
