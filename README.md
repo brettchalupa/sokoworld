@@ -21,3 +21,11 @@ Free and open source Sokoban client
 +-----------------------+-----------+------------+
 | Floor                 | (Space)   | 0x20       |
 +-----------------------+-----------+------------+
+
+## Dev Tools
+
+Run a specific level with:
+
+``` console
+cargo run -- -l=4
+```

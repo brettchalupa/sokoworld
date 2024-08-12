@@ -152,14 +152,10 @@ async fn main() {
     // other piece of data (maybe at compile time?)
     let levels = ["level1", "level2", "level3", "level4"];
     let mut level_index = 0;
-    match args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
-        Some(arg) => {
-            level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
-            level_index -= 1;
-        }
-        None => (),
+    if let Some(arg) = args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
+        level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
+        level_index -= 1;
     };
-    println!("{:?}", args);
     let texture_crate = load_texture("assets/crate.png").await.unwrap();
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
