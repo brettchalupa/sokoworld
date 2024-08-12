@@ -32,27 +32,21 @@ fn gamepad_pressed(action: &Action, gamepads: &Gamepads) -> bool {
     match action {
         Action::Up => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::DPadUp)),
         Action::Down => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::DPadDown)),
         Action::Left => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::DPadLeft)),
         Action::Right => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::DPadRight)),
         Action::Confirm => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::ActionDown)),
         Action::Reset => gamepads
             .all()
-            .into_iter()
             .any(|g| g.is_just_pressed(gamepads::Button::ActionUp)),
     }
 }
