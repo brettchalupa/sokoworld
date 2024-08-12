@@ -4,14 +4,28 @@ const TILE_SIZE: i32 = 64;
 
 /// grid position
 #[derive(Debug, Clone, Copy)]
-struct Pos {
+struct Vec {
     x: i32,
     y: i32,
 }
 
-struct Player {
+impl PartialEq for Vec {
+    fn eq(&self, other: &Self) -> bool {
+        self.x == other.x && self.y == other.y
+    }
+}
+
+impl Vec {
+    fn add(&mut self, vec: Vec) -> &mut Vec {
+        self.x += vec.x;
+        self.y += vec.y;
+        self
+    }
+}
+
+struct Entity {
     texture: Texture2D,
-    pos: Pos,
+    pos: Vec,
 }
 
 pub enum Action {
@@ -33,22 +47,7 @@ pub fn action_pressed(action: Action) -> bool {
     }
 }
 
-impl Player {
-    fn update(&mut self, _dt: f32) {
-        if action_pressed(Action::Up) {
-            self.pos.y -= 1;
-        }
-        if action_pressed(Action::Down) {
-            self.pos.y += 1;
-        }
-        if action_pressed(Action::Left) {
-            self.pos.x -= 1;
-        }
-        if action_pressed(Action::Right) {
-            self.pos.x += 1;
-        }
-    }
-
+impl Entity {
     fn draw(&self) {
         draw_texture(
             &self.texture,
@@ -61,9 +60,14 @@ impl Player {
 
 #[macroquad::main("Sokoworld")]
 async fn main() {
-    let mut player = Player {
+    let mut player = Entity {
         texture: load_texture("assets/player.png").await.unwrap(),
-        pos: Pos { x: 3, y: 3 },
+        pos: Vec { x: 3, y: 3 },
+    };
+
+    let mut krate = Entity {
+        texture: load_texture("assets/crate.png").await.unwrap(),
+        pos: Vec { x: 5, y: 5 },
     };
 
     loop {
@@ -72,12 +76,30 @@ async fn main() {
             break;
         }
 
-        let dt = get_frame_time();
+        // let dt = get_frame_time();
 
-        player.update(dt);
+        let mut move_player = Vec { x: 0, y: 0 };
+
+        if action_pressed(Action::Up) {
+            move_player.y = -1;
+        } else if action_pressed(Action::Down) {
+            move_player.y = 1;
+        } else if action_pressed(Action::Left) {
+            move_player.x = -1;
+        } else if action_pressed(Action::Right) {
+            move_player.x = 1;
+        }
+
+        let new_pos = player.pos.clone().add(move_player).to_owned();
+        if new_pos == krate.pos {
+            krate.pos.add(move_player);
+        } else {
+            player.pos = new_pos;
+        }
 
         clear_background(DARKGRAY);
         player.draw();
+        krate.draw();
 
         next_frame().await
     }
