@@ -1,16 +1,12 @@
-use crate::level::Level;
-use crate::vec2::Vec2;
-use consts::*;
 use gamepads::Gamepads;
 use macroquad::prelude::*;
-
-mod audio;
-mod consts;
-mod draw;
-mod input;
-mod level;
-mod texture;
-mod vec2;
+use sokoworld::audio;
+use sokoworld::consts::*;
+use sokoworld::draw;
+use sokoworld::input;
+use sokoworld::level::Level;
+use sokoworld::texture;
+use sokoworld::vec2::Vec2;
 
 struct LevelPlayData {
     steps: i32,
