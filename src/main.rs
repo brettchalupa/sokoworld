@@ -1,6 +1,6 @@
 use crate::level::Level;
 use crate::vec2::Vec2;
-use consts::{LEVEL_CLI_ARG, TILE_SIZE};
+use consts::*;
 use gamepads::Gamepads;
 use macroquad::prelude::*;
 
@@ -25,7 +25,18 @@ impl Entity {
     }
 }
 
-#[macroquad::main("Sokoworld")]
+fn window_conf() -> Conf {
+    Conf {
+        window_title: String::from("Sokoworld"),
+        window_width: 1280,
+        window_height: 720,
+        fullscreen: false,
+        high_dpi: true,
+        ..Default::default()
+    }
+}
+
+#[macroquad::main(window_conf)]
 async fn main() {
     let args: Vec<String> = std::env::args().collect();
     let mut gamepads = Gamepads::new();
@@ -55,6 +66,14 @@ async fn main() {
             pos: *pos,
         });
     }
+
+    let render_target = render_target(VIRTUAL_WIDTH as u32, VIRTUAL_HEIGHT as u32);
+    render_target.texture.set_filter(FilterMode::Linear);
+
+    // Setup camera for the virtual screen, that will render to 'render_target'
+    let mut render_target_cam =
+        Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
+    render_target_cam.render_target = Some(render_target.clone());
 
     loop {
         gamepads.poll();
@@ -152,6 +171,14 @@ async fn main() {
             }
         }
 
+        // Get required scaling value
+        let scale: f32 = f32::min(
+            screen_width() / VIRTUAL_WIDTH,
+            screen_height() / VIRTUAL_HEIGHT,
+        );
+
+        set_camera(&render_target_cam);
+
         clear_background(DARKGRAY);
         level.draw();
         player.draw();
@@ -168,7 +195,24 @@ async fn main() {
                 WHITE,
             );
         }
-        draw_text("K = Reset Level", 48., screen_height() - 48., 32., WHITE);
+        draw_text("K = Reset Level", 48., VIRTUAL_HEIGHT - 48., 32., WHITE);
+
+        set_default_camera();
+
+        clear_background(BLACK); // Will be the letterbox color
+
+        // Draw 'render_target' to window screen, porperly scaled and letterboxed
+        draw_texture_ex(
+            &render_target.texture,
+            (screen_width() - (VIRTUAL_WIDTH * scale)) * 0.5,
+            (screen_height() - (VIRTUAL_HEIGHT * scale)) * 0.5,
+            WHITE,
+            DrawTextureParams {
+                dest_size: Some(vec2(VIRTUAL_WIDTH * scale, VIRTUAL_HEIGHT * scale)),
+                flip_y: true, // Must flip y otherwise 'render_target' will be upside down
+                ..Default::default()
+            },
+        );
 
         next_frame().await
     }
