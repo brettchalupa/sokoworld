@@ -2,3 +2,5 @@
 notes
 web/assets
 web/*.wasm
+web-release.zip
+web-release

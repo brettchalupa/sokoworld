@@ -20,3 +20,15 @@ cargo run -- -l=4
 ## Assets
 
 - Sprites: [Kenney](https://kenney.nl/assets/sokoban) - CC0
+
+## Deployment
+
+The game is currently hosted on itch at https://brettchalupa.itch.io/sokoworld
+
+WASM builds can be built and pushed by running:
+
+```console
+./release_wasm.sh
+```
+
+Ideally in the future this would push builds for desktop operating systems, create tags, etc., but this works for development.
