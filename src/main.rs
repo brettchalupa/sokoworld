@@ -5,6 +5,7 @@ use gamepads::Gamepads;
 use macroquad::prelude::*;
 
 mod consts;
+mod draw;
 mod input;
 mod level;
 mod vec2;
@@ -16,12 +17,7 @@ struct Entity {
 
 impl Entity {
     fn draw(&self) {
-        draw_texture(
-            &self.texture,
-            (self.pos.x * TILE_SIZE) as f32,
-            (self.pos.y * TILE_SIZE) as f32,
-            WHITE,
-        );
+        draw::draw_tile(&self.texture, &self.pos);
     }
 }
 

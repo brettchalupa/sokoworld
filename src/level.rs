@@ -1,9 +1,6 @@
-use macroquad::{
-    color::WHITE,
-    texture::{draw_texture, load_texture, Texture2D},
-};
+use macroquad::texture::{load_texture, Texture2D};
 
-use crate::{consts::TILE_SIZE, vec2::Vec2};
+use crate::{draw::draw_tile, vec2::Vec2};
 
 #[derive(Debug, Clone)]
 pub struct Level {
@@ -77,31 +74,14 @@ impl Level {
 
     /// draws the static elements of a level (everything except player and boxes)
     pub fn draw(&self) {
-        // TOOD: draw vec fn
-        // TODO: draw vec2 fn
         for wall in &self.walls {
-            draw_texture(
-                &self.wall_texture,
-                (wall.x * TILE_SIZE) as f32,
-                (wall.y * TILE_SIZE) as f32,
-                WHITE,
-            );
+            draw_tile(&self.wall_texture, wall);
         }
         for storage_location in &self.storage_locations {
-            draw_texture(
-                &self.storage_location_texture,
-                (storage_location.x * TILE_SIZE) as f32,
-                (storage_location.y * TILE_SIZE) as f32,
-                WHITE,
-            );
+            draw_tile(&self.storage_location_texture, storage_location);
         }
         for ground in &self.grounds {
-            draw_texture(
-                &self.ground_texture,
-                (ground.x * TILE_SIZE) as f32,
-                (ground.y * TILE_SIZE) as f32,
-                WHITE,
-            );
+            draw_tile(&self.ground_texture, ground);
         }
     }
 }
