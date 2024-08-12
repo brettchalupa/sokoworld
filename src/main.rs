@@ -14,6 +14,11 @@ mod level;
 mod texture;
 mod vec2;
 
+struct LevelPlayData {
+    steps: i32,
+    pushes: i32,
+}
+
 struct Entity {
     pos: Vec2,
 }
@@ -67,6 +72,11 @@ async fn main() {
         Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
     render_target_cam.render_target = Some(render_target.clone());
 
+    let mut level_play_data = LevelPlayData {
+        steps: 0,
+        pushes: 0,
+    };
+
     loop {
         gamepads.poll();
 
@@ -81,6 +91,10 @@ async fn main() {
             for (i, c) in crates.iter_mut().enumerate() {
                 c.pos = *level.crates.get(i).unwrap();
             }
+            level_play_data = LevelPlayData {
+                steps: 0,
+                pushes: 0,
+            };
         }
 
         if beat_level {
@@ -91,6 +105,10 @@ async fn main() {
                     level_index = 0;
                 }
                 level = Level::load(levels[level_index]).await.unwrap();
+                level_play_data = LevelPlayData {
+                    steps: 0,
+                    pushes: 0,
+                };
 
                 player = Entity { pos: level.player };
                 crates.clear();
@@ -117,45 +135,52 @@ async fn main() {
             let crate_at_new_player_pos = crates.iter().find(|c| c.pos == new_player_pos);
             let mut move_crate = false;
 
-            match crate_at_new_player_pos {
-                Some(c) => {
-                    let new_crate_pos = c.pos.clone().add(move_player).to_owned();
-                    let wall_at_new_crate_pos = level.walls.iter().find(|w| *w == &new_crate_pos);
-                    let other_crate_at_new_crate_pos =
-                        crates.iter().find(|c| c.pos == new_crate_pos);
+            if !move_player.is_zero() {
+                match crate_at_new_player_pos {
+                    Some(c) => {
+                        let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                        let wall_at_new_crate_pos =
+                            level.walls.iter().find(|w| *w == &new_crate_pos);
+                        let other_crate_at_new_crate_pos =
+                            crates.iter().find(|c| c.pos == new_crate_pos);
 
-                    if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
-                        move_crate = true;
-                    }
-                }
-                None => {
-                    let wall_at_new_player_pos = level.walls.iter().find(|w| *w == &new_player_pos);
-                    match wall_at_new_player_pos {
-                        None => {
-                            player.pos = new_player_pos;
+                        if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none()
+                        {
+                            move_crate = true;
                         }
-                        Some(_) => (),
-                    };
+                    }
+                    None => {
+                        let wall_at_new_player_pos =
+                            level.walls.iter().find(|w| *w == &new_player_pos);
+                        match wall_at_new_player_pos {
+                            None => {
+                                player.pos = new_player_pos;
+                                level_play_data.steps += 1;
+                            }
+                            Some(_) => (),
+                        };
+                    }
+                };
+
+                // this feels bad and duplicative to get around borrow checker
+                if move_crate {
+                    let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
+                    let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                    c.pos = new_crate_pos;
+                    level_play_data.pushes += 1;
+                    play_sound_once(&sfx_push);
                 }
-            };
 
-            // this feels bad and duplicative to get around borrow checker
-            if move_crate {
-                let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
-                let new_crate_pos = c.pos.clone().add(move_player).to_owned();
-                c.pos = new_crate_pos;
-                play_sound_once(&sfx_push);
-            }
-
-            if crates.iter().all(|c| {
-                level
-                    .storage_locations
-                    .clone() // idk if cloning is right here
-                    .into_iter()
-                    .any(|sl| sl == c.pos)
-            }) {
-                play_sound_once(&sfx_level_complete);
-                beat_level = true;
+                if crates.iter().all(|c| {
+                    level
+                        .storage_locations
+                        .clone() // idk if cloning is right here
+                        .into_iter()
+                        .any(|sl| sl == c.pos)
+                }) {
+                    play_sound_once(&sfx_level_complete);
+                    beat_level = true;
+                }
             }
         }
 
@@ -177,13 +202,33 @@ async fn main() {
         if beat_level {
             draw_text(
                 "Nice job! Press J to go to next level.",
-                48.,
+                420.,
                 48.,
                 32.,
                 WHITE,
             );
         }
-        draw_text("K = Reset Level", 48., VIRTUAL_HEIGHT - 48., 32., WHITE);
+        draw_text(
+            "WASD = Move | K = Reset Level",
+            VIRTUAL_WIDTH / 2. - 200.,
+            VIRTUAL_HEIGHT - 48.,
+            32.,
+            WHITE,
+        );
+        draw_text(
+            format!("Steps: {}", level_play_data.steps).as_str(),
+            48.,
+            48.,
+            32.,
+            WHITE,
+        );
+        draw_text(
+            format!("Pushes: {}", level_play_data.pushes).as_str(),
+            48.,
+            88.,
+            32.,
+            WHITE,
+        );
 
         set_default_camera();
 

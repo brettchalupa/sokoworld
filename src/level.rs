@@ -2,6 +2,7 @@ use crate::{draw::draw_tile, texture::TextureAtlas, vec2::Vec2};
 
 #[derive(Debug, Clone)]
 pub struct Level {
+    pub name: String,
     pub walls: Vec<Vec2>,
     pub crates: Vec<Vec2>,
     pub storage_locations: Vec<Vec2>,
@@ -56,6 +57,7 @@ impl Level {
         }
 
         Ok(Self {
+            name: level_name.to_owned(),
             walls,
             crates,
             storage_locations,

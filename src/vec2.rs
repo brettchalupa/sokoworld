@@ -16,4 +16,19 @@ impl Vec2 {
         self.y += vec.y;
         self
     }
+
+    pub fn is_zero(&self) -> bool {
+        self.x == 0 && self.y == 0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_zero() {
+        assert!(Vec2 { x: 0, y: 0 }.is_zero());
+        assert!(!Vec2 { x: 1, y: 0 }.is_zero());
+    }
 }
