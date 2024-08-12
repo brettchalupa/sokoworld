@@ -230,7 +230,7 @@ async fn main() {
             if action_pressed(Action::Reset) {
                 player.pos = level.player;
                 for (i, c) in crates.iter_mut().enumerate() {
-                    c.pos = level.crates.get(i).unwrap().clone();
+                    c.pos = *level.crates.get(i).unwrap();
                 }
             }
 
