@@ -43,6 +43,7 @@ async fn main() {
     let sfx_level_complete = audio::load_sound("assets/level_complete.wav")
         .await
         .unwrap();
+    let sfx_reset = audio::load_sound("assets/reset.wav").await.unwrap();
 
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
@@ -95,6 +96,7 @@ async fn main() {
                 steps: 0,
                 pushes: 0,
             };
+            play_sound_once(&sfx_reset);
         }
 
         if beat_level {
