@@ -159,13 +159,25 @@ impl Entity {
         );
     }
 }
+const LEVEL_CLI_ARG: &str = "-l=";
 
 #[macroquad::main("Sokoworld")]
 async fn main() {
-    let texture_crate = load_texture("assets/crate.png").await.unwrap();
+    let args: Vec<String> = std::env::args().collect();
 
+    // TODO: move away from indices and just use the level names + load from asset dir or some
+    // other piece of data (maybe at compile time?)
+    let levels = ["level1", "level2", "level3", "level4"];
     let mut level_index = 0;
-    let levels = ["level1", "level2", "level3"];
+    match args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
+        Some(arg) => {
+            level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
+            level_index -= 1;
+        }
+        None => (),
+    };
+    println!("{:?}", args);
+    let texture_crate = load_texture("assets/crate.png").await.unwrap();
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
 
