@@ -204,7 +204,13 @@ async fn main() {
                 c.pos.add(move_player);
             }
             None => {
-                player.pos = new_pos;
+                let wall_at_new_pos = level.walls.iter().find(|w| *w == &new_pos);
+                match wall_at_new_pos {
+                    None => {
+                        player.pos = new_pos;
+                    }
+                    Some(_) => (),
+                };
             }
         };
 
