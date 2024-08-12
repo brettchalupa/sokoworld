@@ -23,10 +23,32 @@ fn window_conf() -> Conf {
     }
 }
 
+/// game-wide data and resources
+struct Context {
+    request_quit: bool,
+    gamepads: Gamepads,
+    textures: texture::TextureAtlas,
+    audio: audio::AudioAtlas,
+}
+
+impl Context {
+    async fn default() -> Self {
+        Self {
+            gamepads: Gamepads::new(),
+            request_quit: false,
+            textures: texture::TextureAtlas::new().await,
+            audio: audio::AudioAtlas::new().await,
+        }
+    }
+}
+
 #[macroquad::main(window_conf)]
 async fn main() {
+    let mut ctx = Context {
+        ..Context::default().await
+    };
+
     let args: Vec<String> = std::env::args().collect();
-    let mut gamepads = Gamepads::new();
 
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
@@ -36,8 +58,6 @@ async fn main() {
         level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
         level_index -= 1;
     };
-    let texture_atlas = texture::TextureAtlas::new().await;
-    let audio_atlas = audio::AudioAtlas::new().await;
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
 
@@ -63,14 +83,14 @@ async fn main() {
     };
 
     loop {
-        gamepads.poll();
+        ctx.gamepads.poll();
 
         #[cfg(debug_assertions)]
         if is_key_pressed(KeyCode::Escape) {
-            break;
+            ctx.request_quit = true;
         }
 
-        if input::action_pressed(input::Action::Reset, &gamepads) {
+        if input::action_pressed(input::Action::Reset, &ctx.gamepads) {
             beat_level = false;
             player.pos = level.player;
             for (i, c) in crates.iter_mut().enumerate() {
@@ -80,11 +100,11 @@ async fn main() {
                 steps: 0,
                 pushes: 0,
             };
-            macroquad::audio::play_sound_once(&audio_atlas.sfx.reset);
+            macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
         }
 
         if beat_level {
-            if input::action_pressed(input::Action::Confirm, &gamepads) {
+            if input::action_pressed(input::Action::Confirm, &ctx.gamepads) {
                 // DRY THIS THE HECK UP w/ init load
                 level_index += 1;
                 if level_index >= levels.len() {
@@ -107,13 +127,13 @@ async fn main() {
         } else {
             let mut move_player = Vec2 { x: 0, y: 0 };
 
-            if input::action_pressed(input::Action::Up, &gamepads) {
+            if input::action_pressed(input::Action::Up, &ctx.gamepads) {
                 move_player.y = -1;
-            } else if input::action_pressed(input::Action::Down, &gamepads) {
+            } else if input::action_pressed(input::Action::Down, &ctx.gamepads) {
                 move_player.y = 1;
-            } else if input::action_pressed(input::Action::Left, &gamepads) {
+            } else if input::action_pressed(input::Action::Left, &ctx.gamepads) {
                 move_player.x = -1;
-            } else if input::action_pressed(input::Action::Right, &gamepads) {
+            } else if input::action_pressed(input::Action::Right, &ctx.gamepads) {
                 move_player.x = 1;
             }
 
@@ -154,7 +174,7 @@ async fn main() {
                     let new_crate_pos = c.pos.clone().add(move_player).to_owned();
                     c.pos = new_crate_pos;
                     level_play_data.pushes += 1;
-                    macroquad::audio::play_sound_once(&audio_atlas.sfx.push);
+                    macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
                 }
 
                 if crates.iter().all(|c| {
@@ -164,7 +184,7 @@ async fn main() {
                         .into_iter()
                         .any(|sl| sl == c.pos)
                 }) {
-                    macroquad::audio::play_sound_once(&audio_atlas.sfx.level_complete);
+                    macroquad::audio::play_sound_once(&ctx.audio.sfx.level_complete);
                     beat_level = true;
                 }
             }
@@ -179,10 +199,10 @@ async fn main() {
         set_camera(&render_target_cam);
 
         clear_background(DARKGRAY);
-        level.draw(&texture_atlas);
-        draw::draw_tile(&texture_atlas.player, &player.pos);
+        level.draw(&ctx.textures);
+        draw::draw_tile(&ctx.textures.player, &player.pos);
         for c in &crates {
-            draw::draw_tile(&texture_atlas.krate, &c.pos);
+            draw::draw_tile(&ctx.textures.krate, &c.pos);
         }
 
         if beat_level {
@@ -230,6 +250,10 @@ async fn main() {
                 ..Default::default()
             },
         );
+
+        if ctx.request_quit {
+            break;
+        }
 
         next_frame().await
     }
