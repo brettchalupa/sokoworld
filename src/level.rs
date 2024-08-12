@@ -18,7 +18,6 @@ pub struct LevelPlayData {
 impl Level {
     /// loads a level from the specified file
     /// panics if the file can't be found
-    /// TODO: handle errors better than panic
     pub async fn load(level_name: &str) -> Result<Self, macroquad::Error> {
         let data = macroquad::file::load_string(format!("assets/{}.txt", level_name).as_str())
             .await
