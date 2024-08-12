@@ -165,7 +165,7 @@ async fn main() {
     let texture_crate = load_texture("assets/crate.png").await.unwrap();
 
     let mut level_index = 0;
-    let levels = ["level1", "level2"];
+    let levels = ["level1", "level2", "level3"];
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
 
@@ -189,7 +189,13 @@ async fn main() {
             break;
         }
 
-        // let dt = get_frame_time();
+        if action_pressed(Action::Reset) {
+            beat_level = false;
+            player.pos = level.player;
+            for (i, c) in crates.iter_mut().enumerate() {
+                c.pos = *level.crates.get(i).unwrap();
+            }
+        }
 
         if beat_level {
             if action_pressed(Action::Confirm) {
@@ -225,13 +231,6 @@ async fn main() {
                 move_player.x = -1;
             } else if action_pressed(Action::Right) {
                 move_player.x = 1;
-            }
-
-            if action_pressed(Action::Reset) {
-                player.pos = level.player;
-                for (i, c) in crates.iter_mut().enumerate() {
-                    c.pos = *level.crates.get(i).unwrap();
-                }
             }
 
             let new_player_pos = player.pos.clone().add(move_player).to_owned();
@@ -294,6 +293,7 @@ async fn main() {
                 WHITE,
             );
         }
+        draw_text("K = Reset Level", 48., screen_height() - 48., 32., WHITE);
 
         next_frame().await
     }
