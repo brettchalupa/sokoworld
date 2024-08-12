@@ -10,6 +10,11 @@ pub struct Level {
     pub player: Vec2,
 }
 
+pub struct LevelPlayData {
+    pub steps: i32,
+    pub pushes: i32,
+}
+
 impl Level {
     /// loads a level from the specified file
     /// panics if the file can't be found

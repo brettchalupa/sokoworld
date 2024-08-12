@@ -4,14 +4,9 @@ use sokoworld::audio;
 use sokoworld::consts::*;
 use sokoworld::draw;
 use sokoworld::input;
-use sokoworld::level::Level;
+use sokoworld::level::{Level, LevelPlayData};
 use sokoworld::texture;
 use sokoworld::vec2::Vec2;
-
-struct LevelPlayData {
-    steps: i32,
-    pushes: i32,
-}
 
 struct Entity {
     pos: Vec2,
