@@ -132,7 +132,7 @@ pub enum Action {
     Down,
     Left,
     Right,
-    Restart,
+    Reset,
 }
 
 /// just pressed, not held down
@@ -142,7 +142,7 @@ pub fn action_pressed(action: Action) -> bool {
         Action::Down => is_key_pressed(KeyCode::S),
         Action::Left => is_key_pressed(KeyCode::A),
         Action::Right => is_key_pressed(KeyCode::D),
-        Action::Restart => is_key_pressed(KeyCode::K),
+        Action::Reset => is_key_pressed(KeyCode::K),
     }
 }
 
@@ -196,8 +196,12 @@ async fn main() {
             move_player.x = 1;
         }
 
-        let new_pos = player.pos.clone().add(move_player).to_owned();
-        let crate_at_new_pos = crates.iter_mut().find(|c| c.pos == new_pos);
+        if action_pressed(Action::Reset) {
+            player.pos = level.player;
+            for (i, c) in crates.iter_mut().enumerate() {
+                c.pos = level.crates.get(i).unwrap().clone();
+            }
+        }
 
         let new_player_pos = player.pos.clone().add(move_player).to_owned();
         let crate_at_new_player_pos = crates.iter().find(|c| c.pos == new_player_pos);
