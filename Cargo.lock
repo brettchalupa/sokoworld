@@ -33,6 +33,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
+name = "bumpalo"
+version = "3.16.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79296716171880943b8470b5f8d03aa55eb2e645a4874bdbb28adb49162e012c"
+
+[[package]]
 name = "bytemuck"
 version = "1.16.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -96,9 +102,9 @@ dependencies = [
 
 [[package]]
 name = "glam"
-version = "0.27.0"
+version = "0.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e05e7e6723e3455f4818c7b26e855439f7546cf617ef669d1adedb8669e5cb9"
+checksum = "518faa5064866338b013ff9b2350dc318e14cc4fcd6cb8206d7e7c9886c98815"
 
 [[package]]
 name = "hashbrown"
@@ -130,10 +136,11 @@ checksum = "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f24761847c"
 
 [[package]]
 name = "macroquad"
-version = "0.4.12"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7db34475fdc8d1ce7f601c8ed532f44edbc5a7c6e12e822c4d86d68756e6b3fc"
+checksum = "17e29d28c6e08e098455c03a94afda970c9d009a0ccca95904a26e73b4cace7b"
 dependencies = [
+ "bumpalo",
  "fontdue",
  "glam",
  "image",
@@ -160,9 +167,9 @@ dependencies = [
 
 [[package]]
 name = "miniquad"
-version = "0.4.5"
+version = "0.4.0-alpha.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fc9c33a02870e728cf798dc0a69f29039f96ba13e46cde0f91d4b364eeb17a1"
+checksum = "f9a0c72bbe6fe751b03e87054c06822bab8e4494bbec4eb63a670cbe5980f538"
 dependencies = [
  "libc",
  "ndk-sys",

@@ -6,4 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-macroquad = "0.4.12"
+# later versions use way more CPU on macOS, see
+# https://github.com/not-fl3/miniquad/issues/470
+macroquad = "=0.4.0"
