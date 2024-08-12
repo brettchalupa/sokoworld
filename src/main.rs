@@ -32,7 +32,7 @@ async fn main() {
 
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
-    let levels = ["level1", "level2", "level3", "level4", "level5"];
+    let levels = ["level1", "level2", "level3", "level4", "level5", "level6"];
     let mut level_index = 0;
     if let Some(arg) = args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
         level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
