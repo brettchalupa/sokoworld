@@ -60,13 +60,14 @@ impl Entity {
 
 #[macroquad::main("Sokoworld")]
 async fn main() {
+    let texture_crate = load_texture("assets/crate.png").await.unwrap();
     let mut player = Entity {
         texture: load_texture("assets/player.png").await.unwrap(),
         pos: Vec { x: 3, y: 3 },
     };
 
     let mut krate = Entity {
-        texture: load_texture("assets/crate.png").await.unwrap(),
+        texture: texture_crate.clone(),
         pos: Vec { x: 5, y: 5 },
     };
 
