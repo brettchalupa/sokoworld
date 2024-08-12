@@ -1,3 +1,4 @@
+use gamepads::Gamepads;
 use macroquad::prelude::*;
 
 const TILE_SIZE: i32 = 64;
@@ -137,8 +138,7 @@ pub enum Action {
     Reset,
 }
 
-/// just pressed, not held down
-pub fn action_pressed(action: Action) -> bool {
+fn keyboard_pressed(action: &Action) -> bool {
     match action {
         Action::Up => is_key_pressed(KeyCode::W),
         Action::Down => is_key_pressed(KeyCode::S),
@@ -147,6 +147,40 @@ pub fn action_pressed(action: Action) -> bool {
         Action::Reset => is_key_pressed(KeyCode::K),
         Action::Confirm => is_key_pressed(KeyCode::J),
     }
+}
+
+fn gamepad_pressed(action: &Action, gamepads: &Gamepads) -> bool {
+    match action {
+        Action::Up => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::DPadUp)),
+        Action::Down => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::DPadDown)),
+        Action::Left => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::DPadLeft)),
+        Action::Right => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::DPadRight)),
+        Action::Confirm => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::ActionDown)),
+        Action::Reset => gamepads
+            .all()
+            .into_iter()
+            .any(|g| g.is_just_pressed(gamepads::Button::ActionUp)),
+    }
+}
+
+/// just pressed, not held down
+pub fn action_pressed(action: Action, gamepads: &Gamepads) -> bool {
+    keyboard_pressed(&action) || gamepad_pressed(&action, gamepads)
 }
 
 impl Entity {
@@ -164,6 +198,7 @@ const LEVEL_CLI_ARG: &str = "-l=";
 #[macroquad::main("Sokoworld")]
 async fn main() {
     let args: Vec<String> = std::env::args().collect();
+    let mut gamepads = Gamepads::new();
 
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
@@ -196,12 +231,14 @@ async fn main() {
     }
 
     loop {
+        gamepads.poll();
+
         #[cfg(debug_assertions)]
         if is_key_pressed(KeyCode::Escape) {
             break;
         }
 
-        if action_pressed(Action::Reset) {
+        if action_pressed(Action::Reset, &gamepads) {
             beat_level = false;
             player.pos = level.player;
             for (i, c) in crates.iter_mut().enumerate() {
@@ -210,7 +247,7 @@ async fn main() {
         }
 
         if beat_level {
-            if action_pressed(Action::Confirm) {
+            if action_pressed(Action::Confirm, &gamepads) {
                 // DRY THIS THE HECK UP w/ init load
                 level_index += 1;
                 if level_index >= levels.len() {
@@ -235,13 +272,13 @@ async fn main() {
         } else {
             let mut move_player = Vec2 { x: 0, y: 0 };
 
-            if action_pressed(Action::Up) {
+            if action_pressed(Action::Up, &gamepads) {
                 move_player.y = -1;
-            } else if action_pressed(Action::Down) {
+            } else if action_pressed(Action::Down, &gamepads) {
                 move_player.y = 1;
-            } else if action_pressed(Action::Left) {
+            } else if action_pressed(Action::Left, &gamepads) {
                 move_player.x = -1;
-            } else if action_pressed(Action::Right) {
+            } else if action_pressed(Action::Right, &gamepads) {
                 move_player.x = 1;
             }
 
