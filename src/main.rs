@@ -2,7 +2,10 @@ use crate::level::Level;
 use crate::vec2::Vec2;
 use consts::*;
 use gamepads::Gamepads;
-use macroquad::prelude::*;
+use macroquad::{
+    audio::{self, play_sound_once},
+    prelude::*,
+};
 
 mod consts;
 mod draw;
@@ -36,6 +39,11 @@ fn window_conf() -> Conf {
 async fn main() {
     let args: Vec<String> = std::env::args().collect();
     let mut gamepads = Gamepads::new();
+
+    let sfx_push = audio::load_sound("assets/push.wav").await.unwrap();
+    let sfx_level_complete = audio::load_sound("assets/level_complete.wav")
+        .await
+        .unwrap();
 
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
@@ -154,6 +162,7 @@ async fn main() {
                 let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
                 let new_crate_pos = c.pos.clone().add(move_player).to_owned();
                 c.pos = new_crate_pos;
+                play_sound_once(&sfx_push);
             }
 
             if crates.iter().all(|c| {
@@ -163,6 +172,7 @@ async fn main() {
                     .into_iter()
                     .any(|sl| sl == c.pos)
             }) {
+                play_sound_once(&sfx_level_complete);
                 beat_level = true;
             }
         }
