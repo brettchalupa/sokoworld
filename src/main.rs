@@ -18,8 +18,9 @@ impl Level {
     /// loads a level from the specified file
     /// panics if the file can't be found
     /// TODO: handle errors better than panic
-    async fn load(path: &str) -> Result<Self, macroquad::Error> {
-        let data = std::fs::read_to_string(path).expect("Unable to read file");
+    async fn load(level_name: &str) -> Result<Self, macroquad::Error> {
+        let data = std::fs::read_to_string(format!("assets/{}.txt", level_name))
+            .expect("Unable to read file");
         let rows = data.split('\n'); // TODO: maybe split on more OS-friendl format
         let mut walls = vec![];
         let mut crates = vec![];
@@ -132,6 +133,7 @@ pub enum Action {
     Down,
     Left,
     Right,
+    Confirm,
     Reset,
 }
 
@@ -143,6 +145,7 @@ pub fn action_pressed(action: Action) -> bool {
         Action::Left => is_key_pressed(KeyCode::A),
         Action::Right => is_key_pressed(KeyCode::D),
         Action::Reset => is_key_pressed(KeyCode::K),
+        Action::Confirm => is_key_pressed(KeyCode::J),
     }
 }
 
@@ -161,9 +164,10 @@ impl Entity {
 async fn main() {
     let texture_crate = load_texture("assets/crate.png").await.unwrap();
 
+    let mut level_index = 0;
     let levels = ["level1", "level2"];
 
-    let level = Level::load(levels[0]).await.unwrap();
+    let mut level = Level::load(levels[level_index]).await.unwrap();
 
     let mut player = Entity {
         texture: load_texture("assets/player.png").await.unwrap(),
@@ -187,65 +191,91 @@ async fn main() {
 
         // let dt = get_frame_time();
 
-        let mut move_player = Vec2 { x: 0, y: 0 };
+        if beat_level {
+            if action_pressed(Action::Confirm) {
+                // DRY THIS THE HECK UP w/ init load
+                level_index += 1;
+                if level_index >= levels.len() {
+                    level_index = 0;
+                }
+                level = Level::load(levels[level_index]).await.unwrap();
 
-        if action_pressed(Action::Up) {
-            move_player.y = -1;
-        } else if action_pressed(Action::Down) {
-            move_player.y = 1;
-        } else if action_pressed(Action::Left) {
-            move_player.x = -1;
-        } else if action_pressed(Action::Right) {
-            move_player.x = 1;
-        }
+                player = Entity {
+                    texture: load_texture("assets/player.png").await.unwrap(),
+                    pos: level.player,
+                };
+                crates.clear();
+                beat_level = false;
 
-        if action_pressed(Action::Reset) {
-            player.pos = level.player;
-            for (i, c) in crates.iter_mut().enumerate() {
-                c.pos = level.crates.get(i).unwrap().clone();
-            }
-        }
-
-        let new_player_pos = player.pos.clone().add(move_player).to_owned();
-        let crate_at_new_player_pos = crates.iter().find(|c| c.pos == new_player_pos);
-        let mut move_crate = false;
-
-        match crate_at_new_player_pos {
-            Some(c) => {
-                let new_crate_pos = c.pos.clone().add(move_player).to_owned();
-                let wall_at_new_crate_pos = level.walls.iter().find(|w| *w == &new_crate_pos);
-                let other_crate_at_new_crate_pos = crates.iter().find(|c| c.pos == new_crate_pos);
-
-                if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
-                    move_crate = true;
+                for pos in &level.crates {
+                    crates.push(Entity {
+                        texture: texture_crate.clone(),
+                        pos: *pos,
+                    });
                 }
             }
-            None => {
-                let wall_at_new_player_pos = level.walls.iter().find(|w| *w == &new_player_pos);
-                match wall_at_new_player_pos {
-                    None => {
-                        player.pos = new_player_pos;
-                    }
-                    Some(_) => (),
-                };
+        } else {
+            let mut move_player = Vec2 { x: 0, y: 0 };
+
+            if action_pressed(Action::Up) {
+                move_player.y = -1;
+            } else if action_pressed(Action::Down) {
+                move_player.y = 1;
+            } else if action_pressed(Action::Left) {
+                move_player.x = -1;
+            } else if action_pressed(Action::Right) {
+                move_player.x = 1;
             }
-        };
 
-        // this feels bad and duplicative to get around borrow checker
-        if move_crate {
-            let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
-            let new_crate_pos = c.pos.clone().add(move_player).to_owned();
-            c.pos = new_crate_pos;
-        }
+            if action_pressed(Action::Reset) {
+                player.pos = level.player;
+                for (i, c) in crates.iter_mut().enumerate() {
+                    c.pos = level.crates.get(i).unwrap().clone();
+                }
+            }
 
-        if crates.iter().all(|c| {
-            level
-                .storage_locations
-                .clone() // idk if cloning is right here
-                .into_iter()
-                .any(|sl| sl == c.pos)
-        }) {
-            beat_level = true;
+            let new_player_pos = player.pos.clone().add(move_player).to_owned();
+            let crate_at_new_player_pos = crates.iter().find(|c| c.pos == new_player_pos);
+            let mut move_crate = false;
+
+            match crate_at_new_player_pos {
+                Some(c) => {
+                    let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                    let wall_at_new_crate_pos = level.walls.iter().find(|w| *w == &new_crate_pos);
+                    let other_crate_at_new_crate_pos =
+                        crates.iter().find(|c| c.pos == new_crate_pos);
+
+                    if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
+                        move_crate = true;
+                    }
+                }
+                None => {
+                    let wall_at_new_player_pos = level.walls.iter().find(|w| *w == &new_player_pos);
+                    match wall_at_new_player_pos {
+                        None => {
+                            player.pos = new_player_pos;
+                        }
+                        Some(_) => (),
+                    };
+                }
+            };
+
+            // this feels bad and duplicative to get around borrow checker
+            if move_crate {
+                let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
+                let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                c.pos = new_crate_pos;
+            }
+
+            if crates.iter().all(|c| {
+                level
+                    .storage_locations
+                    .clone() // idk if cloning is right here
+                    .into_iter()
+                    .any(|sl| sl == c.pos)
+            }) {
+                beat_level = true;
+            }
         }
 
         clear_background(DARKGRAY);
@@ -256,7 +286,13 @@ async fn main() {
         }
 
         if beat_level {
-            draw_text("Nice job!", 48., 48., 48., WHITE);
+            draw_text(
+                "Nice job! Press J to go to next level.",
+                48.,
+                48.,
+                32.,
+                WHITE,
+            );
         }
 
         next_frame().await
