@@ -161,14 +161,17 @@ impl Entity {
 async fn main() {
     let texture_crate = load_texture("assets/crate.png").await.unwrap();
 
-    let level = Level::load("assets/level1.txt").await.unwrap();
+    let levels = ["level1", "level2"];
+
+    let level = Level::load(levels[0]).await.unwrap();
 
     let mut player = Entity {
         texture: load_texture("assets/player.png").await.unwrap(),
         pos: level.player,
     };
-
     let mut crates: Vec<Entity> = vec![];
+    let mut beat_level = false;
+
     for pos in &level.crates {
         crates.push(Entity {
             texture: texture_crate.clone(),
@@ -235,11 +238,25 @@ async fn main() {
             c.pos = new_crate_pos;
         }
 
+        if crates.iter().all(|c| {
+            level
+                .storage_locations
+                .clone() // idk if cloning is right here
+                .into_iter()
+                .any(|sl| sl == c.pos)
+        }) {
+            beat_level = true;
+        }
+
         clear_background(DARKGRAY);
         level.draw();
         player.draw();
         for c in &crates {
             c.draw();
+        }
+
+        if beat_level {
+            draw_text("Nice job!", 48., 48., 48., WHITE);
         }
 
         next_frame().await
