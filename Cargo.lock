@@ -141,9 +141,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1208d19cfec399754408cdbc7dcc83f2d3d282182cd8f55ba57659db2b119dce"
 dependencies = [
  "gilrs",
- "js-sys",
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]

@@ -22,7 +22,8 @@ impl Level {
     /// panics if the file can't be found
     /// TODO: handle errors better than panic
     pub async fn load(level_name: &str) -> Result<Self, macroquad::Error> {
-        let data = std::fs::read_to_string(format!("assets/{}.txt", level_name))
+        let data = macroquad::file::load_string(format!("assets/{}.txt", level_name).as_str())
+            .await
             .expect("Unable to read file");
         let rows = data.split('\n'); // TODO: maybe split on more OS-friendl format
         let mut walls = vec![];

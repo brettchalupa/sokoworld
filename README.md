@@ -29,3 +29,7 @@ Run a specific level with:
 ``` console
 cargo run -- -l=4
 ```
+
+## Dev Notes
+
+- the JS shims in web are explicitly checked in in case they disappear & to have versions match

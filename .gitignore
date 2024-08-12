@@ -1,2 +1,4 @@
 /target
 notes
+web/assets
+web/*.wasm
