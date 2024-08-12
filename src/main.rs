@@ -2,11 +2,9 @@ use crate::level::Level;
 use crate::vec2::Vec2;
 use consts::*;
 use gamepads::Gamepads;
-use macroquad::{
-    audio::{self, play_sound_once},
-    prelude::*,
-};
+use macroquad::prelude::*;
 
+mod audio;
 mod consts;
 mod draw;
 mod input;
@@ -39,12 +37,6 @@ async fn main() {
     let args: Vec<String> = std::env::args().collect();
     let mut gamepads = Gamepads::new();
 
-    let sfx_push = audio::load_sound("assets/push.wav").await.unwrap();
-    let sfx_level_complete = audio::load_sound("assets/level_complete.wav")
-        .await
-        .unwrap();
-    let sfx_reset = audio::load_sound("assets/reset.wav").await.unwrap();
-
     // TODO: move away from indices and just use the level names + load from asset dir or some
     // other piece of data (maybe at compile time?)
     let levels = ["level1", "level2", "level3", "level4", "level5", "level6"];
@@ -54,6 +46,7 @@ async fn main() {
         level_index -= 1;
     };
     let texture_atlas = texture::TextureAtlas::new().await;
+    let audio_atlas = audio::AudioAtlas::new().await;
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
 
@@ -96,7 +89,7 @@ async fn main() {
                 steps: 0,
                 pushes: 0,
             };
-            play_sound_once(&sfx_reset);
+            macroquad::audio::play_sound_once(&audio_atlas.sfx.reset);
         }
 
         if beat_level {
@@ -170,7 +163,7 @@ async fn main() {
                     let new_crate_pos = c.pos.clone().add(move_player).to_owned();
                     c.pos = new_crate_pos;
                     level_play_data.pushes += 1;
-                    play_sound_once(&sfx_push);
+                    macroquad::audio::play_sound_once(&audio_atlas.sfx.push);
                 }
 
                 if crates.iter().all(|c| {
@@ -180,7 +173,7 @@ async fn main() {
                         .into_iter()
                         .any(|sl| sl == c.pos)
                 }) {
-                    play_sound_once(&sfx_level_complete);
+                    macroquad::audio::play_sound_once(&audio_atlas.sfx.level_complete);
                     beat_level = true;
                 }
             }
