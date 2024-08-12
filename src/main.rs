@@ -1,6 +1,8 @@
 use gamepads::Gamepads;
 use macroquad::prelude::*;
 
+mod input;
+
 const TILE_SIZE: i32 = 64;
 
 #[derive(Debug, Clone)]
@@ -129,60 +131,6 @@ struct Entity {
     pos: Vec2,
 }
 
-pub enum Action {
-    Up,
-    Down,
-    Left,
-    Right,
-    Confirm,
-    Reset,
-}
-
-fn keyboard_pressed(action: &Action) -> bool {
-    match action {
-        Action::Up => is_key_pressed(KeyCode::W),
-        Action::Down => is_key_pressed(KeyCode::S),
-        Action::Left => is_key_pressed(KeyCode::A),
-        Action::Right => is_key_pressed(KeyCode::D),
-        Action::Reset => is_key_pressed(KeyCode::K),
-        Action::Confirm => is_key_pressed(KeyCode::J),
-    }
-}
-
-fn gamepad_pressed(action: &Action, gamepads: &Gamepads) -> bool {
-    match action {
-        Action::Up => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::DPadUp)),
-        Action::Down => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::DPadDown)),
-        Action::Left => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::DPadLeft)),
-        Action::Right => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::DPadRight)),
-        Action::Confirm => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::ActionDown)),
-        Action::Reset => gamepads
-            .all()
-            .into_iter()
-            .any(|g| g.is_just_pressed(gamepads::Button::ActionUp)),
-    }
-}
-
-/// just pressed, not held down
-pub fn action_pressed(action: Action, gamepads: &Gamepads) -> bool {
-    keyboard_pressed(&action) || gamepad_pressed(&action, gamepads)
-}
-
 impl Entity {
     fn draw(&self) {
         draw_texture(
@@ -238,7 +186,7 @@ async fn main() {
             break;
         }
 
-        if action_pressed(Action::Reset, &gamepads) {
+        if input::action_pressed(input::Action::Reset, &gamepads) {
             beat_level = false;
             player.pos = level.player;
             for (i, c) in crates.iter_mut().enumerate() {
@@ -247,7 +195,7 @@ async fn main() {
         }
 
         if beat_level {
-            if action_pressed(Action::Confirm, &gamepads) {
+            if input::action_pressed(input::Action::Confirm, &gamepads) {
                 // DRY THIS THE HECK UP w/ init load
                 level_index += 1;
                 if level_index >= levels.len() {
@@ -272,13 +220,13 @@ async fn main() {
         } else {
             let mut move_player = Vec2 { x: 0, y: 0 };
 
-            if action_pressed(Action::Up, &gamepads) {
+            if input::action_pressed(input::Action::Up, &gamepads) {
                 move_player.y = -1;
-            } else if action_pressed(Action::Down, &gamepads) {
+            } else if input::action_pressed(input::Action::Down, &gamepads) {
                 move_player.y = 1;
-            } else if action_pressed(Action::Left, &gamepads) {
+            } else if input::action_pressed(input::Action::Left, &gamepads) {
                 move_player.x = -1;
-            } else if action_pressed(Action::Right, &gamepads) {
+            } else if input::action_pressed(input::Action::Right, &gamepads) {
                 move_player.x = 1;
             }
 
