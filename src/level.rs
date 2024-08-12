@@ -10,9 +10,29 @@ pub struct Level {
     pub player: Vec2,
 }
 
-pub struct LevelPlayData {
+/// wraps the static level data and keeps track of player's progress
+pub struct PlayableLevel {
+    pub complete: bool,
     pub steps: i32,
     pub pushes: i32,
+    pub level: Level,
+}
+
+impl PlayableLevel {
+    pub async fn load(name: &str) -> Self {
+        Self {
+            complete: false,
+            steps: 0,
+            pushes: 0,
+            level: Level::load(name).await.unwrap(),
+        }
+    }
+
+    pub fn reset(&mut self) {
+        self.steps = 0;
+        self.pushes = 0;
+        self.complete = false;
+    }
 }
 
 impl Level {

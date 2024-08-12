@@ -4,7 +4,7 @@ use sokoworld::audio;
 use sokoworld::consts::*;
 use sokoworld::draw;
 use sokoworld::input;
-use sokoworld::level::{Level, LevelPlayData};
+use sokoworld::level::PlayableLevel;
 use sokoworld::texture;
 use sokoworld::vec2::Vec2;
 
@@ -59,13 +59,14 @@ async fn main() {
         level_index -= 1;
     };
 
-    let mut level = Level::load(levels[level_index]).await.unwrap();
-
-    let mut player = Entity { pos: level.player };
+    // TODO: move these into ctx
+    let mut current_level = PlayableLevel::load(levels[level_index]).await;
+    let mut player = Entity {
+        pos: current_level.level.player,
+    };
     let mut crates: Vec<Entity> = vec![];
-    let mut beat_level = false;
 
-    for pos in &level.crates {
+    for pos in &current_level.level.crates {
         crates.push(Entity { pos: *pos });
     }
 
@@ -77,12 +78,8 @@ async fn main() {
         Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
     render_target_cam.render_target = Some(render_target.clone());
 
-    let mut level_play_data = LevelPlayData {
-        steps: 0,
-        pushes: 0,
-    };
-
     loop {
+        ///////// UPDATE
         ctx.gamepads.poll();
 
         #[cfg(debug_assertions)]
@@ -91,36 +88,29 @@ async fn main() {
         }
 
         if input::action_pressed(input::Action::Reset, &ctx.gamepads) {
-            beat_level = false;
-            player.pos = level.player;
+            current_level.reset();
+            player.pos = current_level.level.player;
             for (i, c) in crates.iter_mut().enumerate() {
-                c.pos = *level.crates.get(i).unwrap();
+                c.pos = *current_level.level.crates.get(i).unwrap();
             }
-            level_play_data = LevelPlayData {
-                steps: 0,
-                pushes: 0,
-            };
             macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
         }
 
-        if beat_level {
+        if current_level.complete {
             if input::action_pressed(input::Action::Confirm, &ctx.gamepads) {
                 // DRY THIS THE HECK UP w/ init load
                 level_index += 1;
                 if level_index >= levels.len() {
                     level_index = 0;
                 }
-                level = Level::load(levels[level_index]).await.unwrap();
-                level_play_data = LevelPlayData {
-                    steps: 0,
-                    pushes: 0,
+                current_level = PlayableLevel::load(levels[level_index]).await;
+
+                player = Entity {
+                    pos: current_level.level.player,
                 };
-
-                player = Entity { pos: level.player };
                 crates.clear();
-                beat_level = false;
 
-                for pos in &level.crates {
+                for pos in &current_level.level.crates {
                     crates.push(Entity { pos: *pos });
                 }
             }
@@ -145,8 +135,11 @@ async fn main() {
                 match crate_at_new_player_pos {
                     Some(c) => {
                         let new_crate_pos = c.pos.clone().add(move_player).to_owned();
-                        let wall_at_new_crate_pos =
-                            level.walls.iter().find(|w| *w == &new_crate_pos);
+                        let wall_at_new_crate_pos = current_level
+                            .level
+                            .walls
+                            .iter()
+                            .find(|w| *w == &new_crate_pos);
                         let other_crate_at_new_crate_pos =
                             crates.iter().find(|c| c.pos == new_crate_pos);
 
@@ -156,12 +149,15 @@ async fn main() {
                         }
                     }
                     None => {
-                        let wall_at_new_player_pos =
-                            level.walls.iter().find(|w| *w == &new_player_pos);
+                        let wall_at_new_player_pos = current_level
+                            .level
+                            .walls
+                            .iter()
+                            .find(|w| *w == &new_player_pos);
                         match wall_at_new_player_pos {
                             None => {
                                 player.pos = new_player_pos;
-                                level_play_data.steps += 1;
+                                current_level.steps += 1;
                             }
                             Some(_) => (),
                         };
@@ -173,22 +169,25 @@ async fn main() {
                     let c = crates.iter_mut().find(|c| c.pos == new_player_pos).unwrap();
                     let new_crate_pos = c.pos.clone().add(move_player).to_owned();
                     c.pos = new_crate_pos;
-                    level_play_data.pushes += 1;
+                    current_level.pushes += 1;
                     macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
                 }
 
                 if crates.iter().all(|c| {
-                    level
+                    current_level
+                        .level
                         .storage_locations
                         .clone() // idk if cloning is right here
                         .into_iter()
                         .any(|sl| sl == c.pos)
                 }) {
                     macroquad::audio::play_sound_once(&ctx.audio.sfx.level_complete);
-                    beat_level = true;
+                    current_level.complete = true;
                 }
             }
         }
+
+        ///////// DRAW
 
         // Get required scaling value
         let scale: f32 = f32::min(
@@ -199,13 +198,13 @@ async fn main() {
         set_camera(&render_target_cam);
 
         clear_background(DARKGRAY);
-        level.draw(&ctx.textures);
+        current_level.level.draw(&ctx.textures);
         draw::draw_tile(&ctx.textures.player, &player.pos);
         for c in &crates {
             draw::draw_tile(&ctx.textures.krate, &c.pos);
         }
 
-        if beat_level {
+        if current_level.complete {
             draw_text(
                 "Nice job! Press J to go to next level.",
                 VIRTUAL_WIDTH / 2. - 280.,
@@ -221,11 +220,11 @@ async fn main() {
             32.,
             WHITE,
         );
-        draw_text(level.name.as_str(), 48., 32., 32., WHITE);
+        draw_text(current_level.level.name.as_str(), 48., 32., 32., WHITE);
         draw_text(
             format!(
                 "Steps: {} | Pushes: {}",
-                level_play_data.steps, level_play_data.pushes
+                current_level.steps, current_level.pushes
             )
             .as_str(),
             48.,
