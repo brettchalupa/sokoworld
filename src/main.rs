@@ -11,17 +11,11 @@ mod consts;
 mod draw;
 mod input;
 mod level;
+mod texture;
 mod vec2;
 
 struct Entity {
-    texture: Texture2D,
     pos: Vec2,
-}
-
-impl Entity {
-    fn draw(&self) {
-        draw::draw_tile(&self.texture, &self.pos);
-    }
 }
 
 fn window_conf() -> Conf {
@@ -53,22 +47,16 @@ async fn main() {
         level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
         level_index -= 1;
     };
-    let texture_crate = load_texture("assets/crate.png").await.unwrap();
+    let texture_atlas = texture::TextureAtlas::new().await;
 
     let mut level = Level::load(levels[level_index]).await.unwrap();
 
-    let mut player = Entity {
-        texture: load_texture("assets/player.png").await.unwrap(),
-        pos: level.player,
-    };
+    let mut player = Entity { pos: level.player };
     let mut crates: Vec<Entity> = vec![];
     let mut beat_level = false;
 
     for pos in &level.crates {
-        crates.push(Entity {
-            texture: texture_crate.clone(),
-            pos: *pos,
-        });
+        crates.push(Entity { pos: *pos });
     }
 
     let render_target = render_target(VIRTUAL_WIDTH as u32, VIRTUAL_HEIGHT as u32);
@@ -104,18 +92,12 @@ async fn main() {
                 }
                 level = Level::load(levels[level_index]).await.unwrap();
 
-                player = Entity {
-                    texture: load_texture("assets/player.png").await.unwrap(),
-                    pos: level.player,
-                };
+                player = Entity { pos: level.player };
                 crates.clear();
                 beat_level = false;
 
                 for pos in &level.crates {
-                    crates.push(Entity {
-                        texture: texture_crate.clone(),
-                        pos: *pos,
-                    });
+                    crates.push(Entity { pos: *pos });
                 }
             }
         } else {
@@ -186,10 +168,10 @@ async fn main() {
         set_camera(&render_target_cam);
 
         clear_background(DARKGRAY);
-        level.draw();
-        player.draw();
+        level.draw(&texture_atlas);
+        draw::draw_tile(&texture_atlas.player, &player.pos);
         for c in &crates {
-            c.draw();
+            draw::draw_tile(&texture_atlas.krate, &c.pos);
         }
 
         if beat_level {

@@ -1,6 +1,4 @@
-use macroquad::texture::{load_texture, Texture2D};
-
-use crate::{draw::draw_tile, vec2::Vec2};
+use crate::{draw::draw_tile, texture::TextureAtlas, vec2::Vec2};
 
 #[derive(Debug, Clone)]
 pub struct Level {
@@ -9,9 +7,6 @@ pub struct Level {
     pub storage_locations: Vec<Vec2>,
     pub grounds: Vec<Vec2>,
     pub player: Vec2,
-    ground_texture: Texture2D,
-    wall_texture: Texture2D,
-    storage_location_texture: Texture2D,
 }
 
 impl Level {
@@ -66,22 +61,19 @@ impl Level {
             storage_locations,
             grounds,
             player,
-            wall_texture: load_texture("assets/wall.png").await.unwrap(),
-            ground_texture: load_texture("assets/ground.png").await.unwrap(),
-            storage_location_texture: load_texture("assets/storage_location.png").await.unwrap(),
         })
     }
 
     /// draws the static elements of a level (everything except player and boxes)
-    pub fn draw(&self) {
+    pub fn draw(&self, texture_atlas: &TextureAtlas) {
         for wall in &self.walls {
-            draw_tile(&self.wall_texture, wall);
+            draw_tile(&texture_atlas.wall, wall);
         }
         for storage_location in &self.storage_locations {
-            draw_tile(&self.storage_location_texture, storage_location);
+            draw_tile(&texture_atlas.storage_location, storage_location);
         }
         for ground in &self.grounds {
-            draw_tile(&self.ground_texture, ground);
+            draw_tile(&texture_atlas.ground, ground);
         }
     }
 }
