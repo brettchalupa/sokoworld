@@ -18,7 +18,7 @@ impl Level {
         let data = macroquad::file::load_string(format!("assets/{}.txt", level_name).as_str())
             .await
             .expect("Unable to read file");
-        let rows = data.split('\n'); // TODO: maybe split on more OS-friendl format
+        let rows = data.lines();
         let mut walls = vec![];
         let mut crates = vec![];
         let mut storage_locations = vec![];
