@@ -29,15 +29,27 @@ struct Context {
     gamepads: Gamepads,
     textures: texture::TextureAtlas,
     audio: audio::AudioAtlas,
+    render_target: RenderTarget,
+    render_target_cam: Camera2D,
 }
 
 impl Context {
     async fn default() -> Self {
+        let render_target = render_target(VIRTUAL_WIDTH as u32, VIRTUAL_HEIGHT as u32);
+        render_target.texture.set_filter(FilterMode::Linear);
+
+        // Setup camera for the virtual screen, that will render to 'render_target'
+        let mut render_target_cam =
+            Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
+        render_target_cam.render_target = Some(render_target.clone());
+
         Self {
             gamepads: Gamepads::new(),
             request_quit: false,
             textures: texture::TextureAtlas::new().await,
             audio: audio::AudioAtlas::new().await,
+            render_target,
+            render_target_cam,
         }
     }
 }
@@ -69,14 +81,6 @@ async fn main() {
     for pos in &current_level.level.crates {
         crates.push(Entity { pos: *pos });
     }
-
-    let render_target = render_target(VIRTUAL_WIDTH as u32, VIRTUAL_HEIGHT as u32);
-    render_target.texture.set_filter(FilterMode::Linear);
-
-    // Setup camera for the virtual screen, that will render to 'render_target'
-    let mut render_target_cam =
-        Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
-    render_target_cam.render_target = Some(render_target.clone());
 
     loop {
         ///////// UPDATE
@@ -189,13 +193,7 @@ async fn main() {
 
         ///////// DRAW
 
-        // Get required scaling value
-        let scale: f32 = f32::min(
-            screen_width() / VIRTUAL_WIDTH,
-            screen_height() / VIRTUAL_HEIGHT,
-        );
-
-        set_camera(&render_target_cam);
+        set_camera(&ctx.render_target_cam);
 
         clear_background(DARKGRAY);
         current_level.level.draw(&ctx.textures);
@@ -238,8 +236,12 @@ async fn main() {
         clear_background(BLACK); // Will be the letterbox color
 
         // Draw 'render_target' to window screen, porperly scaled and letterboxed
+        let scale: f32 = f32::min(
+            screen_width() / VIRTUAL_WIDTH,
+            screen_height() / VIRTUAL_HEIGHT,
+        );
         draw_texture_ex(
-            &render_target.texture,
+            &ctx.render_target.texture,
             (screen_width() - (VIRTUAL_WIDTH * scale)) * 0.5,
             (screen_height() - (VIRTUAL_HEIGHT * scale)) * 0.5,
             WHITE,
