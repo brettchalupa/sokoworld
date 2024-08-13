@@ -1,4 +1,10 @@
-use crate::{draw::draw_tile, texture::TextureAtlas, vec2::Vec2};
+use crate::input;
+use macroquad::color::WHITE;
+use macroquad::text::draw_text;
+
+use crate::consts::*;
+use crate::entity::Entity;
+use crate::{context::Context, draw::draw_tile, texture::TextureAtlas, vec2::Vec2};
 
 #[derive(Debug, Clone)]
 pub struct Level {
@@ -16,15 +22,27 @@ pub struct PlayableLevel {
     pub steps: i32,
     pub pushes: i32,
     pub level: Level,
+    pub player: Entity,
+    pub crates: Vec<Entity>,
 }
 
 impl PlayableLevel {
     pub async fn load(name: &str) -> Self {
+        let level = Level::load(name).await.unwrap();
+        let player = Entity { pos: level.player };
+        let mut crates: Vec<Entity> = vec![];
+
+        for pos in &level.crates {
+            crates.push(Entity { pos: *pos });
+        }
+
         Self {
             complete: false,
             steps: 0,
             pushes: 0,
-            level: Level::load(name).await.unwrap(),
+            level,
+            crates,
+            player,
         }
     }
 
@@ -32,6 +50,124 @@ impl PlayableLevel {
         self.steps = 0;
         self.pushes = 0;
         self.complete = false;
+    }
+
+    pub fn update(&mut self, ctx: &mut Context) {
+        if input::action_pressed(input::Action::Reset, &ctx.gamepads) {
+            self.reset();
+            self.player.pos = self.level.player;
+            for (i, c) in self.crates.iter_mut().enumerate() {
+                c.pos = *self.level.crates.get(i).unwrap();
+            }
+            macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
+        }
+
+        if self.complete {
+            if input::action_pressed(input::Action::Confirm, &ctx.gamepads) {
+                ctx.load_next_level = true;
+            }
+            return;
+        }
+
+        let mut move_player = Vec2 { x: 0, y: 0 };
+
+        if input::action_pressed(input::Action::Up, &ctx.gamepads) {
+            move_player.y = -1;
+        } else if input::action_pressed(input::Action::Down, &ctx.gamepads) {
+            move_player.y = 1;
+        } else if input::action_pressed(input::Action::Left, &ctx.gamepads) {
+            move_player.x = -1;
+        } else if input::action_pressed(input::Action::Right, &ctx.gamepads) {
+            move_player.x = 1;
+        }
+
+        let new_player_pos = self.player.pos.clone().add(move_player).to_owned();
+        let crate_at_new_player_pos = self.crates.iter().find(|c| c.pos == new_player_pos);
+        let mut move_crate = false;
+
+        if !move_player.is_zero() {
+            match crate_at_new_player_pos {
+                Some(c) => {
+                    let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                    let wall_at_new_crate_pos =
+                        self.level.walls.iter().find(|w| *w == &new_crate_pos);
+                    let other_crate_at_new_crate_pos =
+                        self.crates.iter().find(|c| c.pos == new_crate_pos);
+
+                    if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
+                        move_crate = true;
+                    }
+                }
+                None => {
+                    let wall_at_new_player_pos =
+                        self.level.walls.iter().find(|w| *w == &new_player_pos);
+                    match wall_at_new_player_pos {
+                        None => {
+                            self.player.pos = new_player_pos;
+                            self.steps += 1;
+                        }
+                        Some(_) => (),
+                    };
+                }
+            };
+
+            // this feels bad and duplicative to get around borrow checker
+            if move_crate {
+                let c = self
+                    .crates
+                    .iter_mut()
+                    .find(|c| c.pos == new_player_pos)
+                    .unwrap();
+                let new_crate_pos = c.pos.clone().add(move_player).to_owned();
+                c.pos = new_crate_pos;
+                self.pushes += 1;
+                macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
+            }
+
+            if self.crates.iter().all(|c| {
+                self.level
+                    .storage_locations
+                    .clone() // idk if cloning is right here
+                    .into_iter()
+                    .any(|sl| sl == c.pos)
+            }) {
+                macroquad::audio::play_sound_once(&ctx.audio.sfx.level_complete);
+                self.complete = true;
+            }
+        }
+    }
+
+    pub fn draw(&mut self, ctx: &mut Context) {
+        self.level.draw(&ctx.textures);
+        draw_tile(&ctx.textures.player, &self.player.pos);
+        for c in &self.crates {
+            draw_tile(&ctx.textures.krate, &c.pos);
+        }
+
+        if self.complete {
+            draw_text(
+                "Nice job! Press J to go to next level.",
+                VIRTUAL_WIDTH / 2. - 280.,
+                VIRTUAL_HEIGHT - 92.,
+                32.,
+                WHITE,
+            );
+        }
+        draw_text(
+            "WASD = Move | K = Reset Level",
+            VIRTUAL_WIDTH / 2. - 200.,
+            VIRTUAL_HEIGHT - 48.,
+            32.,
+            WHITE,
+        );
+        draw_text(self.level.name.as_str(), 48., 32., 32., WHITE);
+        draw_text(
+            format!("Steps: {} | Pushes: {}", self.steps, self.pushes).as_str(),
+            48.,
+            72.,
+            32.,
+            WHITE,
+        );
     }
 }
 

@@ -1,6 +1,8 @@
 pub mod audio;
 pub mod consts;
+pub mod context;
 pub mod draw;
+pub mod entity;
 pub mod input;
 pub mod level;
 pub mod texture;
