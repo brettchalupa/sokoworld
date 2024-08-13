@@ -8,7 +8,7 @@ use crate::{context::Context, draw::draw_tile, texture::TextureAtlas, vec2::Vec2
 
 #[derive(Debug, Clone)]
 pub struct Level {
-    pub name: String,
+    pub title: String,
     pub walls: Vec<Vec2>,
     pub crates: Vec<Vec2>,
     pub storage_locations: Vec<Vec2>,
@@ -29,8 +29,8 @@ pub struct PlayableLevel {
 }
 
 impl PlayableLevel {
-    pub async fn load(name: &str) -> Self {
-        let level = Level::load(name).await.unwrap();
+    pub fn load(pack_level: &PackLevel) -> Self {
+        let level = Level::load(pack_level).unwrap();
         let player = Entity { pos: level.player };
         let mut crates: Vec<Entity> = vec![];
 
@@ -166,7 +166,7 @@ impl PlayableLevel {
             32.,
             WHITE,
         );
-        draw_text(self.level.name.as_str(), 48., 32., 32., WHITE);
+        draw_text(self.level.title.as_str(), 48., 32., 32., WHITE);
         draw_text(
             format!("Steps: {} | Pushes: {}", self.steps, self.pushes).as_str(),
             48.,
@@ -180,11 +180,8 @@ impl PlayableLevel {
 impl Level {
     /// loads a level from the specified file
     /// panics if the file can't be found
-    pub async fn load(level_name: &str) -> Result<Self, macroquad::Error> {
-        let data = macroquad::file::load_string(format!("assets/{}.txt", level_name).as_str())
-            .await
-            .expect("Unable to read file");
-        let rows = data.lines();
+    pub fn load(pack_level: &PackLevel) -> Result<Self, macroquad::Error> {
+        let rows = pack_level.data.lines();
         let mut walls = vec![];
         let mut crates = vec![];
         let mut storage_locations = vec![];
@@ -229,7 +226,7 @@ impl Level {
         }
 
         Ok(Self {
-            name: level_name.to_owned(),
+            title: pack_level.title.clone(),
             walls,
             crates,
             storage_locations,
@@ -252,4 +249,26 @@ impl Level {
             draw_tile(&texture_atlas.ground, ground, offset);
         }
     }
+}
+
+use serde::Deserialize;
+
+/// a collection of levels
+#[derive(Debug, Deserialize)]
+pub struct Pack {
+    pub title: String,
+    pub description: String,
+    pub author: String,
+    pub license: String,
+    pub year: i32,
+    pub levels: Vec<PackLevel>,
+    pub version: String,
+}
+/// a level defined in a pack file
+#[derive(Debug, Deserialize)]
+pub struct PackLevel {
+    /// name of the level
+    pub title: String,
+    /// grid of the puzzle's elements
+    pub data: String,
 }

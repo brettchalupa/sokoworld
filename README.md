@@ -2,8 +2,19 @@
 
 Free and open source Sokoban client
 
-See [level-format.txt](./level-format.txt) for the meaning of characters in the
-level files.
+## Defining Levels
+
+Levels are collected in Packs, which are
+[TOML](https://toml.io/en/) files that describe the pack and
+the data for each level within it.
+
+The benefit of using TOML is that it's much more human readable
+than XML but provides a bit of structure and mark-up. It
+strikes a nice balance of easy to map to data structures while
+also being human editable.
+
+See [level-format.txt](./level-format.txt) for the meaning of
+characters in the level files.
 
 ## Dev Tools
 

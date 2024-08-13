@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 use sokoworld::consts::*;
 use sokoworld::context::Context;
-use sokoworld::level::PlayableLevel;
+use sokoworld::level::{Pack, PlayableLevel};
 
 fn window_conf() -> Conf {
     Conf {
@@ -22,16 +22,17 @@ async fn main() {
 
     let args: Vec<String> = std::env::args().collect();
 
-    // TODO: move away from indices and just use the level names + load from asset dir or some
-    // other piece of data (maybe at compile time?)
-    let levels = ["level1", "level2", "level3", "level4", "level5", "level6"];
     let mut level_index = 0;
     if let Some(arg) = args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
         level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
         level_index -= 1;
     };
 
-    let mut current_level = PlayableLevel::load(levels[level_index]).await;
+    let level_pack_str = macroquad::file::load_string("assets/pack-a.toml")
+        .await
+        .expect("Unable to read file");
+    let pack: Pack = toml::from_str(level_pack_str.as_str()).unwrap();
+    let mut current_level = PlayableLevel::load(&pack.levels.get(level_index).unwrap());
 
     loop {
         ///////// UPDATE
@@ -47,11 +48,11 @@ async fn main() {
         if ctx.load_next_level {
             ctx.load_next_level = false;
             level_index += 1;
-            if level_index >= levels.len() {
+            if level_index >= pack.levels.len() {
                 level_index = 0;
             }
 
-            current_level = PlayableLevel::load(levels[level_index]).await;
+            current_level = PlayableLevel::load(&pack.levels.get(level_index).unwrap());
         }
 
         ///////// DRAW

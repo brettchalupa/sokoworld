@@ -1,0 +1,70 @@
+title = "Pack A: Starting Out"
+description = "Simple levels to learn the rules of Sokoban."
+author = "Brett Chalupa"
+license = "CC0 (Public Domain)"
+year = 2024
+version = "0.1"
+
+[[levels]]
+title = "Level 1"
+data = '''
+#####
+#@$.#
+#####
+'''
+
+[[levels]]
+title = "Level 2"
+data = '''
+######
+#    #
+#    #
+#@$#.#
+#    #
+######
+'''
+
+[[levels]]
+title = "Level 3"
+data = '''
+#######
+#-----#
+#@$$.-#
+#--.--#
+#######
+'''
+
+[[levels]]
+title = "Level 4"
+data = '''
+#######
+#     #
+#     #
+#@$$. #
+## .  #
+#######
+'''
+
+[[levels]]
+title = "Level 5"
+data = '''
+#######
+##   ##
+#  $  #
+# $   #
+#@$$  #
+##....#
+#######
+'''
+
+[[levels]]
+title = "Level 6"
+data = '''
+########
+#.#.#.##
+#      #
+#   #  #
+# $$$  #
+#     @#
+########
+'''
