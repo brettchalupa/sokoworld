@@ -32,7 +32,7 @@ async fn main() {
         .await
         .expect("Unable to read file");
     let pack: Pack = toml::from_str(level_pack_str.as_str()).unwrap();
-    let mut current_level = PlayableLevel::load(&pack.levels.get(level_index).unwrap());
+    let mut current_level = PlayableLevel::load(pack.levels.get(level_index).unwrap());
 
     loop {
         ///////// UPDATE
@@ -52,7 +52,7 @@ async fn main() {
                 level_index = 0;
             }
 
-            current_level = PlayableLevel::load(&pack.levels.get(level_index).unwrap());
+            current_level = PlayableLevel::load(pack.levels.get(level_index).unwrap());
         }
 
         ///////// DRAW
