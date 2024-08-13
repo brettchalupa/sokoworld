@@ -14,6 +14,8 @@ pub struct Level {
     pub storage_locations: Vec<Vec2>,
     pub grounds: Vec<Vec2>,
     pub player: Vec2,
+    pub width: usize,
+    pub height: usize,
 }
 
 /// wraps the static level data and keeps track of player's progress
@@ -138,10 +140,14 @@ impl PlayableLevel {
     }
 
     pub fn draw(&mut self, ctx: &mut Context) {
-        self.level.draw(&ctx.textures);
-        draw_tile(&ctx.textures.player, &self.player.pos);
+        let offset = Vec2 {
+            x: (VIRTUAL_WIDTH as i32 - (self.level.width as i32 * TILE_SIZE)) / 2,
+            y: (VIRTUAL_HEIGHT as i32 - (self.level.height as i32 * TILE_SIZE)) / 2,
+        };
+        self.level.draw(&ctx.textures, &offset);
+        draw_tile(&ctx.textures.player, &self.player.pos, &offset);
         for c in &self.crates {
-            draw_tile(&ctx.textures.krate, &c.pos);
+            draw_tile(&ctx.textures.krate, &c.pos, &offset);
         }
 
         if self.complete {
@@ -184,8 +190,14 @@ impl Level {
         let mut storage_locations = vec![];
         let mut grounds = vec![];
         let mut player = Vec2 { x: 0, y: 0 };
+        let mut width = 0;
+        let height = rows.clone().count();
 
         for (y, row) in rows.enumerate() {
+            let row_width = row.chars().count();
+            if row_width > width {
+                width = row_width;
+            }
             for (x, c) in row.chars().enumerate() {
                 let pos = Vec2 {
                     x: x as i32,
@@ -223,19 +235,21 @@ impl Level {
             storage_locations,
             grounds,
             player,
+            width,
+            height,
         })
     }
 
     /// draws the static elements of a level (everything except player and boxes)
-    pub fn draw(&self, texture_atlas: &TextureAtlas) {
+    pub fn draw(&self, texture_atlas: &TextureAtlas, offset: &Vec2) {
         for wall in &self.walls {
-            draw_tile(&texture_atlas.wall, wall);
+            draw_tile(&texture_atlas.wall, wall, offset);
         }
         for storage_location in &self.storage_locations {
-            draw_tile(&texture_atlas.storage_location, storage_location);
+            draw_tile(&texture_atlas.storage_location, storage_location, offset);
         }
         for ground in &self.grounds {
-            draw_tile(&texture_atlas.ground, ground);
+            draw_tile(&texture_atlas.ground, ground, offset);
         }
     }
 }
