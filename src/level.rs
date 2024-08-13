@@ -97,6 +97,7 @@ impl PlayableLevel {
                         self.crates.iter().find(|c| c.pos == new_crate_pos);
 
                     if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
+                        self.move_player_to(&new_player_pos);
                         move_crate = true;
                     }
                 }
@@ -105,8 +106,7 @@ impl PlayableLevel {
                         self.level.walls.iter().find(|w| *w == &new_player_pos);
                     match wall_at_new_player_pos {
                         None => {
-                            self.player.pos = new_player_pos;
-                            self.steps += 1;
+                            self.move_player_to(&new_player_pos);
                         }
                         Some(_) => (),
                     };
@@ -174,6 +174,11 @@ impl PlayableLevel {
             32.,
             WHITE,
         );
+    }
+
+    fn move_player_to(&mut self, new_pos: &Vec2) {
+        self.player.pos = *new_pos;
+        self.steps += 1;
     }
 }
 
