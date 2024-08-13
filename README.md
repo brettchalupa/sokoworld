@@ -1,4 +1,4 @@
-# Sokoworld
+# SokoWorld
 
 Free and open source Sokoban client
 

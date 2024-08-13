@@ -5,7 +5,7 @@ use sokoworld::level::{Pack, PlayableLevel};
 
 fn window_conf() -> Conf {
     Conf {
-        window_title: String::from("Sokoworld"),
+        window_title: String::from("SokoWorld"),
         window_width: 1280,
         window_height: 720,
         fullscreen: false,
