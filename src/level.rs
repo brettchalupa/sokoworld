@@ -233,7 +233,7 @@ impl PlayableLevel {
             ctx,
             self.level.title.as_str(),
             48.,
-            52.,
+            62.,
             crate::text::Size::Large,
             WHITE,
         );
@@ -241,7 +241,7 @@ impl PlayableLevel {
             ctx,
             format!("Steps: {} | Pushes: {}", self.steps, self.pushes).as_str(),
             48.,
-            92.,
+            112.,
             crate::text::Size::Medium,
             WHITE,
         );
