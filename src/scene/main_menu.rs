@@ -96,10 +96,10 @@ impl Scene for MainMenu {
 }
 
 impl MainMenu {
-    pub async fn new(_ctx: &mut Context) -> Self {
+    pub async fn new(ctx: &mut Context) -> Self {
         let packs = vec![
-            Pack::load("assets/pack-a.toml").await,
-            Pack::load("assets/yoshio-murase-automatic.toml").await,
+            Pack::load(ctx, "assets/pack-a.toml").await,
+            Pack::load(ctx, "assets/yoshio-murase-automatic.toml").await,
         ];
 
         Self {

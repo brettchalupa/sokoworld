@@ -23,6 +23,12 @@ pub struct Context {
     pub load_next_level: bool,
     pub tileset: tile::Tileset,
     pub switch_scene_to: Option<EScene>,
+    /// whether or not to reload the level from disk at the end of the current game loop
+    pub reload_level: bool,
+    /// what pack is currently being played, if any. needed for reloading from disk
+    pub current_pack_file: Option<String>,
+    /// what level is currently being played, if any. needed for reloading from disk
+    pub current_level_index: Option<usize>,
 }
 
 impl Context {
@@ -43,9 +49,12 @@ impl Context {
             fonts: font::FontAtlas::new().await,
             render_target,
             load_next_level: false,
+            reload_level: false,
             render_target_cam,
             tileset: tile::Tileset::Retro,
             switch_scene_to: None,
+            current_pack_file: None,
+            current_level_index: None,
         }
     }
 

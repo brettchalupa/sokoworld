@@ -18,6 +18,8 @@ characters in the level files.
 
 ## Dev Tools
 
+### Play a Specific Level
+
 Run a specific pack and level with:
 
 ```console
@@ -25,6 +27,10 @@ cargo run -- -p=assets/yoshio-murase-automatic.toml -l=2
 ```
 
 where `-p=` is the path to the level pack and `-l=` is the number of level in the levels table.
+
+### Reload the Current Level from Disk
+
+Press the <kbd>9</kbd> key to reload the current level from disk. This is useful for iterating on the design of a level.
 
 ## Dev Notes
 
