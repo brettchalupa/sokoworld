@@ -1,11 +1,25 @@
 use serde::Deserialize;
+use std::fmt;
 
 use crate::context::Context;
 
+#[derive(Debug, Deserialize, Clone)]
 pub enum Difficulty {
     Easy,
     Medium,
     Hard,
+}
+
+impl fmt::Display for Difficulty {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match self {
+            Difficulty::Easy => "Easy".to_string(),
+            Difficulty::Medium => "Medium".to_string(),
+            Difficulty::Hard => "Hard".to_string(),
+        };
+
+        write!(f, "{}", name)
+    }
 }
 
 /// a collection of levels
@@ -24,7 +38,7 @@ pub struct Pack {
     /// file path of where the Pack is located
     pub file: Option<String>,
     /// the general difficulty level of the pack
-    pub difficulty: String,
+    pub difficulty: Difficulty,
 }
 
 /// a level defined in a pack file
