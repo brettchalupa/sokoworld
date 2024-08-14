@@ -1,7 +1,7 @@
 use super::{EScene, Scene};
 use crate::context::Context;
 use crate::level::pack::PackLevel;
-use crate::level::{pack::Pack, PlayableLevel};
+use crate::level::{pack::Pack, playable_level::PlayableLevel};
 
 pub struct Gameplay {
     level: PlayableLevel,
