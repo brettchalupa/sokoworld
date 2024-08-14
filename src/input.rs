@@ -8,6 +8,7 @@ pub enum Action {
     Left,
     Right,
     Confirm,
+    Cancel,
     Reset,
 }
 
@@ -24,6 +25,7 @@ fn keyboard_pressed(action: &Action) -> bool {
         Action::Right => is_key_pressed(KeyCode::D) || is_key_pressed(KeyCode::Right),
         Action::Reset => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::Z),
         Action::Confirm => is_key_pressed(KeyCode::J) || is_key_pressed(KeyCode::X),
+        Action::Cancel => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::Z),
     }
 }
 
@@ -45,6 +47,9 @@ fn gamepad_pressed(action: &Action, gamepads: &Gamepads) -> bool {
         Action::Confirm => gamepads
             .all()
             .any(|g| g.is_just_pressed(gamepads::Button::ActionDown)),
+        Action::Cancel => gamepads
+            .all()
+            .any(|g| g.is_just_pressed(gamepads::Button::ActionRight)),
         Action::Reset => gamepads
             .all()
             .any(|g| g.is_just_pressed(gamepads::Button::ActionUp)),

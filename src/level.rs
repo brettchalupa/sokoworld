@@ -28,6 +28,7 @@ pub struct Level {
 }
 
 /// wraps the static level data and keeps track of player's progress
+#[derive(Clone, Debug)]
 pub struct PlayableLevel {
     pub complete: bool,
     pub steps: i32,

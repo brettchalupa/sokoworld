@@ -31,7 +31,7 @@ impl Scene for MainMenu {
                 .packs
                 .get(self.focused_pack_index as usize)
                 .expect("pack index not present in loaded packs");
-            ctx.switch_scene_to = Some(EScene::Gameplay(pack.to_owned()));
+            ctx.switch_scene_to = Some(EScene::LevelSelect(pack.to_owned()));
         }
     }
     fn draw(&mut self, _ctx: &mut Context) {
@@ -52,7 +52,7 @@ impl Scene for MainMenu {
         }
 
         draw_text(
-            "Press [Confirm] to start",
+            "Press [Confirm] to select level pack",
             VIRTUAL_WIDTH / 2. - 180.,
             VIRTUAL_HEIGHT - 120.,
             32.,

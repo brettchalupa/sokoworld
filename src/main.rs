@@ -2,6 +2,7 @@ use macroquad::prelude::*;
 use sokoworld::consts::*;
 use sokoworld::context::Context;
 use sokoworld::scene::gameplay::Gameplay;
+use sokoworld::scene::level_select::LevelSelect;
 use sokoworld::scene::EScene;
 use sokoworld::scene::{main_menu::MainMenu, Scene};
 
@@ -68,7 +69,12 @@ async fn main() {
         if let Some(escene) = ctx.switch_scene_to.clone() {
             current_scene = match escene {
                 EScene::MainMenu => Box::new(MainMenu::new(&mut ctx).await),
-                EScene::Gameplay(pack) => Box::new(Gameplay::new(&mut ctx, pack.clone()).await),
+                EScene::LevelSelect(pack) => {
+                    Box::new(LevelSelect::new(&mut ctx, pack.clone()).await)
+                }
+                EScene::Gameplay(level, level_index, pack) => Box::new(
+                    Gameplay::new(&mut ctx, level.clone(), level_index, pack.clone()).await,
+                ),
             };
             ctx.switch_scene_to = None;
         }
