@@ -1,15 +1,15 @@
 /// enum of various scenes that exist
 // not sure if there's a better way to do this...
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub enum EScene {
-    Gameplay,
+    Gameplay(Pack),
     MainMenu,
     // Settings,
     // Pause,
     // HowToPlay,
 }
 
-use crate::context::Context;
+use crate::{context::Context, level::pack::Pack};
 
 pub mod gameplay;
 pub mod main_menu;

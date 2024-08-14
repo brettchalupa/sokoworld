@@ -11,6 +11,10 @@ use crate::{
     vec2::Vec2,
 };
 
+use self::pack::PackLevel;
+
+pub mod pack;
+
 #[derive(Debug, Clone)]
 pub struct Level {
     pub title: String,
@@ -304,26 +308,4 @@ impl Level {
             draw_tile(ctx, Tile::Ground, ground, offset);
         }
     }
-}
-
-use serde::Deserialize;
-
-/// a collection of levels
-#[derive(Debug, Deserialize)]
-pub struct Pack {
-    pub title: String,
-    pub description: String,
-    pub author: String,
-    pub license: String,
-    pub year: i32,
-    pub levels: Vec<PackLevel>,
-    pub version: String,
-}
-/// a level defined in a pack file
-#[derive(Debug, Deserialize)]
-pub struct PackLevel {
-    /// name of the level
-    pub title: String,
-    /// grid of the puzzle's elements
-    pub data: String,
 }
