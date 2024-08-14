@@ -4,6 +4,7 @@ pub mod context;
 pub mod entity;
 pub mod input;
 pub mod level;
+pub mod scene;
 pub mod texture;
 pub mod tile;
 pub mod vec2;

@@ -1,7 +1,9 @@
 use macroquad::prelude::*;
 use sokoworld::consts::*;
 use sokoworld::context::Context;
-use sokoworld::level::{Pack, PlayableLevel};
+use sokoworld::scene::gameplay::Gameplay;
+use sokoworld::scene::EScene;
+use sokoworld::scene::{main_menu::MainMenu, Scene};
 
 fn window_conf() -> Conf {
     Conf {
@@ -19,24 +21,7 @@ async fn main() {
     let mut ctx = Context {
         ..Context::default().await
     };
-
-    let args: Vec<String> = std::env::args().collect();
-
-    let mut level_index = 0;
-    if let Some(arg) = args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
-        level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
-        level_index -= 1;
-    };
-    let mut pack_file = "assets/pack-a.toml";
-    if let Some(arg) = args.iter().find(|arg| arg.starts_with(PACK_CLI_ARG)) {
-        pack_file = arg.split(PACK_CLI_ARG).last().unwrap();
-    };
-
-    let level_pack_str = macroquad::file::load_string(pack_file)
-        .await
-        .expect("Unable to read file");
-    let pack: Pack = toml::from_str(level_pack_str.as_str()).unwrap();
-    let mut current_level = PlayableLevel::load(pack.levels.get(level_index).unwrap());
+    let mut current_scene: Box<dyn Scene> = Box::new(MainMenu::new(&mut ctx).await);
 
     loop {
         ///////// UPDATE
@@ -46,25 +31,14 @@ async fn main() {
         }
 
         ctx.gamepads.poll();
-
-        current_level.update(&mut ctx);
-
-        if ctx.load_next_level {
-            ctx.load_next_level = false;
-            level_index += 1;
-            if level_index >= pack.levels.len() {
-                level_index = 0;
-            }
-
-            current_level = PlayableLevel::load(pack.levels.get(level_index).unwrap());
-        }
+        current_scene.update(&mut ctx);
 
         ///////// DRAW
 
         // render target drawing
         set_camera(&ctx.render_target_cam);
         clear_background(DARKGRAY);
-        current_level.draw(&mut ctx);
+        current_scene.draw(&mut ctx);
 
         // regular drawing
         set_default_camera();
@@ -89,6 +63,14 @@ async fn main() {
 
         if ctx.request_quit {
             break;
+        }
+
+        if let Some(escene) = ctx.switch_scene_to {
+            current_scene = match escene {
+                EScene::MainMenu => Box::new(MainMenu::new(&mut ctx).await),
+                EScene::Gameplay => Box::new(Gameplay::new(&mut ctx).await),
+            };
+            ctx.switch_scene_to = None;
         }
 
         next_frame().await

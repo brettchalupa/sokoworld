@@ -1,5 +1,6 @@
 use crate::audio;
 use crate::consts::*;
+use crate::scene::EScene;
 use crate::texture;
 use crate::tile;
 use gamepads::Gamepads;
@@ -19,6 +20,7 @@ pub struct Context {
     pub render_target_cam: Camera2D,
     pub load_next_level: bool,
     pub tileset: tile::Tileset,
+    pub switch_scene_to: Option<EScene>,
 }
 
 impl Context {
@@ -40,6 +42,7 @@ impl Context {
             load_next_level: false,
             render_target_cam,
             tileset: tile::Tileset::Retro,
+            switch_scene_to: None,
         }
     }
 
