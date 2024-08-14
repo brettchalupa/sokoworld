@@ -49,6 +49,13 @@ impl Scene for MainMenu {
 
             draw_text(pack.title.as_str(), title_x, title_y, 32., color);
             draw_text(pack.author.as_str(), title_x, title_y + 24., 24., color);
+            draw_text(
+                format!("{} levels", pack.levels.len()).as_str(),
+                title_x,
+                title_y + 48.,
+                24.,
+                color,
+            );
         }
 
         draw_text(
