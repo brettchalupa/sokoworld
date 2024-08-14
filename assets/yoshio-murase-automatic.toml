@@ -1,0 +1,34 @@
+title = "Yoshio Murase Auto"
+description = "These sokoban screens were made automatically by computer. Yosio Murase wrote the program that created these levels and then made the levels available on his sokoban web pages."
+source = "http://sneezingtiger.com/sokoban/levels/yoshioText.html"
+author = "Yoshio Murase"
+license = "Copyright Yoshio Murase"
+difficulty = "hard"
+year = 1996
+version = "0.1" # will make them 1.0 when the whole pack is included
+
+# Walls slightly edited for how the game renders levels
+
+[[levels]]
+title = "Level 1"
+data = '''
+#######
+##  . #
+# * # #
+# .$  #
+#  #$##
+## @ ##
+#######
+'''
+
+[[levels]]
+title = "Level 2"
+data = '''
+#######
+#  .@ #
+# #.# #
+#   $ #
+#.$$ ##
+#  ###
+####
+'''

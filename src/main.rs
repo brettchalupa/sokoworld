@@ -27,8 +27,12 @@ async fn main() {
         level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
         level_index -= 1;
     };
+    let mut pack_file = "assets/pack-a.toml";
+    if let Some(arg) = args.iter().find(|arg| arg.starts_with(PACK_CLI_ARG)) {
+        pack_file = arg.split(PACK_CLI_ARG).last().unwrap();
+    };
 
-    let level_pack_str = macroquad::file::load_string("assets/pack-a.toml")
+    let level_pack_str = macroquad::file::load_string(pack_file)
         .await
         .expect("Unable to read file");
     let pack: Pack = toml::from_str(level_pack_str.as_str()).unwrap();

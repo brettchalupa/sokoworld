@@ -2,6 +2,7 @@ title = "Pack A: Starting Out"
 description = "Simple levels to learn the rules of Sokoban."
 author = "Brett Chalupa"
 license = "CC0 (Public Domain)"
+difficulty = "easy"
 year = 2024
 version = "0.1"
 
