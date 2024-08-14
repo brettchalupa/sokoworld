@@ -62,6 +62,22 @@ impl PlayableLevel {
     }
 
     pub fn reset(&mut self) {
+        self.player.pos = self.level.player;
+        for (i, c) in self.crates.iter_mut().enumerate() {
+            c.pos = *self.level.crates.get(i).unwrap();
+
+            if self
+                .level
+                .storage_locations
+                .clone() // idk if cloning is right here
+                .into_iter()
+                .any(|sl| sl == c.pos)
+            {
+                c.on_storage_location = true
+            } else {
+                c.on_storage_location = false
+            }
+        }
         self.steps = 0;
         self.pushes = 0;
         self.complete = false;
@@ -70,10 +86,6 @@ impl PlayableLevel {
     pub fn update(&mut self, ctx: &mut Context) {
         if input::action_pressed(input::Action::Reset, &ctx.gamepads) {
             self.reset();
-            self.player.pos = self.level.player;
-            for (i, c) in self.crates.iter_mut().enumerate() {
-                c.pos = *self.level.crates.get(i).unwrap();
-            }
             macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
         }
 
@@ -146,6 +158,7 @@ impl PlayableLevel {
                 self.pushes += 1;
                 macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
 
+                // TODO: DRY up since this check exists elsewhere
                 if self
                     .level
                     .storage_locations
