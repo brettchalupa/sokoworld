@@ -4,7 +4,7 @@ use macroquad::input::is_key_pressed;
 use macroquad::text::draw_text;
 
 use crate::consts::*;
-use crate::entity::Entity;
+use crate::entity::{Crate, Entity};
 use crate::{
     context::Context,
     tile::{draw_tile, Tile},
@@ -30,17 +30,25 @@ pub struct PlayableLevel {
     pub pushes: i32,
     pub level: Level,
     pub player: Entity,
-    pub crates: Vec<Entity>,
+    pub crates: Vec<Crate>,
 }
 
 impl PlayableLevel {
     pub fn load(pack_level: &PackLevel) -> Self {
         let level = Level::load(pack_level).unwrap();
         let player = Entity { pos: level.player };
-        let mut crates: Vec<Entity> = vec![];
+        let mut crates: Vec<Crate> = vec![];
 
         for pos in &level.crates {
-            crates.push(Entity { pos: *pos });
+            let on_storage_location = level
+                .storage_locations
+                .clone()
+                .into_iter()
+                .any(|sl| sl == *pos);
+            crates.push(Crate {
+                pos: *pos,
+                on_storage_location,
+            });
         }
 
         Self {
@@ -137,6 +145,18 @@ impl PlayableLevel {
                 c.pos = new_crate_pos;
                 self.pushes += 1;
                 macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
+
+                if self
+                    .level
+                    .storage_locations
+                    .clone() // idk if cloning is right here
+                    .into_iter()
+                    .any(|sl| sl == c.pos)
+                {
+                    c.on_storage_location = true
+                } else {
+                    c.on_storage_location = false
+                }
             }
 
             if self.crates.iter().all(|c| {
@@ -160,7 +180,11 @@ impl PlayableLevel {
         self.level.draw(ctx, &offset);
         draw_tile(ctx, Tile::Player, &self.player.pos, &offset);
         for c in &self.crates {
-            draw_tile(ctx, Tile::Crate, &c.pos, &offset);
+            let t = match c.on_storage_location {
+                true => Tile::CrateOnStorageLocation,
+                false => Tile::Crate,
+            };
+            draw_tile(ctx, t, &c.pos, &offset);
         }
 
         if self.complete {
