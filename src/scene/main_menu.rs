@@ -59,7 +59,7 @@ impl Scene for MainMenu {
         }
 
         draw_text(
-            "Press [Confirm] to select level pack",
+            "Press Z to select level pack",
             VIRTUAL_WIDTH / 2. - 180.,
             VIRTUAL_HEIGHT - 120.,
             32.,

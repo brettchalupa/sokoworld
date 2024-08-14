@@ -207,7 +207,7 @@ impl PlayableLevel {
 
         if self.complete {
             draw_text(
-                "Nice job! Press J to go to next level.",
+                "Nice job! Press X to go to next level.",
                 VIRTUAL_WIDTH / 2. - 280.,
                 VIRTUAL_HEIGHT - 92.,
                 32.,
@@ -215,7 +215,7 @@ impl PlayableLevel {
             );
         }
         draw_text(
-            "WASD = Move | K = Reset Level",
+            "Arrow Keys = Move | X = Reset Level",
             VIRTUAL_WIDTH / 2. - 200.,
             VIRTUAL_HEIGHT - 48.,
             32.,

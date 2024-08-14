@@ -67,7 +67,7 @@ impl Scene for LevelSelect {
         }
 
         draw_text(
-            "Press [Confirm] to select level",
+            "Press Z to select level",
             VIRTUAL_WIDTH / 2. - 180.,
             VIRTUAL_HEIGHT - 120.,
             32.,

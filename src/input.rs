@@ -23,9 +23,9 @@ fn keyboard_pressed(action: &Action) -> bool {
         Action::Down => is_key_pressed(KeyCode::S) || is_key_pressed(KeyCode::Down),
         Action::Left => is_key_pressed(KeyCode::A) || is_key_pressed(KeyCode::Left),
         Action::Right => is_key_pressed(KeyCode::D) || is_key_pressed(KeyCode::Right),
-        Action::Reset => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::Z),
-        Action::Confirm => is_key_pressed(KeyCode::J) || is_key_pressed(KeyCode::X),
-        Action::Cancel => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::Z),
+        Action::Reset => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::X),
+        Action::Confirm => is_key_pressed(KeyCode::J) || is_key_pressed(KeyCode::Z),
+        Action::Cancel => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::X),
     }
 }
 
