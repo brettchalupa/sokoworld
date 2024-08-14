@@ -1,4 +1,5 @@
 use super::{EScene, Scene};
+use crate::audio::play_sfx;
 use crate::consts::*;
 use crate::context::Context;
 use crate::input::{action_pressed, Action};
@@ -14,12 +15,14 @@ pub struct LevelSelect {
 impl Scene for LevelSelect {
     fn update(&mut self, ctx: &mut Context) {
         if action_pressed(Action::Left, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_level_index -= 1;
             if self.focused_level_index < 0 {
                 self.focused_level_index = (self.pack.levels.len() - 1) as i32;
             }
         }
         if action_pressed(Action::Right, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_level_index += 1;
             if self.focused_level_index > (self.pack.levels.len() - 1) as i32 {
                 self.focused_level_index = 0;
@@ -27,6 +30,7 @@ impl Scene for LevelSelect {
         }
 
         if action_pressed(Action::Confirm, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_select);
             let level = self
                 .pack
                 .levels
@@ -40,6 +44,7 @@ impl Scene for LevelSelect {
         }
 
         if action_pressed(Action::Cancel, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_cancel);
             ctx.switch_scene_to = Some(EScene::MainMenu);
         }
     }

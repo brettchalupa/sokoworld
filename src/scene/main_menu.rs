@@ -1,4 +1,5 @@
 use super::{EScene, Scene};
+use crate::audio::play_sfx;
 use crate::consts::*;
 use crate::context::Context;
 use crate::input::{action_pressed, Action};
@@ -14,12 +15,14 @@ pub struct MainMenu {
 impl Scene for MainMenu {
     fn update(&mut self, ctx: &mut Context) {
         if action_pressed(Action::Left, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_pack_index -= 1;
             if self.focused_pack_index < 0 {
                 self.focused_pack_index = (self.packs.len() - 1) as i32;
             }
         }
         if action_pressed(Action::Right, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_pack_index += 1;
             if self.focused_pack_index > (self.packs.len() - 1) as i32 {
                 self.focused_pack_index = 0;
@@ -27,6 +30,7 @@ impl Scene for MainMenu {
         }
 
         if action_pressed(Action::Confirm, &ctx.gamepads) {
+            play_sfx(ctx, &ctx.audio.sfx.menu_select);
             let pack = self
                 .packs
                 .get(self.focused_pack_index as usize)

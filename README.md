@@ -44,3 +44,12 @@ WASM builds can be built and pushed by running:
 ```
 
 Ideally in the future this would push builds for desktop operating systems, create tags, etc., but this works for development.
+
+## Credits
+
+- Programming: Brett Chalupa
+- Sprites
+  - Kenney set: [kenney.nl](https://kenney.nl) (CC0)
+  - Retro set: Brett Chalupa
+- Sound Effects
+  - melos: Melos Han-Tani of Analgesic Productions (non-commercial usage)

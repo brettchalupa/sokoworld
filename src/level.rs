@@ -1,3 +1,4 @@
+use crate::audio::play_sfx;
 use crate::input;
 use crate::text::draw_text;
 use macroquad::color::WHITE;
@@ -91,7 +92,7 @@ impl PlayableLevel {
     pub fn update(&mut self, ctx: &mut Context) {
         if input::action_pressed(input::Action::Reset, &ctx.gamepads) {
             self.reset();
-            macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
+            play_sfx(ctx, &ctx.audio.sfx.reset);
         }
 
         // TODO: move to a game setting
@@ -135,8 +136,10 @@ impl PlayableLevel {
                         self.crates.iter().find(|c| c.pos == new_crate_pos);
 
                     if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
-                        self.move_player_to(&new_player_pos);
+                        self.move_player_to(ctx, &new_player_pos);
                         move_crate = true;
+                    } else {
+                        play_sfx(ctx, &ctx.audio.sfx.cant_move);
                     }
                 }
                 None => {
@@ -144,9 +147,11 @@ impl PlayableLevel {
                         self.level.walls.iter().find(|w| *w == &new_player_pos);
                     match wall_at_new_player_pos {
                         None => {
-                            self.move_player_to(&new_player_pos);
+                            self.move_player_to(ctx, &new_player_pos);
                         }
-                        Some(_) => (),
+                        Some(_) => {
+                            play_sfx(ctx, &ctx.audio.sfx.cant_move);
+                        }
                     };
                 }
             };
@@ -161,7 +166,7 @@ impl PlayableLevel {
                 let new_crate_pos = c.pos.clone().add(move_player).to_owned();
                 c.pos = new_crate_pos;
                 self.pushes += 1;
-                macroquad::audio::play_sound_once(&ctx.audio.sfx.push);
+                play_sfx(ctx, &ctx.audio.sfx.push);
 
                 // TODO: DRY up since this check exists elsewhere
                 if self
@@ -171,9 +176,10 @@ impl PlayableLevel {
                     .into_iter()
                     .any(|sl| sl == c.pos)
                 {
-                    c.on_storage_location = true
+                    c.on_storage_location = true;
+                    play_sfx(ctx, &ctx.audio.sfx.crate_on_storage_location);
                 } else {
-                    c.on_storage_location = false
+                    c.on_storage_location = false;
                 }
             }
 
@@ -184,7 +190,7 @@ impl PlayableLevel {
                     .into_iter()
                     .any(|sl| sl == c.pos)
             }) {
-                macroquad::audio::play_sound_once(&ctx.audio.sfx.level_complete);
+                play_sfx(ctx, &ctx.audio.sfx.level_complete);
                 self.complete = true;
             }
         }
@@ -241,7 +247,8 @@ impl PlayableLevel {
         );
     }
 
-    fn move_player_to(&mut self, new_pos: &Vec2) {
+    fn move_player_to(&mut self, ctx: &Context, new_pos: &Vec2) {
+        play_sfx(ctx, &ctx.audio.sfx.footstep);
         self.player.pos = *new_pos;
         self.steps += 1;
     }
