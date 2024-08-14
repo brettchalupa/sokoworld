@@ -26,7 +26,8 @@ pub struct PlayableLevel {
 }
 
 impl PlayableLevel {
-    pub fn load(pack_level: &PackLevel) -> Self {
+    /// creates a new playable level with properly reset data from the specified pack_level
+    pub fn new(pack_level: &PackLevel) -> Self {
         let level = Level::parse(pack_level).unwrap();
         let player = Entity { pos: level.player };
         let mut crates: Vec<Crate> = vec![];

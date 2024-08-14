@@ -19,7 +19,7 @@ impl Scene for Gameplay {
             if self.level_index >= self.pack.levels.len() {
                 ctx.switch_scene_to = Some(EScene::LevelSelect(self.pack.clone()));
             } else {
-                self.level = PlayableLevel::load(self.pack.levels.get(self.level_index).unwrap());
+                self.level = PlayableLevel::new(self.pack.levels.get(self.level_index).unwrap());
             }
         }
     }
@@ -32,7 +32,7 @@ impl Scene for Gameplay {
 impl Gameplay {
     // TODO: determine level_index dynamically based on where level is in the pack
     pub async fn new(_ctx: &mut Context, level: PackLevel, level_index: usize, pack: Pack) -> Self {
-        let level = PlayableLevel::load(&level);
+        let level = PlayableLevel::new(&level);
         Self {
             level_index,
             level,
