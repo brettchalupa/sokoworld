@@ -18,11 +18,13 @@ characters in the level files.
 
 ## Dev Tools
 
-Run a specific level with:
+Run a specific pack and level with:
 
 ```console
-cargo run -- -l=4
+cargo run -- -p=assets/yoshio-murase-automatic.toml -l=2
 ```
+
+where `-p=` is the path to the level pack and `-l=` is the number of level in the levels table.
 
 ## Dev Notes
 

@@ -1,6 +1,7 @@
 use macroquad::prelude::*;
 use sokoworld::consts::*;
 use sokoworld::context::Context;
+use sokoworld::level::pack::Pack;
 use sokoworld::scene::gameplay::Gameplay;
 use sokoworld::scene::level_select::LevelSelect;
 use sokoworld::scene::EScene;
@@ -22,7 +23,25 @@ async fn main() {
     let mut ctx = Context {
         ..Context::default().await
     };
-    let mut current_scene: Box<dyn Scene> = Box::new(MainMenu::new(&mut ctx).await);
+
+    let mut current_scene: Box<dyn Scene>;
+
+    // load pack & level from arg for quick testing, otherwise boot to main menu
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(arg) = args.iter().find(|arg| arg.starts_with(PACK_CLI_ARG)) {
+        let pack_file = arg.split(PACK_CLI_ARG).last().unwrap();
+        let pack = Pack::load(pack_file).await;
+
+        let mut level_index = 0;
+        if let Some(arg) = args.iter().find(|arg| arg.starts_with(LEVEL_CLI_ARG)) {
+            level_index = arg.split(LEVEL_CLI_ARG).last().unwrap().parse().unwrap();
+            level_index -= 1;
+        };
+        let level = pack.levels.get(level_index).unwrap();
+        current_scene = Box::new(Gameplay::new(&mut ctx, level.clone(), level_index, pack).await);
+    } else {
+        current_scene = Box::new(MainMenu::new(&mut ctx).await);
+    };
 
     loop {
         ///////// UPDATE
