@@ -30,7 +30,8 @@ cargo run -- -l=4
 
 ## Assets
 
-- Sprites: [Kenney](https://kenney.nl/assets/sokoban) - CC0
+- Retro: Brett Chalupa - CC0
+- Kenney Tileset: [Kenney](https://kenney.nl/assets/sokoban) - CC0
 
 ## Deployment
 

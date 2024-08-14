@@ -1,10 +1,15 @@
 use crate::input;
 use macroquad::color::WHITE;
+use macroquad::input::is_key_pressed;
 use macroquad::text::draw_text;
 
 use crate::consts::*;
 use crate::entity::Entity;
-use crate::{context::Context, draw::draw_tile, texture::TextureAtlas, vec2::Vec2};
+use crate::{
+    context::Context,
+    tile::{draw_tile, Tile},
+    vec2::Vec2,
+};
 
 #[derive(Debug, Clone)]
 pub struct Level {
@@ -83,6 +88,14 @@ impl PlayableLevel {
             move_player.x = 1;
         }
 
+        // TODO: move to a game setting
+        if is_key_pressed(macroquad::miniquad::KeyCode::Key0) {
+            ctx.tileset = match ctx.tileset {
+                crate::tile::Tileset::Retro => crate::tile::Tileset::Kenney,
+                crate::tile::Tileset::Kenney => crate::tile::Tileset::Retro,
+            }
+        }
+
         let new_player_pos = self.player.pos.clone().add(move_player).to_owned();
         let crate_at_new_player_pos = self.crates.iter().find(|c| c.pos == new_player_pos);
         let mut move_crate = false;
@@ -144,10 +157,10 @@ impl PlayableLevel {
             x: (VIRTUAL_WIDTH as i32 - (self.level.width as i32 * TILE_SIZE)) / 2,
             y: (VIRTUAL_HEIGHT as i32 - (self.level.height as i32 * TILE_SIZE)) / 2,
         };
-        self.level.draw(&ctx.textures, &offset);
-        draw_tile(&ctx.textures.player, &self.player.pos, &offset);
+        self.level.draw(ctx, &offset);
+        draw_tile(ctx, Tile::Player, &self.player.pos, &offset);
         for c in &self.crates {
-            draw_tile(&ctx.textures.krate, &c.pos, &offset);
+            draw_tile(ctx, Tile::Crate, &c.pos, &offset);
         }
 
         if self.complete {
@@ -243,15 +256,15 @@ impl Level {
     }
 
     /// draws the static elements of a level (everything except player and boxes)
-    pub fn draw(&self, texture_atlas: &TextureAtlas, offset: &Vec2) {
+    pub fn draw(&self, ctx: &Context, offset: &Vec2) {
         for wall in &self.walls {
-            draw_tile(&texture_atlas.wall, wall, offset);
+            draw_tile(ctx, Tile::Wall, wall, offset);
         }
         for storage_location in &self.storage_locations {
-            draw_tile(&texture_atlas.storage_location, storage_location, offset);
+            draw_tile(ctx, Tile::StorageLocation, storage_location, offset);
         }
         for ground in &self.grounds {
-            draw_tile(&texture_atlas.ground, ground, offset);
+            draw_tile(ctx, Tile::Ground, ground, offset);
         }
     }
 }
