@@ -3,8 +3,8 @@ use crate::consts::*;
 use crate::context::Context;
 use crate::input::{action_pressed, Action};
 use crate::level::pack::Pack;
+use crate::text::{self, draw_text};
 use macroquad::color::{BLUE, WHITE};
-use macroquad::text::draw_text;
 
 pub struct MainMenu {
     packs: Vec<Pack>,
@@ -34,8 +34,15 @@ impl Scene for MainMenu {
             ctx.switch_scene_to = Some(EScene::LevelSelect(pack.to_owned()));
         }
     }
-    fn draw(&mut self, _ctx: &mut Context) {
-        draw_text("SokoWorld", VIRTUAL_WIDTH / 2. - 140., 120., 64., WHITE);
+    fn draw(&mut self, ctx: &mut Context) {
+        draw_text(
+            ctx,
+            "SokoWorld",
+            VIRTUAL_WIDTH / 2. - 140.,
+            120.,
+            text::Size::Large,
+            WHITE,
+        );
 
         for (i, pack) in &mut self.packs.iter().enumerate() {
             let color = if self.focused_pack_index == i as i32 {
@@ -47,22 +54,38 @@ impl Scene for MainMenu {
             let title_x = i as f32 * 320.0 + 280.;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
-            draw_text(pack.title.as_str(), title_x, title_y, 32., color);
-            draw_text(pack.author.as_str(), title_x, title_y + 24., 24., color);
             draw_text(
+                ctx,
+                pack.title.as_str(),
+                title_x,
+                title_y,
+                text::Size::Medium,
+                color,
+            );
+            draw_text(
+                ctx,
+                pack.author.as_str(),
+                title_x,
+                title_y + 24.,
+                text::Size::Small,
+                color,
+            );
+            draw_text(
+                ctx,
                 format!("{} levels", pack.levels.len()).as_str(),
                 title_x,
                 title_y + 48.,
-                24.,
+                text::Size::Small,
                 color,
             );
         }
 
         draw_text(
+            ctx,
             "Press Z to select level pack",
             VIRTUAL_WIDTH / 2. - 180.,
             VIRTUAL_HEIGHT - 120.,
-            32.,
+            text::Size::Medium,
             WHITE,
         );
     }

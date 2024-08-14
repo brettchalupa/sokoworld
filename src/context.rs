@@ -1,5 +1,6 @@
 use crate::audio;
 use crate::consts::*;
+use crate::font;
 use crate::scene::EScene;
 use crate::texture;
 use crate::tile;
@@ -15,6 +16,7 @@ pub struct Context {
     pub request_quit: bool,
     pub gamepads: Gamepads,
     pub textures: texture::TextureAtlas,
+    pub fonts: font::FontAtlas,
     pub audio: audio::AudioAtlas,
     pub render_target: RenderTarget,
     pub render_target_cam: Camera2D,
@@ -38,6 +40,7 @@ impl Context {
             request_quit: false,
             textures: texture::TextureAtlas::new().await,
             audio: audio::AudioAtlas::new().await,
+            fonts: font::FontAtlas::new().await,
             render_target,
             load_next_level: false,
             render_target_cam,

@@ -38,12 +38,12 @@ async fn main() {
 
         // render target drawing
         set_camera(&ctx.render_target_cam);
-        clear_background(DARKGRAY);
+        clear_background(sokoworld::color::DARKGRAY);
         current_scene.draw(&mut ctx);
 
         // regular drawing
         set_default_camera();
-        clear_background(BLACK); // Will be the letterbox color
+        clear_background(sokoworld::color::DARKGRAY); // Will be the letterbox color
 
         // draw the render target properly scaled and letterboxed
         let scale: f32 = f32::min(

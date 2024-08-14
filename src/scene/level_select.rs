@@ -3,8 +3,8 @@ use crate::consts::*;
 use crate::context::Context;
 use crate::input::{action_pressed, Action};
 use crate::level::pack::Pack;
+use crate::text::{self, draw_text};
 use macroquad::color::{BLUE, WHITE};
-use macroquad::text::draw_text;
 
 pub struct LevelSelect {
     pack: Pack,
@@ -43,15 +43,23 @@ impl Scene for LevelSelect {
             ctx.switch_scene_to = Some(EScene::MainMenu);
         }
     }
-    fn draw(&mut self, _ctx: &mut Context) {
+    fn draw(&mut self, ctx: &mut Context) {
         draw_text(
+            ctx,
             format!("{} by {}", self.pack.title, self.pack.author).as_str(),
             VIRTUAL_WIDTH / 2. - 300.,
             60.,
-            42.,
+            text::Size::Large,
             WHITE,
         );
-        draw_text("Select a Level", VIRTUAL_WIDTH / 2. - 90., 120., 32., WHITE);
+        draw_text(
+            ctx,
+            "Select a Level",
+            VIRTUAL_WIDTH / 2. - 90.,
+            120.,
+            text::Size::Medium,
+            WHITE,
+        );
 
         for (i, level) in &mut self.pack.levels.iter().enumerate() {
             let color = if self.focused_level_index == i as i32 {
@@ -63,14 +71,22 @@ impl Scene for LevelSelect {
             let title_x = i as f32 * 180.0 + 140.;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
-            draw_text(level.title.as_str(), title_x, title_y, 32., color);
+            draw_text(
+                ctx,
+                level.title.as_str(),
+                title_x,
+                title_y,
+                text::Size::Medium,
+                color,
+            );
         }
 
         draw_text(
+            ctx,
             "Press Z to select level",
             VIRTUAL_WIDTH / 2. - 180.,
             VIRTUAL_HEIGHT - 120.,
-            32.,
+            text::Size::Medium,
             WHITE,
         );
     }

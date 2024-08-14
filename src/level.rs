@@ -1,7 +1,7 @@
 use crate::input;
+use crate::text::draw_text;
 use macroquad::color::WHITE;
 use macroquad::input::is_key_pressed;
-use macroquad::text::draw_text;
 
 use crate::consts::*;
 use crate::entity::{Crate, Entity};
@@ -207,26 +207,36 @@ impl PlayableLevel {
 
         if self.complete {
             draw_text(
+                ctx,
                 "Nice job! Press Z to go to next level.",
-                VIRTUAL_WIDTH / 2. - 280.,
+                VIRTUAL_WIDTH / 2. - 220.,
                 VIRTUAL_HEIGHT - 92.,
-                32.,
+                crate::text::Size::Medium,
                 WHITE,
             );
         }
         draw_text(
+            ctx,
             "Arrow Keys = Move | X = Reset Level",
-            VIRTUAL_WIDTH / 2. - 200.,
+            VIRTUAL_WIDTH / 2. - 220.,
             VIRTUAL_HEIGHT - 48.,
-            32.,
+            crate::text::Size::Medium,
             WHITE,
         );
-        draw_text(self.level.title.as_str(), 48., 32., 32., WHITE);
         draw_text(
+            ctx,
+            self.level.title.as_str(),
+            48.,
+            52.,
+            crate::text::Size::Large,
+            WHITE,
+        );
+        draw_text(
+            ctx,
             format!("Steps: {} | Pushes: {}", self.steps, self.pushes).as_str(),
             48.,
-            72.,
-            32.,
+            92.,
+            crate::text::Size::Medium,
             WHITE,
         );
     }

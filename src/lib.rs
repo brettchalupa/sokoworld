@@ -1,10 +1,13 @@
 pub mod audio;
+pub mod color;
 pub mod consts;
 pub mod context;
 pub mod entity;
+pub mod font;
 pub mod input;
 pub mod level;
 pub mod scene;
+pub mod text;
 pub mod texture;
 pub mod tile;
 pub mod vec2;
