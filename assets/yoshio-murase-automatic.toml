@@ -3,7 +3,7 @@ description = "These sokoban screens were made automatically by computer. Yosio 
 source = "http://sneezingtiger.com/sokoban/levels/yoshioText.html"
 author = "Yoshio Murase"
 license = "Copyright Yoshio Murase"
-difficulty = "hard"
+difficulty = "Medium"
 year = 1996
 version = "0.1" # will make them 1.0 when the whole pack is included
 

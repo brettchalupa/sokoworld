@@ -68,7 +68,7 @@ impl Scene for MainMenu {
             );
             draw_text(
                 ctx,
-                pack.author.as_str(),
+                &format!("{} • {}", pack.author, pack.difficulty),
                 title_x,
                 title_y + 24.,
                 text::Size::Small,

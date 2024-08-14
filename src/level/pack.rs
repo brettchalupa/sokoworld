@@ -2,6 +2,12 @@ use serde::Deserialize;
 
 use crate::context::Context;
 
+pub enum Difficulty {
+    Easy,
+    Medium,
+    Hard,
+}
+
 /// a collection of levels
 #[derive(Debug, Deserialize, Clone)]
 pub struct Pack {
@@ -17,6 +23,8 @@ pub struct Pack {
     pub version: String,
     /// file path of where the Pack is located
     pub file: Option<String>,
+    /// the general difficulty level of the pack
+    pub difficulty: String,
 }
 
 /// a level defined in a pack file
