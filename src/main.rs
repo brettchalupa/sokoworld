@@ -94,7 +94,6 @@ async fn main() {
             ctx.reload_level = false;
             if let Some(current_pack_file) = ctx.current_pack_file.clone() {
                 if let Some(current_level_index) = ctx.current_level_index {
-                    println!("{} test", current_pack_file);
                     let pack = Pack::load(&mut ctx, current_pack_file.as_str()).await;
                     let level = pack.levels.get(current_level_index).unwrap();
                     current_scene = Box::new(
