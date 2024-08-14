@@ -77,6 +77,14 @@ impl PlayableLevel {
             macroquad::audio::play_sound_once(&ctx.audio.sfx.reset);
         }
 
+        // TODO: move to a game setting
+        if is_key_pressed(macroquad::miniquad::KeyCode::Key0) {
+            ctx.tileset = match ctx.tileset {
+                crate::tile::Tileset::Retro => crate::tile::Tileset::Kenney,
+                crate::tile::Tileset::Kenney => crate::tile::Tileset::Retro,
+            }
+        }
+
         if self.complete {
             if input::action_pressed(input::Action::Confirm, &ctx.gamepads) {
                 ctx.load_next_level = true;
@@ -94,14 +102,6 @@ impl PlayableLevel {
             move_player.x = -1;
         } else if input::action_pressed(input::Action::Right, &ctx.gamepads) {
             move_player.x = 1;
-        }
-
-        // TODO: move to a game setting
-        if is_key_pressed(macroquad::miniquad::KeyCode::Key0) {
-            ctx.tileset = match ctx.tileset {
-                crate::tile::Tileset::Retro => crate::tile::Tileset::Kenney,
-                crate::tile::Tileset::Kenney => crate::tile::Tileset::Retro,
-            }
         }
 
         let new_player_pos = self.player.pos.clone().add(move_player).to_owned();
