@@ -27,7 +27,7 @@ pub struct PlayableLevel {
 
 impl PlayableLevel {
     pub fn load(pack_level: &PackLevel) -> Self {
-        let level = Level::load(pack_level).unwrap();
+        let level = Level::parse(pack_level).unwrap();
         let player = Entity { pos: level.player };
         let mut crates: Vec<Crate> = vec![];
 

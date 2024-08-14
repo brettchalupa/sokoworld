@@ -22,9 +22,9 @@ pub struct Level {
 }
 
 impl Level {
-    /// loads a level from the specified file
-    /// panics if the file can't be found
-    pub fn load(pack_level: &PackLevel) -> Result<Self, macroquad::Error> {
+    /// Parses a level from the PackLevel data
+    /// panics if there's an unexpected char in the level data
+    pub fn parse(pack_level: &PackLevel) -> Result<Self, macroquad::Error> {
         let rows = pack_level.data.lines();
         let mut walls = vec![];
         let mut crates = vec![];
