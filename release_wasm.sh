@@ -12,6 +12,7 @@ cp web/index.html web-release
 mkdir -p web-release/assets
 cp -r assets/* web-release/assets
 rm -rf web-release/**/.DS_Store
+rm -rf web-release/**/*/.DS_Store
 zip -r web-release.zip web-release
 echo "web release zipped into web-release.zip"
 butler push web-release.zip brettchalupa/sokoworld:html
