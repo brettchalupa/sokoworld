@@ -5,9 +5,8 @@ pub enum EScene {
     Gameplay(PackLevel, usize, Pack),
     MainMenu,
     LevelSelect(Pack),
-    // Settings,
-    // Pause,
     // HowToPlay,
+    // Credits,
 }
 
 use crate::{
@@ -18,6 +17,8 @@ use crate::{
 pub mod gameplay;
 pub mod level_select;
 pub mod main_menu;
+pub mod pause;
+pub mod settings;
 
 pub trait Scene {
     fn update(&mut self, ctx: &mut Context);

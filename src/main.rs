@@ -46,7 +46,9 @@ async fn main() {
     loop {
         ///////// UPDATE
         #[cfg(debug_assertions)]
-        if is_key_pressed(KeyCode::Escape) {
+        if (is_key_down(KeyCode::LeftShift) || is_key_down(KeyCode::RightShift))
+            && is_key_down(KeyCode::Escape)
+        {
             ctx.request_quit = true;
         }
 

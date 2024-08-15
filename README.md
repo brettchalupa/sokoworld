@@ -18,6 +18,8 @@ characters in the level files.
 
 ## Dev Tools
 
+In debug builds, <kbd>Shift</kbd> + <kbd>Esc</kbd> quits quickly.
+
 ### Play a Specific Level
 
 Run a specific pack and level with:

@@ -1,8 +1,11 @@
 use macroquad::input::is_key_pressed;
 
+use super::pause::Pause;
 use super::{EScene, Scene};
 use crate::audio::play_sfx;
 use crate::context::Context;
+use crate::input::action_pressed;
+use crate::input::Action;
 use crate::level::pack::PackLevel;
 use crate::level::{pack::Pack, playable_level::PlayableLevel};
 
@@ -10,33 +13,48 @@ pub struct Gameplay {
     level: PlayableLevel,
     pack: Pack,
     level_index: usize,
+    pause_subscene: Pause,
 }
 
 impl Scene for Gameplay {
     fn update(&mut self, ctx: &mut Context) {
-        self.level.update(ctx);
-
-        if ctx.load_next_level {
-            ctx.load_next_level = false;
-            self.level_index += 1;
-            if self.level_index >= self.pack.levels.len() {
-                ctx.switch_scene_to = Some(EScene::LevelSelect(self.pack.clone()));
-            } else {
-                self.sync_to_ctx(ctx);
-                self.level = PlayableLevel::new(self.pack.levels.get(self.level_index).unwrap());
+        if self.pause_subscene.active {
+            self.pause_subscene.update(ctx);
+        } else {
+            if action_pressed(Action::Pause, &ctx.gamepads) {
+                self.pause_subscene.active = true;
+                play_sfx(ctx, &ctx.audio.sfx.menu_select);
             }
-        }
 
-        // reloads the current level from the pack file
-        // unsure if this should be debug or not...
-        if is_key_pressed(macroquad::miniquad::KeyCode::Key9) {
-            play_sfx(ctx, &ctx.audio.sfx.reset);
-            ctx.reload_level = true;
+            self.level.update(ctx);
+
+            if ctx.load_next_level {
+                ctx.load_next_level = false;
+                self.level_index += 1;
+                if self.level_index >= self.pack.levels.len() {
+                    ctx.switch_scene_to = Some(EScene::LevelSelect(self.pack.clone()));
+                } else {
+                    self.sync_to_ctx(ctx);
+                    self.level =
+                        PlayableLevel::new(self.pack.levels.get(self.level_index).unwrap());
+                }
+            }
+
+            // reloads the current level from the pack file
+            // unsure if this should be debug or not...
+            if is_key_pressed(macroquad::miniquad::KeyCode::Key9) {
+                play_sfx(ctx, &ctx.audio.sfx.reset);
+                ctx.reload_level = true;
+            }
         }
     }
 
     fn draw(&mut self, ctx: &mut Context) {
-        self.level.draw(ctx);
+        if self.pause_subscene.active {
+            self.pause_subscene.draw(ctx);
+        } else {
+            self.level.draw(ctx);
+        }
     }
 }
 
@@ -44,10 +62,12 @@ impl Gameplay {
     // TODO: determine level_index dynamically based on where level is in the pack
     pub async fn new(ctx: &mut Context, level: PackLevel, level_index: usize, pack: Pack) -> Self {
         let level = PlayableLevel::new(&level);
+        let pause_subscene = Pause::new();
         let mut gameplay = Self {
             level_index,
             level,
             pack,
+            pause_subscene,
         };
         gameplay.sync_to_ctx(ctx);
         gameplay

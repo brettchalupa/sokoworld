@@ -10,6 +10,7 @@ pub enum Action {
     Confirm,
     Cancel,
     Reset,
+    Pause,
 }
 
 /// just pressed, not held down
@@ -26,6 +27,7 @@ fn keyboard_pressed(action: &Action) -> bool {
         Action::Reset => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::X),
         Action::Confirm => is_key_pressed(KeyCode::J) || is_key_pressed(KeyCode::Z),
         Action::Cancel => is_key_pressed(KeyCode::K) || is_key_pressed(KeyCode::X),
+        Action::Pause => is_key_pressed(KeyCode::Escape) || is_key_pressed(KeyCode::P),
     }
 }
 
@@ -53,5 +55,8 @@ fn gamepad_pressed(action: &Action, gamepads: &Gamepads) -> bool {
         Action::Reset => gamepads
             .all()
             .any(|g| g.is_just_pressed(gamepads::Button::ActionUp)),
+        Action::Pause => gamepads
+            .all()
+            .any(|g| g.is_just_pressed(gamepads::Button::RightCenterCluster)),
     }
 }

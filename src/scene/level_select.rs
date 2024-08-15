@@ -5,7 +5,7 @@ use crate::context::Context;
 use crate::input::{action_pressed, Action};
 use crate::level::pack::Pack;
 use crate::text::{self, draw_text};
-use macroquad::color::{BLUE, WHITE};
+use macroquad::color::{RED, WHITE};
 
 pub struct LevelSelect {
     pack: Pack,
@@ -68,7 +68,7 @@ impl Scene for LevelSelect {
 
         for (i, level) in &mut self.pack.levels.iter().enumerate() {
             let color = if self.focused_level_index == i as i32 {
-                BLUE
+                RED
             } else {
                 WHITE
             };

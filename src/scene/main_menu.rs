@@ -5,7 +5,7 @@ use crate::context::Context;
 use crate::input::{action_pressed, Action};
 use crate::level::pack::Pack;
 use crate::text::{self, draw_text};
-use macroquad::color::{BLUE, WHITE};
+use macroquad::color::{RED, WHITE};
 
 pub struct MainMenu {
     packs: Vec<Pack>,
@@ -50,7 +50,7 @@ impl Scene for MainMenu {
 
         for (i, pack) in &mut self.packs.iter().enumerate() {
             let color = if self.focused_pack_index == i as i32 {
-                BLUE
+                RED
             } else {
                 WHITE
             };
