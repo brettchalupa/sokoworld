@@ -22,6 +22,7 @@ enum MenuOption {
     Settings,
     LevelSelect,
     MainMenu,
+    #[allow(dead_code)] // doesn't get built in WASM target
     Quit,
 }
 
@@ -38,6 +39,7 @@ impl Pause {
             MenuOption::Settings,
             MenuOption::LevelSelect,
             MenuOption::MainMenu,
+            #[cfg(not(target_family = "wasm"))]
             MenuOption::Quit,
         ];
 
