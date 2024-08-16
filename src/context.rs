@@ -2,6 +2,7 @@ use crate::audio;
 use crate::consts::*;
 use crate::font;
 use crate::scene::EScene;
+use crate::settings::Settings;
 use crate::texture;
 use crate::tile;
 use gamepads::Gamepads;
@@ -29,6 +30,7 @@ pub struct Context {
     pub current_pack_file: Option<String>,
     /// what level is currently being played, if any. needed for reloading from disk
     pub current_level_index: Option<usize>,
+    pub settings: Settings,
 }
 
 impl Context {
@@ -55,6 +57,7 @@ impl Context {
             switch_scene_to: None,
             current_pack_file: None,
             current_level_index: None,
+            settings: Settings::load(),
         }
     }
 

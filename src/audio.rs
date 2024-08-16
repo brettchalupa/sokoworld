@@ -55,6 +55,10 @@ impl AudioAtlas {
     }
 }
 
-pub fn play_sfx(_ctx: &Context, sfx: &Sound) {
+pub fn play_sfx(ctx: &Context, sfx: &Sound) {
+    if ctx.settings.is_muted() {
+        return;
+    }
+
     macroquad::audio::play_sound_once(sfx);
 }

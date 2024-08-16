@@ -15,24 +15,14 @@ pub struct Settings {
 }
 
 enum MenuOption {
-    Fullscreen(bool),
-    Mute(bool),
+    Fullscreen,
+    Mute,
     Back,
 }
 
-impl Default for Settings {
-    fn default() -> Self {
-        Self::new(false)
-    }
-}
-
 impl Settings {
-    pub fn new(active: bool) -> Self {
-        let menu_options = vec![
-            MenuOption::Fullscreen(false), // TODO: set from config
-            MenuOption::Mute(false),       // TODO: set from config
-            MenuOption::Back,
-        ];
+    pub fn new(_ctx: &Context, active: bool) -> Self {
+        let menu_options = vec![MenuOption::Fullscreen, MenuOption::Mute, MenuOption::Back];
 
         Self {
             menu_options,
@@ -41,11 +31,17 @@ impl Settings {
         }
     }
 
-    fn text_for_menu_option(&self, menu_option: &MenuOption) -> &str {
+    fn text_for_menu_option(
+        &self,
+        settings: &crate::settings::Settings,
+        menu_option: &MenuOption,
+    ) -> String {
         match menu_option {
-            MenuOption::Back => "Back",
-            MenuOption::Fullscreen(_enabled) => "Fullscreen",
-            MenuOption::Mute(_enabled) => "Mute",
+            MenuOption::Back => "Back".to_string(),
+            MenuOption::Fullscreen => {
+                format!("Fullscreen: {}", settings.is_fullscreen())
+            }
+            MenuOption::Mute => format!("Mute: {}", settings.is_muted()),
         }
     }
 }
@@ -90,11 +86,11 @@ impl Scene for Settings {
                 MenuOption::Back => {
                     self.active = false;
                 }
-                MenuOption::Fullscreen(_enabled) => {
-                    println!("Fullscreen not yet implemented");
+                MenuOption::Fullscreen => {
+                    ctx.settings.toggle_fullscreen();
                 }
-                MenuOption::Mute(_enabled) => {
-                    println!("Mute not yet implemented");
+                MenuOption::Mute => {
+                    ctx.settings.toggle_mute();
                 }
             }
         }
@@ -106,9 +102,10 @@ impl Scene for Settings {
         for (i, menu_option) in self.menu_options.iter().enumerate() {
             let color = if self.menu_index == i { RED } else { WHITE };
 
+            let text = self.text_for_menu_option(&ctx.settings, menu_option);
             draw_text(
                 ctx,
-                self.text_for_menu_option(menu_option),
+                text.as_str(),
                 X_ALIGN,
                 200. + (i as f32 * 40.),
                 Size::Medium,

@@ -29,7 +29,7 @@ enum MenuOption {
 }
 
 impl Pause {
-    pub fn new(pack: Pack) -> Self {
+    pub fn new(ctx: &mut Context, pack: Pack) -> Self {
         let menu_options = vec![
             MenuOption::Resume,
             MenuOption::Settings,
@@ -43,7 +43,7 @@ impl Pause {
             menu_options,
             menu_index: 0,
             active: false,
-            settings_subscene: Settings::new(false),
+            settings_subscene: Settings::new(ctx, false),
             pack,
         }
     }

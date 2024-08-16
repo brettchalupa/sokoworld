@@ -7,6 +7,7 @@ pub mod font;
 pub mod input;
 pub mod level;
 pub mod scene;
+pub mod settings;
 pub mod text;
 pub mod texture;
 pub mod tile;
