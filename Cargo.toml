@@ -10,6 +10,7 @@ gamepads = { version = "0.1.6", default-features = false }
 # later versions use way more CPU on macOS, see
 # https://github.com/not-fl3/miniquad/issues/470
 macroquad = { version = "0.4", features=["audio"] }
+quad-storage = "0.1.3"
 serde = { version = "1.0.207", features=["serde_derive"] }
 toml = "0.8.19"
 

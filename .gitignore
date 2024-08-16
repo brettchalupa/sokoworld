@@ -5,3 +5,4 @@ web/*.wasm
 web-release.zip
 web-release
 tmp
+local.data
