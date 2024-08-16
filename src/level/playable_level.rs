@@ -10,9 +10,13 @@ use crate::{
 };
 use macroquad::color::WHITE;
 use macroquad::input::is_key_pressed;
+use macroquad::time::get_frame_time;
 
 use crate::consts::*;
 use crate::entity::{Crate, Entity};
+
+/// delay in seconds between movement when held down
+const HELD_DOWN_DELAY: f32 = 0.2;
 
 /// wraps the static level data and keeps track of player's progress
 #[derive(Clone, Debug)]
@@ -23,6 +27,7 @@ pub struct PlayableLevel {
     pub level: Level,
     pub player: Entity,
     pub crates: Vec<Crate>,
+    held_down_delay: f32,
 }
 
 impl PlayableLevel {
@@ -51,6 +56,7 @@ impl PlayableLevel {
             level,
             crates,
             player,
+            held_down_delay: 0.,
         }
     }
 
@@ -97,15 +103,30 @@ impl PlayableLevel {
             return;
         }
 
+        if self.held_down_delay > 0.0 {
+            self.held_down_delay -= get_frame_time();
+        }
+
         let mut move_player = Vec2 { x: 0, y: 0 };
 
-        if input::action_pressed(input::Action::Up, &ctx.gamepads) {
+        if input::action_pressed(input::Action::Up, &ctx.gamepads)
+            || (input::action_down(input::Action::Up, &ctx.gamepads) && self.held_down_delay <= 0.)
+        {
             move_player.y = -1;
-        } else if input::action_pressed(input::Action::Down, &ctx.gamepads) {
+        } else if input::action_pressed(input::Action::Down, &ctx.gamepads)
+            || (input::action_down(input::Action::Down, &ctx.gamepads)
+                && self.held_down_delay <= 0.)
+        {
             move_player.y = 1;
-        } else if input::action_pressed(input::Action::Left, &ctx.gamepads) {
+        } else if input::action_pressed(input::Action::Left, &ctx.gamepads)
+            || (input::action_down(input::Action::Left, &ctx.gamepads)
+                && self.held_down_delay <= 0.)
+        {
             move_player.x = -1;
-        } else if input::action_pressed(input::Action::Right, &ctx.gamepads) {
+        } else if input::action_pressed(input::Action::Right, &ctx.gamepads)
+            || (input::action_down(input::Action::Right, &ctx.gamepads)
+                && self.held_down_delay <= 0.)
+        {
             move_player.x = 1;
         }
 
@@ -114,6 +135,8 @@ impl PlayableLevel {
         let mut move_crate = false;
 
         if !move_player.is_zero() {
+            self.held_down_delay = HELD_DOWN_DELAY;
+
             match crate_at_new_player_pos {
                 Some(c) => {
                     let new_crate_pos = c.pos.clone().add(move_player).to_owned();
