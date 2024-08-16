@@ -6,6 +6,7 @@ use super::Scene;
 use crate::audio::play_sfx;
 use crate::input::action_pressed;
 use crate::input::Action;
+use crate::level::pack::Pack;
 use crate::text::Size;
 use crate::{context::Context, text::draw_text};
 
@@ -15,6 +16,7 @@ pub struct Pause {
     menu_options: Vec<MenuOption>,
     menu_index: usize,
     settings_subscene: Settings,
+    pack: Pack,
 }
 
 enum MenuOption {
@@ -26,14 +28,8 @@ enum MenuOption {
     Quit,
 }
 
-impl Default for Pause {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl Pause {
-    pub fn new() -> Self {
+    pub fn new(pack: Pack) -> Self {
         let menu_options = vec![
             MenuOption::Resume,
             MenuOption::Settings,
@@ -48,6 +44,7 @@ impl Pause {
             menu_index: 0,
             active: false,
             settings_subscene: Settings::new(false),
+            pack,
         }
     }
 
@@ -113,7 +110,7 @@ impl Scene for Pause {
                     self.settings_subscene.active = true;
                 }
                 MenuOption::LevelSelect => {
-                    println!("LevelSelect not yet implemented");
+                    ctx.switch_scene_to = Some(EScene::LevelSelect(self.pack.clone()));
                 }
                 MenuOption::MainMenu => {
                     ctx.switch_scene_to = Some(EScene::MainMenu);
