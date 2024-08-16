@@ -73,7 +73,9 @@ impl Scene for LevelSelect {
                 WHITE
             };
 
-            let title_x = i as f32 * 180.0 + 140.;
+            // hacky attempt at centering, needs to be improved
+            let title_x =
+                (i as i32 - self.focused_level_index) as f32 * 180. + VIRTUAL_WIDTH / 2. - 60.;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
             draw_text(
