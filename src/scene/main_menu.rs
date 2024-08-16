@@ -92,6 +92,15 @@ impl Scene for MainMenu {
             text::Size::Medium,
             WHITE,
         );
+
+        draw_text(
+            ctx,
+            format!("v{}", VERSION).as_str(),
+            40.,
+            VIRTUAL_HEIGHT - 40.,
+            text::Size::Small,
+            WHITE,
+        );
     }
 }
 

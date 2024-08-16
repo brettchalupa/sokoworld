@@ -27,7 +27,7 @@ pub fn draw_text(ctx: &mut Context, text: &str, x: f32, y: f32, size: Size, colo
 
 fn text_size(size: Size) -> u16 {
     match size {
-        Size::Small => 24u16,
+        Size::Small => 20u16,
         Size::Medium => 32u16,
         Size::Large => 48u16,
     }
