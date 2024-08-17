@@ -7,8 +7,10 @@ use macroquad::{
 };
 
 pub enum Tileset {
+    Doggo,
     Retro,
     Kenney,
+    Marble,
 }
 
 pub enum Tile {

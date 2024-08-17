@@ -91,8 +91,10 @@ impl PlayableLevel {
         // TODO: move to a game setting
         if is_key_pressed(macroquad::miniquad::KeyCode::Key0) {
             ctx.tileset = match ctx.tileset {
-                crate::tile::Tileset::Retro => crate::tile::Tileset::Kenney,
-                crate::tile::Tileset::Kenney => crate::tile::Tileset::Retro,
+                crate::tile::Tileset::Retro => crate::tile::Tileset::Doggo,
+                crate::tile::Tileset::Doggo => crate::tile::Tileset::Kenney,
+                crate::tile::Tileset::Kenney => crate::tile::Tileset::Marble,
+                crate::tile::Tileset::Marble => crate::tile::Tileset::Retro,
             }
         }
 

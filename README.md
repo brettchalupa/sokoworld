@@ -61,5 +61,7 @@ Ideally in the future this would push builds for desktop operating systems, crea
 - Sprites
   - Kenney set: [kenney.nl](https://kenney.nl) (CC0)
   - Retro set: Brett Chalupa
+  - Marble set: [Vellidragon](https://opengameart.org/content/sokoban-clone-tiles) (CC0)
+  - Doggo set: [Chrysalis](https://opengameart.org/content/tic-80-sokoban-tileset-8x8) (CC-BY 4.0)
 - Sound Effects
   - melos: Melos Han-Tani of Analgesic Productions (non-commercial usage)

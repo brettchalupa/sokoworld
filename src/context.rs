@@ -53,7 +53,7 @@ impl Context {
             load_next_level: false,
             reload_level: false,
             render_target_cam,
-            tileset: tile::Tileset::Retro,
+            tileset: tile::Tileset::Doggo,
             switch_scene_to: None,
             current_pack_file: None,
             current_level_index: None,
@@ -65,6 +65,8 @@ impl Context {
         match self.tileset {
             tile::Tileset::Retro => &self.textures.retro,
             tile::Tileset::Kenney => &self.textures.kenney,
+            tile::Tileset::Doggo => &self.textures.doggo,
+            tile::Tileset::Marble => &self.textures.marble,
         }
     }
 }
