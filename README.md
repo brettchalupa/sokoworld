@@ -38,11 +38,6 @@ Press the <kbd>9</kbd> key to reload the current level from disk. This is useful
 
 - the JS shims in web are explicitly checked in in case they disappear & to have versions match
 
-## Assets
-
-- Retro: Brett Chalupa - CC0
-- Kenney Tileset: [Kenney](https://kenney.nl/assets/sokoban) - CC0
-
 ## Deployment
 
 The game is currently hosted on itch at https://brettchalupa.itch.io/sokoworld
@@ -65,3 +60,9 @@ Ideally in the future this would push builds for desktop operating systems, crea
   - Doggo set: [Chrysalis](https://opengameart.org/content/tic-80-sokoban-tileset-8x8) (CC-BY 4.0)
 - Sound Effects
   - melos: Melos Han-Tani of Analgesic Productions (non-commercial usage)
+
+## LICENSE
+
+The course code is released under the Unlicense, see [LICENSE](./LICENSE) for full details.
+
+The license does not apply to the other assets, they fall under their own terms (see above). Assets created by me, Brett Chalupa, for the game are CC0 (Public Domain).
