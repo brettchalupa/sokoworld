@@ -1,6 +1,8 @@
 # SokoWorld
 
-Free and open source Sokoban client
+Free and open source Sokoban client made with Rust and Macroquad.
+
+[Play the game!](https://brettchalupa.itch.io/sokoworld)
 
 ## Defining Levels
 
@@ -61,7 +63,7 @@ Ideally in the future this would push builds for desktop operating systems, crea
 - Sound Effects
   - melos: Melos Han-Tani of Analgesic Productions (non-commercial usage)
 
-## LICENSE
+## License
 
 The course code is released under the Unlicense, see [LICENSE](./LICENSE) for full details.
 
