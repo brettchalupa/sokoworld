@@ -299,8 +299,8 @@ impl PlayableLevel {
         }
         draw_text(
             ctx,
-            "Arrow Keys = Move | X = Reset Level",
-            VIRTUAL_WIDTH / 2. - 220.,
+            "Move = Arrow Keys | Rewind = X | Reset = C",
+            VIRTUAL_WIDTH / 2. - 320.,
             VIRTUAL_HEIGHT - 48.,
             crate::text::Size::Medium,
             WHITE,
