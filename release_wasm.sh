@@ -2,7 +2,7 @@ set -e
 
 # makes a release zip of the game for distribution
 
-rm web-release.zip
+rm web-release.zip || true
 rm -rf web-release
 mkdir -p web-release
 cargo build --release --target wasm32-unknown-unknown
@@ -15,4 +15,4 @@ rm -rf web-release/**/.DS_Store
 rm -rf web-release/**/*/.DS_Store
 zip -r web-release.zip web-release
 echo "web release zipped into web-release.zip"
-butler push web-release.zip brettchalupa/sokoworld:html
+butler push web-release.zip brettchalupa/sokoworld-staging:html
