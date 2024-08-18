@@ -16,7 +16,26 @@ use crate::consts::*;
 use crate::entity::{Crate, Entity};
 
 /// delay in seconds between movement when held down
-const HELD_DOWN_DELAY: f32 = 0.2;
+const MOVE_HELD_DELAY: f32 = 0.2;
+/// delay in seconds between rewind steps when held down
+const REWIND_HELD_DELAY: f32 = 0.1;
+
+/// direction that the player moved in
+#[derive(Clone, Debug)]
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+/// for tracking player input to make it easy to rewind
+#[derive(Clone, Debug)]
+struct PlayerMove {
+    direction: Direction,
+    /// index of the crate that was moved, if any
+    crate_moved_index: Option<usize>,
+}
 
 /// wraps the static level data and keeps track of player's progress
 #[derive(Clone, Debug)]
@@ -27,7 +46,9 @@ pub struct PlayableLevel {
     pub level: Level,
     pub player: Entity,
     pub crates: Vec<Crate>,
-    held_down_delay: f32,
+    move_held_delay: f32,
+    rewind_held_delay: f32,
+    moves: Vec<PlayerMove>,
 }
 
 impl PlayableLevel {
@@ -56,7 +77,9 @@ impl PlayableLevel {
             level,
             crates,
             player,
-            held_down_delay: 0.,
+            move_held_delay: 0.,
+            rewind_held_delay: 0.,
+            moves: vec![],
         }
     }
 
@@ -105,29 +128,77 @@ impl PlayableLevel {
             return;
         }
 
-        if self.held_down_delay > 0.0 {
-            self.held_down_delay -= get_frame_time();
+        if self.move_held_delay > 0.0 {
+            self.move_held_delay -= get_frame_time();
         }
 
+        if self.rewind_held_delay > 0.0 {
+            self.rewind_held_delay -= get_frame_time();
+        }
+
+        let rewind = input::action_pressed(input::Action::Rewind, &ctx.gamepads)
+            || (input::action_down(input::Action::Rewind, &ctx.gamepads)
+                && self.rewind_held_delay <= 0.);
+
+        if rewind {
+            if !self.moves.is_empty() {
+                self.rewind_held_delay = REWIND_HELD_DELAY;
+
+                if let Some(m) = self.moves.pop() {
+                    play_sfx(ctx, &ctx.audio.sfx.footstep);
+                    self.steps -= 1;
+                    if m.crate_moved_index.is_some() {
+                        self.pushes -= 1;
+                    }
+                    let reverse_move = match m.direction {
+                        Direction::Up => {
+                            // move down
+                            Vec2 { x: 0, y: 1 }
+                        }
+                        Direction::Down => {
+                            // move up
+                            Vec2 { x: 0, y: -1 }
+                        }
+                        Direction::Left => {
+                            // move right
+                            Vec2 { x: 1, y: 0 }
+                        }
+                        Direction::Right => {
+                            // move left
+                            Vec2 { x: -1, y: 0 }
+                        }
+                    };
+                    self.player.pos.add(reverse_move);
+                    self.reverse_move_crate(ctx, m.crate_moved_index, reverse_move);
+                }
+            } else {
+                play_sfx(ctx, &ctx.audio.sfx.cant_move);
+            }
+        } else {
+            self.handle_movement(ctx)
+        }
+    }
+
+    fn handle_movement(&mut self, ctx: &mut Context) {
         let mut move_player = Vec2 { x: 0, y: 0 };
 
         if input::action_pressed(input::Action::Up, &ctx.gamepads)
-            || (input::action_down(input::Action::Up, &ctx.gamepads) && self.held_down_delay <= 0.)
+            || (input::action_down(input::Action::Up, &ctx.gamepads) && self.move_held_delay <= 0.)
         {
             move_player.y = -1;
         } else if input::action_pressed(input::Action::Down, &ctx.gamepads)
             || (input::action_down(input::Action::Down, &ctx.gamepads)
-                && self.held_down_delay <= 0.)
+                && self.move_held_delay <= 0.)
         {
             move_player.y = 1;
         } else if input::action_pressed(input::Action::Left, &ctx.gamepads)
             || (input::action_down(input::Action::Left, &ctx.gamepads)
-                && self.held_down_delay <= 0.)
+                && self.move_held_delay <= 0.)
         {
             move_player.x = -1;
         } else if input::action_pressed(input::Action::Right, &ctx.gamepads)
             || (input::action_down(input::Action::Right, &ctx.gamepads)
-                && self.held_down_delay <= 0.)
+                && self.move_held_delay <= 0.)
         {
             move_player.x = 1;
         }
@@ -137,7 +208,7 @@ impl PlayableLevel {
         let mut move_crate = false;
 
         if !move_player.is_zero() {
-            self.held_down_delay = HELD_DOWN_DELAY;
+            self.move_held_delay = MOVE_HELD_DELAY;
 
             match crate_at_new_player_pos {
                 Some(c) => {
@@ -148,7 +219,8 @@ impl PlayableLevel {
                         self.crates.iter().find(|c| c.pos == new_crate_pos);
 
                     if wall_at_new_crate_pos.is_none() && other_crate_at_new_crate_pos.is_none() {
-                        self.move_player_to(ctx, &new_player_pos);
+                        let crate_i = self.crates.iter().position(|ic| ic.pos == c.pos);
+                        self.move_player_to(ctx, &move_player, &new_player_pos, crate_i);
                         move_crate = true;
                     } else {
                         play_sfx(ctx, &ctx.audio.sfx.cant_move);
@@ -159,7 +231,7 @@ impl PlayableLevel {
                         self.level.walls.iter().find(|w| *w == &new_player_pos);
                     match wall_at_new_player_pos {
                         None => {
-                            self.move_player_to(ctx, &new_player_pos);
+                            self.move_player_to(ctx, &move_player, &new_player_pos, None);
                         }
                         Some(_) => {
                             play_sfx(ctx, &ctx.audio.sfx.cant_move);
@@ -180,19 +252,11 @@ impl PlayableLevel {
                 self.pushes += 1;
                 play_sfx(ctx, &ctx.audio.sfx.push);
 
-                // TODO: DRY up since this check exists elsewhere
-                if self
-                    .level
-                    .storage_locations
-                    .clone() // idk if cloning is right here
-                    .into_iter()
-                    .any(|sl| sl == c.pos)
-                {
-                    c.on_storage_location = true;
-                    play_sfx(ctx, &ctx.audio.sfx.crate_on_storage_location);
-                } else {
-                    c.on_storage_location = false;
-                }
+                Self::check_for_crate_on_storage_location(
+                    ctx,
+                    c,
+                    self.level.storage_locations.clone(),
+                );
             }
 
             if self.crates.iter().all(|c| {
@@ -259,9 +323,57 @@ impl PlayableLevel {
         );
     }
 
-    fn move_player_to(&mut self, ctx: &Context, new_pos: &Vec2) {
+    fn reverse_move_crate(
+        &mut self,
+        ctx: &Context,
+        crate_moved_index: Option<usize>,
+        reverse_move: Vec2,
+    ) {
+        if crate_moved_index.is_some() {
+            let c = self.crates.get_mut(crate_moved_index.unwrap()).unwrap();
+            c.pos.add(reverse_move);
+            Self::check_for_crate_on_storage_location(ctx, c, self.level.storage_locations.clone())
+        }
+    }
+
+    fn check_for_crate_on_storage_location(
+        ctx: &Context,
+        c: &mut Crate,
+        storage_locations: Vec<Vec2>,
+    ) {
+        if storage_locations.into_iter().any(|sl| sl == c.pos) {
+            c.on_storage_location = true;
+            play_sfx(ctx, &ctx.audio.sfx.crate_on_storage_location);
+        } else {
+            c.on_storage_location = false;
+        }
+    }
+
+    fn move_player_to(
+        &mut self,
+        ctx: &Context,
+        movement: &Vec2,
+        new_pos: &Vec2,
+        crate_index: Option<usize>,
+    ) {
         play_sfx(ctx, &ctx.audio.sfx.footstep);
+        self.moves.push(PlayerMove {
+            direction: Self::direction_of_movement(movement),
+            crate_moved_index: crate_index,
+        });
         self.player.pos = *new_pos;
         self.steps += 1;
+    }
+
+    fn direction_of_movement(movement_vec: &Vec2) -> Direction {
+        if movement_vec.x > 0 {
+            Direction::Right
+        } else if movement_vec.x < 0 {
+            Direction::Left
+        } else if movement_vec.y < 0 {
+            Direction::Up
+        } else {
+            Direction::Down
+        }
     }
 }
