@@ -6,9 +6,10 @@ fn test_packs_are_valid() {
     for path in paths {
         let file_string =
             std::fs::read_to_string(path.unwrap().path()).expect("couldn't read file");
-        sokoworld::level::pack::Pack {
+        let pack = sokoworld::level::pack::Pack {
             file: None,
             ..toml::from_str(file_string.as_str()).unwrap()
         };
+        assert!(!pack.title.is_empty());
     }
 }
