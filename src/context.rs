@@ -1,3 +1,4 @@
+use crate::assets_path::determine_asset_path;
 use crate::audio;
 use crate::consts::*;
 use crate::font;
@@ -43,12 +44,14 @@ impl Context {
             Camera2D::from_display_rect(Rect::new(0., 0., VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
         render_target_cam.render_target = Some(render_target.clone());
 
+        let base_assets_path = determine_asset_path();
+
         Self {
             gamepads: Gamepads::new(),
             request_quit: false,
-            textures: texture::TextureAtlas::new().await,
-            audio: audio::AudioAtlas::new().await,
-            fonts: font::FontAtlas::new().await,
+            textures: texture::TextureAtlas::new(&base_assets_path).await,
+            audio: audio::AudioAtlas::new(&base_assets_path).await,
+            fonts: font::FontAtlas::new(&base_assets_path).await,
             render_target,
             load_next_level: false,
             reload_level: false,

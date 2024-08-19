@@ -1,4 +1,5 @@
 use super::{EScene, Scene};
+use crate::assets_path::determine_asset_path;
 use crate::audio::play_sfx;
 use crate::consts::*;
 use crate::context::Context;
@@ -106,9 +107,22 @@ impl Scene for MainMenu {
 
 impl MainMenu {
     pub async fn new(ctx: &mut Context) -> Self {
+        let base_assets_path = determine_asset_path();
+
         let packs = vec![
-            Pack::load(ctx, "assets/packs/pack-a.toml").await,
-            Pack::load(ctx, "assets/packs/yoshio-murase-automatic.toml").await,
+            Pack::load(
+                ctx,
+                base_assets_path.join("packs/pack-a.toml").to_str().unwrap(),
+            )
+            .await,
+            Pack::load(
+                ctx,
+                base_assets_path
+                    .join("packs/yoshio-murase-automatic.toml")
+                    .to_str()
+                    .unwrap(),
+            )
+            .await,
         ];
 
         Self {
