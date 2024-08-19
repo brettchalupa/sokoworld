@@ -2,7 +2,7 @@ set -e
 
 rustup target add x86_64-apple-darwin
 rustup target add aarch64-apple-darwin
-# this could prob be cleaned up
+export MACOSX_DEPLOYMENT_TARGET=11.0
 cargo bundle --release
 cargo build --release --target x86_64-apple-darwin
 cargo build --release --target aarch64-apple-darwin
