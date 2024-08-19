@@ -2,6 +2,7 @@
 name = "sokoworld"
 version = "0.2.0-dev"
 edition = "2021"
+description = "Classic box pushing puzzler Sokoban"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -16,3 +17,11 @@ toml = "0.8.19"
 
 [profile.dev.package.'*']
 opt-level = 3
+
+[package.metadata.bundle]
+name = "SokoWorld"
+identifier = "com.brettchalupa.sokoworld"
+# icon = ["icon/32x32.png", "icon/128x128.png", "icon/128x128@2x.png"] # TODO
+resources = ["assets"]
+copyright = "Copyright (c) Brett Chalupa 2024. Public domain."
+category = "Puzzle game"

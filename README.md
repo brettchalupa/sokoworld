@@ -52,6 +52,15 @@ WASM builds can be built and pushed by running:
 
 Ideally in the future this would push builds for desktop operating systems, create tags, etc., but this works for development.
 
+### Building for Desktop
+
+MacOS & Linux (.deb) use [cargo bundle](https://github.com/burtonageo/cargo-bundle):
+
+1. Install cargo bundle: `cargo install cargo-bundle`
+2. Build the bundle: `cargo bundle --release`
+
+There's a `release_macos.sh` script to build and upload a Universal app for macOS (works on both Intel and Apple Silicon Macs).
+
 ## Credits
 
 - Programming: Brett Chalupa

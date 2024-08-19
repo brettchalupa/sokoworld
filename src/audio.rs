@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use macroquad::audio::Sound;
 
 use crate::context::Context;
@@ -18,38 +20,81 @@ pub struct AudioAtlas {
 }
 
 impl AudioAtlas {
-    pub async fn new() -> Self {
+    pub async fn new(base_assets_path: &Path) -> Self {
         Self {
             sfx: SfxAtlas {
-                push: macroquad::audio::load_sound("assets/sfx/melos/dialogBlip2.wav")
-                    .await
-                    .unwrap(),
-                level_complete: macroquad::audio::load_sound("assets/sfx/melos/get_item.wav")
-                    .await
-                    .unwrap(),
-                reset: macroquad::audio::load_sound("assets/sfx/melos/save.wav")
-                    .await
-                    .unwrap(),
-                footstep: macroquad::audio::load_sound("assets/sfx/melos/footstep_4.wav")
-                    .await
-                    .unwrap(),
-                menu_cancel: macroquad::audio::load_sound("assets/sfx/melos/menuCancel.wav")
-                    .await
-                    .unwrap(),
-                menu_select: macroquad::audio::load_sound("assets/sfx/melos/menuSelect.wav")
-                    .await
-                    .unwrap(),
-                menu_move: macroquad::audio::load_sound("assets/sfx/melos/menuMove.wav")
-                    .await
-                    .unwrap(),
-                crate_on_storage_location: macroquad::audio::load_sound(
-                    "assets/sfx/melos/pieceSelect.wav",
+                push: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/dialogBlip2.wav")
+                        .to_str()
+                        .unwrap(),
                 )
                 .await
                 .unwrap(),
-                cant_move: macroquad::audio::load_sound("assets/sfx/melos/pieceCantPlace.wav")
-                    .await
-                    .unwrap(),
+                level_complete: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/get_item.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                reset: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/save.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                footstep: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/footstep_4.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                menu_cancel: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/menuCancel.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                menu_select: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/menuSelect.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                menu_move: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/menuMove.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                crate_on_storage_location: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/pieceSelect.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
+                cant_move: macroquad::audio::load_sound(
+                    base_assets_path
+                        .join("sfx/melos/pieceCantPlace.wav")
+                        .to_str()
+                        .unwrap(),
+                )
+                .await
+                .unwrap(),
             },
         }
     }
