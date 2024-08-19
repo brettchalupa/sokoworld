@@ -61,6 +61,17 @@ MacOS & Linux (.deb) use [cargo bundle](https://github.com/burtonageo/cargo-bund
 
 There's a `release_macos.sh` script to build and upload a Universal app for macOS (works on both Intel and Apple Silicon Macs).
 
+#### Windows
+
+Not ideal but functioning
+
+1. `cargo run --release`
+2. `mkdir win`
+3. `cp .\target\release\sokoworld.exe .\win\`
+4. copy the assets folder into the `win` dir
+5. zip it up
+6. upload it to itch.io
+
 ## Credits
 
 - Programming: Brett Chalupa
