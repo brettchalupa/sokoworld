@@ -44,6 +44,8 @@ Press the <kbd>9</kbd> key to reload the current level from disk. This is useful
 
 The game is currently hosted on itch at https://brettchalupa.itch.io/sokoworld
 
+### Web
+
 WASM builds can be built and pushed by running:
 
 ```console
@@ -52,16 +54,16 @@ WASM builds can be built and pushed by running:
 
 Ideally in the future this would push builds for desktop operating systems, create tags, etc., but this works for development.
 
-### Building for Desktop
+### macOS
 
-MacOS & Linux (.deb) use [cargo bundle](https://github.com/burtonageo/cargo-bundle):
+macOS uses [cargo bundle](https://github.com/burtonageo/cargo-bundle):
 
 1. Install cargo bundle: `cargo install cargo-bundle`
 2. Build the bundle: `cargo bundle --release`
 
 There's a `release_macos.sh` script to build and upload a Universal app for macOS (works on both Intel and Apple Silicon Macs).
 
-#### Windows
+### Windows
 
 Not ideal but functioning
 
@@ -70,7 +72,15 @@ Not ideal but functioning
 3. `cp .\target\release\sokoworld.exe .\win\`
 4. copy the assets folder into the `win` dir
 5. zip it up
-6. upload it to itch.io
+6. upload it to itch.io manually
+
+### Linux
+
+Run the script:
+
+```console
+./release_linux.sh
+```
 
 ## Credits
 
