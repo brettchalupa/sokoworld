@@ -93,4 +93,89 @@ impl Level {
             draw_tile(ctx, Tile::Ground, ground, offset);
         }
     }
+
+    /// whether or not the level data meets all of the criteria to be considered a valid Sokoban
+    /// level:
+    ///
+    /// 1. enclosed by walls (TODO: not part of this check yet)
+    /// 2. only one player
+    /// 3. at least one crate
+    /// 4. a storage location for each crate
+    ///
+    /// does not factor in whether or not the level can be completed
+    ///
+    /// in the future this could be nice companion to a `validate()` function that returns the
+    ///     various issues.
+    pub fn is_valid(&self) -> bool {
+        // player can't be placed at 0, 0 and that's the default, so that means the player is
+        // missing
+        !self.player.is_zero()
+            && !self.crates.is_empty()
+            && self.storage_locations.len() == self.crates.len()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::level::{pack::PackLevel, Level};
+
+    #[test]
+    fn test_level_is_valid() {
+        let pack_level = PackLevel {
+            title: "test level".to_string(),
+            data: r#"
+            #####
+            #@$.#
+            #####
+            "#
+            .to_string(),
+        };
+        let level = Level::parse(&pack_level).unwrap();
+        assert!(level.is_valid());
+    }
+
+    #[test]
+    fn test_level_without_player_is_invalid() {
+        let pack_level = PackLevel {
+            title: "test level".to_string(),
+            data: r#"
+            ###
+            # #
+            ###
+            "#
+            .to_string(),
+        };
+        let level = Level::parse(&pack_level).unwrap();
+        assert!(!level.is_valid());
+    }
+
+    #[test]
+    fn test_level_without_crate_is_invalid() {
+        let pack_level = PackLevel {
+            title: "test level".to_string(),
+            data: r#"
+            #####
+            #@  #
+            #####
+            "#
+            .to_string(),
+        };
+        let level = Level::parse(&pack_level).unwrap();
+        assert!(!level.is_valid());
+    }
+
+    #[test]
+    fn test_level_with_mismatch_crates_and_storage_locations_is_invalid() {
+        let pack_level = PackLevel {
+            title: "test level".to_string(),
+            data: r#"
+            #######
+            #@$.. #
+            #######
+            "#
+            .to_string(),
+        };
+        let level = Level::parse(&pack_level).unwrap();
+        assert!(!level.is_valid());
+    }
 }
