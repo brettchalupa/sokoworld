@@ -24,7 +24,7 @@ enum MenuOption {
     Settings,
     LevelSelect,
     MainMenu,
-    #[allow(dead_code)] // doesn't get built in WASM target
+    #[cfg(not(target_family = "wasm"))]
     Quit,
 }
 
@@ -54,6 +54,7 @@ impl Pause {
             MenuOption::Settings => "Settings",
             MenuOption::LevelSelect => "Back to Level Select",
             MenuOption::MainMenu => "Return to Main Menu",
+            #[cfg(not(target_family = "wasm"))]
             MenuOption::Quit => "Quit",
         }
     }
@@ -115,6 +116,7 @@ impl Scene for Pause {
                 MenuOption::MainMenu => {
                     ctx.switch_scene_to = Some(EScene::MainMenu);
                 }
+                #[cfg(not(target_family = "wasm"))]
                 MenuOption::Quit => {
                     ctx.request_quit = true;
                 }
