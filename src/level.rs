@@ -39,13 +39,21 @@ impl Level {
             if row_width > width {
                 width = row_width;
             }
+            // this bool is used to prevent space characters before the first wall in a row being
+            // rendered as ground
+            let mut found_first_wall = false;
             for (x, c) in row.chars().enumerate() {
                 let pos = Vec2 {
                     x: x as i32,
                     y: y as i32,
                 };
                 match c {
-                    '#' => walls.push(pos),
+                    '#' => {
+                        if !found_first_wall {
+                            found_first_wall = true;
+                        }
+                        walls.push(pos)
+                    }
                     '@' => {
                         player = pos;
                         grounds.push(pos);
@@ -63,7 +71,12 @@ impl Level {
                         crates.push(pos);
                     }
                     '.' => storage_locations.push(pos),
-                    ' ' | '-' | '_' => grounds.push(pos),
+                    ' ' | '-' | '_' => {
+                        // first row and column can never be ground
+                        if found_first_wall && y != 0 && x != 0 {
+                            grounds.push(pos)
+                        }
+                    }
                     _ => panic!("unexpected char in level at {}, {}", x, y),
                 }
             }
