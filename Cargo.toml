@@ -3,6 +3,7 @@ name = "sokoworld"
 version = "0.2.0-dev"
 edition = "2021"
 description = "Classic box pushing puzzler Sokoban"
+license = "Unlicense"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
