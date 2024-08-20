@@ -2,6 +2,7 @@ use macroquad::color::{RED, WHITE};
 
 use super::Scene;
 use crate::audio::play_sfx;
+use crate::consts::X_INSET;
 use crate::input::action_pressed;
 use crate::input::Action;
 use crate::text::Size;
@@ -45,8 +46,6 @@ impl Settings {
         }
     }
 }
-
-const X_ALIGN: f32 = 200.;
 
 impl Scene for Settings {
     fn update(&mut self, ctx: &mut Context) {
@@ -97,7 +96,7 @@ impl Scene for Settings {
     }
 
     fn draw(&mut self, ctx: &mut Context) {
-        draw_text(ctx, "Settings", X_ALIGN, 128., Size::Large, WHITE);
+        draw_text(ctx, "Settings", X_INSET, 128., Size::Large, WHITE);
 
         for (i, menu_option) in self.menu_options.iter().enumerate() {
             let color = if self.menu_index == i { RED } else { WHITE };
@@ -106,7 +105,7 @@ impl Scene for Settings {
             draw_text(
                 ctx,
                 text.as_str(),
-                X_ALIGN,
+                X_INSET,
                 200. + (i as f32 * 40.),
                 Size::Medium,
                 color,

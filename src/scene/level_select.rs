@@ -52,16 +52,16 @@ impl Scene for LevelSelect {
         draw_text(
             ctx,
             format!("{} by {}", self.pack.title, self.pack.author).as_str(),
-            VIRTUAL_WIDTH / 2. - 300.,
-            60.,
+            X_INSET,
+            TITLE_Y_INSET,
             text::Size::Large,
             WHITE,
         );
         draw_text(
             ctx,
             "Select a Level",
-            VIRTUAL_WIDTH / 2. - 90.,
-            120.,
+            X_INSET,
+            TITLE_Y_INSET + 60.,
             text::Size::Medium,
             WHITE,
         );
@@ -73,9 +73,7 @@ impl Scene for LevelSelect {
                 WHITE
             };
 
-            // hacky attempt at centering, needs to be improved
-            let title_x =
-                (i as i32 - self.focused_level_index) as f32 * 180. + VIRTUAL_WIDTH / 2. - 60.;
+            let title_x = (i as i32 - self.focused_level_index) as f32 * 180. + X_INSET;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
             let title = level.title.clone();

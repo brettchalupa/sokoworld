@@ -27,8 +27,6 @@ enum MenuOption {
     Quit,
 }
 
-const X_ALIGN: f32 = 360.;
-
 impl MainMenu {
     pub async fn new(ctx: &mut Context) -> Self {
         let base_assets_path = determine_asset_path();
@@ -171,7 +169,14 @@ impl Scene for MainMenu {
             .get(self.menu_index)
             .expect("pause menu index out of bounds");
 
-        draw_text(ctx, "SokoWorld", X_ALIGN, 120., text::Size::Large, WHITE);
+        draw_text(
+            ctx,
+            "SokoWorld",
+            X_INSET,
+            TITLE_Y_INSET,
+            text::Size::Large,
+            WHITE,
+        );
 
         for (i, pack) in &mut self.packs.iter().enumerate() {
             let color = if (self.focused_pack_index == i as i32)
@@ -182,7 +187,7 @@ impl Scene for MainMenu {
                 WHITE
             };
 
-            let title_x = (i as i32 - self.focused_pack_index) as f32 * 320. + X_ALIGN;
+            let title_x = (i as i32 - self.focused_pack_index) as f32 * 320. + X_INSET;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
             draw_text(
@@ -217,7 +222,7 @@ impl Scene for MainMenu {
             draw_text(
                 ctx,
                 self.text_for_menu_option(menu_option),
-                X_ALIGN,
+                X_INSET,
                 400. + (i as f32 * 40.),
                 text::Size::Medium,
                 color,

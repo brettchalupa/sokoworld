@@ -2,7 +2,9 @@ use macroquad::color::{RED, WHITE};
 
 use super::Scene;
 use crate::audio::play_sfx;
+use crate::consts::TITLE_Y_INSET;
 use crate::consts::VIRTUAL_HEIGHT;
+use crate::consts::X_INSET;
 use crate::input::action_pressed;
 use crate::input::Action;
 use crate::text::Size;
@@ -18,8 +20,6 @@ impl Credits {
     }
 }
 
-const X_ALIGN: f32 = 200.;
-
 impl Scene for Credits {
     fn update(&mut self, ctx: &mut Context) {
         if action_pressed(Action::Cancel, &ctx.gamepads)
@@ -31,12 +31,12 @@ impl Scene for Credits {
     }
 
     fn draw(&mut self, ctx: &mut Context) {
-        draw_text(ctx, "Credits", X_ALIGN, 128., Size::Large, WHITE);
+        draw_text(ctx, "Credits", X_INSET, TITLE_Y_INSET, Size::Large, WHITE);
 
         draw_text(
             ctx,
             "Art by Chrysalis, Vellidragon, kenney, and Brett Chalupa",
-            X_ALIGN,
+            X_INSET,
             240.,
             Size::Small,
             WHITE,
@@ -44,7 +44,7 @@ impl Scene for Credits {
         draw_text(
             ctx,
             "Sound effects by Melos Han-Tani",
-            X_ALIGN,
+            X_INSET,
             300.,
             Size::Small,
             WHITE,
@@ -52,7 +52,7 @@ impl Scene for Credits {
         draw_text(
             ctx,
             "Level design by Brett Chalupa and Yoshio Murase",
-            X_ALIGN,
+            X_INSET,
             360.,
             Size::Small,
             WHITE,
@@ -60,7 +60,7 @@ impl Scene for Credits {
         draw_text(
             ctx,
             "Programming by Brett Chalupa",
-            X_ALIGN,
+            X_INSET,
             420.,
             Size::Small,
             WHITE,
@@ -69,7 +69,7 @@ impl Scene for Credits {
         draw_text(
             ctx,
             "Press Z or X to return",
-            X_ALIGN,
+            X_INSET,
             VIRTUAL_HEIGHT - 120.,
             Size::Medium,
             RED,
