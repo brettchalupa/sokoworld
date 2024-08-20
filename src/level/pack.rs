@@ -27,6 +27,8 @@ impl fmt::Display for Difficulty {
 pub struct Pack {
     /// name of the pack
     pub title: String,
+    /// id used for save data; NOTE: changing this will break saves, don't change
+    pub slug: String,
     pub description: String,
     /// who compiled the levels in the pack, often just the designer
     pub author: String,

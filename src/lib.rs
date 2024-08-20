@@ -7,6 +7,7 @@ pub mod entity;
 pub mod font;
 pub mod input;
 pub mod level;
+pub mod save;
 pub mod scene;
 pub mod settings;
 pub mod text;

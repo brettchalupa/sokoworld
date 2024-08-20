@@ -49,11 +49,12 @@ pub struct PlayableLevel {
     move_held_delay: f32,
     rewind_held_delay: f32,
     moves: Vec<PlayerMove>,
+    pack_slug: String,
 }
 
 impl PlayableLevel {
     /// creates a new playable level with properly reset data from the specified pack_level
-    pub fn new(pack_level: &PackLevel) -> Self {
+    pub fn new(pack_slug: String, pack_level: &PackLevel) -> Self {
         let level = Level::parse(pack_level).unwrap();
         let player = Entity { pos: level.player };
         let mut crates: Vec<Crate> = vec![];
@@ -80,6 +81,7 @@ impl PlayableLevel {
             move_held_delay: 0.,
             rewind_held_delay: 0.,
             moves: vec![],
+            pack_slug,
         }
     }
 
@@ -268,6 +270,12 @@ impl PlayableLevel {
             }) {
                 play_sfx(ctx, &ctx.audio.sfx.level_complete);
                 self.complete = true;
+                ctx.save.complete_level(
+                    self.pack_slug.clone(),
+                    self.level.title.clone(),
+                    self.steps,
+                    self.pushes,
+                );
             }
         }
     }

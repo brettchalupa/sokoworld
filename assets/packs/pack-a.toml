@@ -1,4 +1,5 @@
 title = "Pack A: Starting Out"
+slug = "pack-a"
 description = "Simple levels to learn the rules of Sokoban."
 author = "Brett Chalupa"
 license = "CC0 (Public Domain)"

@@ -2,6 +2,7 @@ use crate::assets_path::determine_asset_path;
 use crate::audio;
 use crate::consts::*;
 use crate::font;
+use crate::save::Save;
 use crate::scene::EScene;
 use crate::settings::Settings;
 use crate::texture;
@@ -32,6 +33,7 @@ pub struct Context {
     /// what level is currently being played, if any. needed for reloading from disk
     pub current_level_index: Option<usize>,
     pub settings: Settings,
+    pub save: Save,
 }
 
 impl Context {
@@ -61,6 +63,7 @@ impl Context {
             current_pack_file: None,
             current_level_index: None,
             settings: Settings::load(),
+            save: Save::load(),
         }
     }
 

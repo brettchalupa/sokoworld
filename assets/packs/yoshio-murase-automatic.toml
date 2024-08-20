@@ -1,4 +1,5 @@
 title = "YM Auto"
+slug = "ym-auto"
 description = "These sokoban screens were made automatically by computer. Yosio Murase wrote the program that created these levels and then made the levels available on his sokoban web pages."
 source = "http://sneezingtiger.com/sokoban/levels/yoshioText.html"
 author = "Yoshio Murase"
