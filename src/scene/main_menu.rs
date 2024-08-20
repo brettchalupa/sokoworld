@@ -1,3 +1,4 @@
+use super::credits::Credits;
 use super::settings::Settings;
 use super::{EScene, Scene};
 use crate::assets_path::determine_asset_path;
@@ -15,6 +16,7 @@ pub struct MainMenu {
     menu_options: Vec<MenuOption>,
     menu_index: usize,
     settings_subscene: Settings,
+    credits_subscene: Credits,
 }
 
 enum MenuOption {
@@ -61,6 +63,7 @@ impl MainMenu {
             packs,
             focused_pack_index: 0,
             settings_subscene: Settings::new(ctx, false),
+            credits_subscene: Credits::new(ctx),
         }
     }
 
@@ -79,6 +82,11 @@ impl Scene for MainMenu {
     fn update(&mut self, ctx: &mut Context) {
         if self.settings_subscene.active {
             self.settings_subscene.update(ctx);
+            return;
+        }
+
+        if self.credits_subscene.active {
+            self.credits_subscene.update(ctx);
             return;
         }
 
@@ -119,7 +127,7 @@ impl Scene for MainMenu {
                     self.settings_subscene.active = true;
                 }
                 MenuOption::Credits => {
-                    todo!("credits subscene");
+                    self.credits_subscene.active = true;
                 }
                 #[cfg(not(target_family = "wasm"))]
                 MenuOption::Quit => {
@@ -150,6 +158,11 @@ impl Scene for MainMenu {
     fn draw(&mut self, ctx: &mut Context) {
         if self.settings_subscene.active {
             self.settings_subscene.draw(ctx);
+            return;
+        }
+
+        if self.credits_subscene.active {
+            self.credits_subscene.draw(ctx);
             return;
         }
 
