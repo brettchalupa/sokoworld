@@ -1,5 +1,6 @@
 use super::{EScene, Scene};
 use crate::audio::play_sfx;
+use crate::color::BLUE;
 use crate::consts::*;
 use crate::context::Context;
 use crate::input::{action_pressed, Action};
@@ -67,16 +68,19 @@ impl Scene for LevelSelect {
         );
 
         for (i, level) in &mut self.pack.levels.iter().enumerate() {
+            let title = level.title.clone();
+            let is_level_complete = ctx.save.is_level_complete(&self.pack.slug, &title);
+
             let color = if self.focused_level_index == i as i32 {
                 RED
+            } else if is_level_complete {
+                BLUE
             } else {
                 WHITE
             };
 
             let title_x = (i as i32 - self.focused_level_index) as f32 * 180. + X_INSET;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
-
-            let title = level.title.clone();
             draw_text(
                 ctx,
                 title.as_str(),
@@ -86,7 +90,7 @@ impl Scene for LevelSelect {
                 color,
             );
 
-            if ctx.save.is_level_complete(&self.pack.slug, &title) {
+            if is_level_complete {
                 draw_text(
                     ctx,
                     "complete",
