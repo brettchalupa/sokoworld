@@ -105,7 +105,7 @@ impl Scene for LevelSelect {
         draw_text(
             ctx,
             "Press Z to select level",
-            VIRTUAL_WIDTH / 2. - 180.,
+            X_INSET,
             VIRTUAL_HEIGHT - 120.,
             text::Size::Medium,
             WHITE,

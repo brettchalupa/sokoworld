@@ -232,7 +232,7 @@ impl Scene for MainMenu {
         draw_text(
             ctx,
             "Change Select = Arrow Keys | Confirm = Z",
-            VIRTUAL_WIDTH / 2. - 180.,
+            X_INSET,
             VIRTUAL_HEIGHT - 40.,
             text::Size::Small,
             WHITE,
