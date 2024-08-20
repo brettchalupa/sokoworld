@@ -17,9 +17,9 @@ use crate::consts::*;
 use crate::entity::{Crate, Entity};
 
 /// delay in seconds between movement when held down
-const MOVE_HELD_DELAY: f32 = 0.2;
+const MOVE_HELD_DELAY: f32 = 0.1;
 /// delay in seconds between rewind steps when held down
-const REWIND_HELD_DELAY: f32 = 0.1;
+const REWIND_HELD_DELAY: f32 = 0.05;
 
 /// direction that the player moved in
 #[derive(Clone, Debug)]
