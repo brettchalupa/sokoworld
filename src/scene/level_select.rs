@@ -78,14 +78,26 @@ impl Scene for LevelSelect {
                 (i as i32 - self.focused_level_index) as f32 * 180. + VIRTUAL_WIDTH / 2. - 60.;
             let title_y = VIRTUAL_HEIGHT / 2. - 58.;
 
+            let title = level.title.clone();
             draw_text(
                 ctx,
-                level.title.as_str(),
+                title.as_str(),
                 title_x,
                 title_y,
                 text::Size::Medium,
                 color,
             );
+
+            if ctx.save.is_level_complete(&self.pack.slug, &title) {
+                draw_text(
+                    ctx,
+                    "complete",
+                    title_x,
+                    title_y + 40.,
+                    text::Size::Small,
+                    color,
+                );
+            }
         }
 
         draw_text(
