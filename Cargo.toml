@@ -29,7 +29,7 @@ opt-level = 3
 [package.metadata.bundle]
 name = "SokoWorld"
 identifier = "com.brettchalupa.sokoworld"
-# icon = ["icon/32x32.png", "icon/128x128.png", "icon/128x128@2x.png"] # TODO
+icon = ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png"]
 resources = ["assets"]
 copyright = "Public Domain"
 category = "Puzzle game"
