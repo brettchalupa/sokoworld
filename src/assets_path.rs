@@ -11,6 +11,7 @@ pub const ASSETS_DIR: &str = "assets";
 /// 1. are we running from Cargo where the assets are in the CARGO_MANIFEST_DIR?
 /// 2. are we running from a build where assets are next to the binary?
 /// 3. are we in a MacOS .app bundle where the assets are in `../Resources/assets`?
+/// 4. are we in a `cargo install`? Check a few dirs up to the project root
 ///
 /// For Windows and Linux releases, it'll be #2. For macOS releases it'll be #3.
 ///
@@ -68,8 +69,21 @@ pub fn determine_asset_path() -> PathBuf {
                         println!("macos bundle asset path: {:#?}", macos_app_path);
                     }
                     return macos_app_path;
-                } else if verbose {
-                    println!("couldn't find assets as sibbling or in macOS app bundle");
+                } else {
+                    // try to find in the project root for `cargo install`s
+                    let mut project_root = exe_path.clone();
+                    project_root.pop();
+                    project_root.pop();
+                    project_root.pop();
+                    project_root.push(ASSETS_DIR);
+                    if project_root.is_dir() {
+                        if verbose {
+                            println!("parent asset path: {:#?}", project_root);
+                        }
+                        return project_root;
+                    } else {
+                        println!("couldn't find assets as sibling, parent, or in macOS app bundle");
+                    }
                 }
             }
         }
