@@ -7,7 +7,6 @@ Free and open source Sokoban client made with Rust and Macroquad.
 Alternate install instructions:
 
 - [Download the latest release from GitHub](https://github.com/brettchalupa/sokoworld/releases)
-- Install with Cargo if you have Rust installed: `cargo install sokoworld`
 
 ## Defining Levels
 
