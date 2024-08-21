@@ -1,6 +1,6 @@
 [package]
 name = "sokoworld"
-version = "0.2.0"
+version = "0.2.1-pre"
 edition = "2021"
 description = "Classic box pushing puzzler Sokoban"
 license = "Unlicense"
