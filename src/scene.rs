@@ -14,6 +14,7 @@ use crate::{
     level::pack::{Pack, PackLevel},
 };
 
+pub mod credits;
 pub mod gameplay;
 pub mod level_select;
 pub mod main_menu;

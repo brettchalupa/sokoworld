@@ -4,6 +4,8 @@ use super::settings::Settings;
 use super::EScene;
 use super::Scene;
 use crate::audio::play_sfx;
+use crate::consts::TITLE_Y_INSET;
+use crate::consts::X_INSET;
 use crate::input::action_pressed;
 use crate::input::Action;
 use crate::level::pack::Pack;
@@ -24,7 +26,7 @@ enum MenuOption {
     Settings,
     LevelSelect,
     MainMenu,
-    #[allow(dead_code)] // doesn't get built in WASM target
+    #[cfg(not(target_family = "wasm"))]
     Quit,
 }
 
@@ -54,12 +56,11 @@ impl Pause {
             MenuOption::Settings => "Settings",
             MenuOption::LevelSelect => "Back to Level Select",
             MenuOption::MainMenu => "Return to Main Menu",
+            #[cfg(not(target_family = "wasm"))]
             MenuOption::Quit => "Quit",
         }
     }
 }
-
-const X_ALIGN: f32 = 200.;
 
 impl Scene for Pause {
     fn update(&mut self, ctx: &mut Context) {
@@ -115,6 +116,7 @@ impl Scene for Pause {
                 MenuOption::MainMenu => {
                     ctx.switch_scene_to = Some(EScene::MainMenu);
                 }
+                #[cfg(not(target_family = "wasm"))]
                 MenuOption::Quit => {
                     ctx.request_quit = true;
                 }
@@ -128,7 +130,7 @@ impl Scene for Pause {
             return;
         }
 
-        draw_text(ctx, "Pause", X_ALIGN, 128., Size::Large, WHITE);
+        draw_text(ctx, "Pause", X_INSET, TITLE_Y_INSET, Size::Large, WHITE);
 
         for (i, menu_option) in self.menu_options.iter().enumerate() {
             let color = if self.menu_index == i { RED } else { WHITE };
@@ -136,7 +138,7 @@ impl Scene for Pause {
             draw_text(
                 ctx,
                 self.text_for_menu_option(menu_option),
-                X_ALIGN,
+                X_INSET,
                 200. + (i as f32 * 40.),
                 Size::Medium,
                 color,

@@ -1,6 +1,7 @@
 use super::pack::PackLevel;
 use super::Level;
 use crate::audio::play_sfx;
+use crate::color::BLUE;
 use crate::input;
 use crate::text::draw_text;
 use crate::{
@@ -295,28 +296,10 @@ impl PlayableLevel {
             draw_tile(ctx, t, &c.pos, &offset);
         }
 
-        if self.complete {
-            draw_text(
-                ctx,
-                "Nice job! Press Z to go to next level.",
-                VIRTUAL_WIDTH / 2. - 220.,
-                VIRTUAL_HEIGHT - 92.,
-                crate::text::Size::Medium,
-                WHITE,
-            );
-        }
-        draw_text(
-            ctx,
-            "Move = Arrow Keys | Rewind = X | Reset = C",
-            VIRTUAL_WIDTH / 2. - 320.,
-            VIRTUAL_HEIGHT - 48.,
-            crate::text::Size::Medium,
-            WHITE,
-        );
         draw_text(
             ctx,
             self.level.title.as_str(),
-            48.,
+            X_INSET / 2.,
             62.,
             crate::text::Size::Large,
             WHITE,
@@ -324,9 +307,27 @@ impl PlayableLevel {
         draw_text(
             ctx,
             format!("Steps: {} | Pushes: {}", self.steps, self.pushes).as_str(),
-            48.,
+            X_INSET / 2.,
             112.,
             crate::text::Size::Medium,
+            WHITE,
+        );
+        if self.complete {
+            draw_text(
+                ctx,
+                "Nice job! Press Z to go to next level.",
+                X_INSET / 2.,
+                VIRTUAL_HEIGHT - 92.,
+                crate::text::Size::Medium,
+                BLUE,
+            );
+        }
+        draw_text(
+            ctx,
+            "Move = Arrow Keys | Rewind = X | Reset = C",
+            X_INSET / 2.,
+            VIRTUAL_HEIGHT - 48.,
+            crate::text::Size::Small,
             WHITE,
         );
     }

@@ -6,3 +6,10 @@ pub const DARKGRAY: Color = Color {
     b: 0.15,
     a: 1.0,
 };
+
+pub const BLUE: Color = Color {
+    r: 0.55,
+    g: 0.55,
+    b: 0.95,
+    a: 1.0,
+};

@@ -1,8 +1,9 @@
 [package]
 name = "sokoworld"
-version = "0.2.0-dev"
+version = "0.2.0"
 edition = "2021"
 description = "Classic box pushing puzzler Sokoban"
+license = "Unlicense"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -28,7 +29,7 @@ opt-level = 3
 [package.metadata.bundle]
 name = "SokoWorld"
 identifier = "com.brettchalupa.sokoworld"
-# icon = ["icon/32x32.png", "icon/128x128.png", "icon/128x128@2x.png"] # TODO
+icon = ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png"]
 resources = ["assets"]
 copyright = "Public Domain"
 category = "Puzzle game"
