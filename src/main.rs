@@ -1,6 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use macroquad::prelude::*;
+use miniquad::conf::Icon;
 use sokoworld::consts::*;
 use sokoworld::context::Context;
 use sokoworld::level::pack::Pack;
@@ -11,11 +12,17 @@ use sokoworld::scene::{main_menu::MainMenu, Scene};
 
 fn window_conf() -> Conf {
     Conf {
-        window_title: String::from("SokoWorld"),
-        window_width: 1280,
-        window_height: 720,
         fullscreen: false,
         high_dpi: true,
+        icon: Some(Icon {
+            small: include_bytes!("../icons/16x16.rgba").to_owned(),
+            medium: include_bytes!("../icons/32x32.rgba").to_owned(),
+            big: include_bytes!("../icons/64x64.rgba").to_owned(),
+        }),
+        window_height: 720,
+        window_resizable: true,
+        window_title: String::from("SokoWorld"),
+        window_width: 1280,
         ..Default::default()
     }
 }
