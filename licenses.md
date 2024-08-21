@@ -15,9 +15,9 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 ## All license text:
 ### Apache License 2.0
 #### Used by:
-- [fdeflate 0.3.4]( https://github.com/image-rs/fdeflate )
-- [image 0.24.9]( https://github.com/image-rs/image )
-- [miniz_oxide 0.7.4]( https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide )
+- [fdeflate 0.3.4](https://github.com/image-rs/fdeflate)
+- [image 0.24.9](https://github.com/image-rs/image)
+- [miniz_oxide 0.7.4](https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide)
 
 
                                  Apache License
@@ -199,7 +199,7 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [io-kit-sys 0.4.1]( https://github.com/jtakakura/io-kit-rs )
+- [io-kit-sys 0.4.1](https://github.com/jtakakura/io-kit-rs)
 
 
                                  Apache License
@@ -407,7 +407,7 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [fontdue 0.7.3]( https://github.com/mooman219/fontdue )
+- [fontdue 0.7.3](https://github.com/mooman219/fontdue)
 
 
                                  Apache License
@@ -613,214 +613,7 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
    limitations under the License.
 ### Apache License 2.0
 #### Used by:
-- [hound 3.5.1]( https://github.com/ruuda/hound )
-
-
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
-   1. Definitions.
-
-      &quot;License&quot; shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
-
-      &quot;Licensor&quot; shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
-
-      &quot;Legal Entity&quot; shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      &quot;control&quot; means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
-
-      &quot;You&quot; (or &quot;Your&quot;) shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
-
-      &quot;Source&quot; form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
-
-      &quot;Object&quot; form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
-
-      &quot;Work&quot; shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
-
-      &quot;Derivative Works&quot; shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
-
-      &quot;Contribution&quot; shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, &quot;submitted&quot;
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as &quot;Not a Contribution.&quot;
-
-      &quot;Contributor&quot; shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
-
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
-
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
-
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
-
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
-
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
-
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
-
-      (d) If the Work includes a &quot;NOTICE&quot; text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
-
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets &quot;[]&quot;
-      replaced with your own identifying information. (Don&#x27;t include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same &quot;printed page&quot; as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright [yyyy] [name of copyright owner]
-
-   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-### Apache License 2.0
-#### Used by:
-- [audir-sles 0.1.0]( https://github.com/norse-rs/audir-sles )
+- [hound 3.5.1](https://github.com/ruuda/hound)
 
 
                                  Apache License
@@ -1027,7 +820,214 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [fontdue 0.7.3]( https://github.com/mooman219/fontdue )
+- [audir-sles 0.1.0](https://github.com/norse-rs/audir-sles)
+
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      &quot;License&quot; shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      &quot;Licensor&quot; shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      &quot;Legal Entity&quot; shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      &quot;control&quot; means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      &quot;You&quot; (or &quot;Your&quot;) shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      &quot;Source&quot; form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      &quot;Object&quot; form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      &quot;Work&quot; shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      &quot;Derivative Works&quot; shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      &quot;Contribution&quot; shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, &quot;submitted&quot;
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as &quot;Not a Contribution.&quot;
+
+      &quot;Contributor&quot; shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a &quot;NOTICE&quot; text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets &quot;[]&quot;
+      replaced with your own identifying information. (Don&#x27;t include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same &quot;printed page&quot; as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+### Apache License 2.0
+#### Used by:
+- [fontdue 0.7.3](https://github.com/mooman219/fontdue)
 
                                  Apache License
                            Version 2.0, January 2004
@@ -1208,30 +1208,30 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [windows-core 0.58.0]( https://github.com/microsoft/windows-rs )
-- [windows-implement 0.58.0]( https://github.com/microsoft/windows-rs )
-- [windows-interface 0.58.0]( https://github.com/microsoft/windows-rs )
-- [windows-result 0.2.0]( https://github.com/microsoft/windows-rs )
-- [windows-strings 0.1.0]( https://github.com/microsoft/windows-rs )
-- [windows-sys 0.48.0]( https://github.com/microsoft/windows-rs )
-- [windows-targets 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows-targets 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows 0.58.0]( https://github.com/microsoft/windows-rs )
-- [windows_aarch64_gnullvm 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_aarch64_gnullvm 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_aarch64_msvc 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_aarch64_msvc 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_i686_gnu 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_i686_gnu 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_i686_gnullvm 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_i686_msvc 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_i686_msvc 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_gnu 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_gnu 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_gnullvm 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_gnullvm 0.52.6]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_msvc 0.48.5]( https://github.com/microsoft/windows-rs )
-- [windows_x86_64_msvc 0.52.6]( https://github.com/microsoft/windows-rs )
+- [windows-core 0.58.0](https://github.com/microsoft/windows-rs)
+- [windows-implement 0.58.0](https://github.com/microsoft/windows-rs)
+- [windows-interface 0.58.0](https://github.com/microsoft/windows-rs)
+- [windows-result 0.2.0](https://github.com/microsoft/windows-rs)
+- [windows-strings 0.1.0](https://github.com/microsoft/windows-rs)
+- [windows-sys 0.48.0](https://github.com/microsoft/windows-rs)
+- [windows-targets 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows-targets 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows 0.58.0](https://github.com/microsoft/windows-rs)
+- [windows_aarch64_gnullvm 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_aarch64_gnullvm 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_aarch64_msvc 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_aarch64_msvc 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_i686_gnu 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_i686_gnu 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_i686_gnullvm 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_i686_msvc 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_i686_msvc 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_gnu 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_gnu 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_gnullvm 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_gnullvm 0.52.6](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_msvc 0.48.5](https://github.com/microsoft/windows-rs)
+- [windows_x86_64_msvc 0.52.6](https://github.com/microsoft/windows-rs)
 
                                  Apache License
                            Version 2.0, January 2004
@@ -1437,7 +1437,7 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [zerocopy 0.7.35]( https://github.com/google/zerocopy )
+- [zerocopy 0.7.35](https://github.com/google/zerocopy)
 
                                  Apache License
                            Version 2.0, January 2004
@@ -1644,7 +1644,7 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [winapi 0.3.9]( https://github.com/retep998/winapi-rs )
+- [winapi 0.3.9](https://github.com/retep998/winapi-rs)
 
                                  Apache License
                            Version 2.0, January 2004
@@ -1850,11 +1850,11 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [crc32fast 1.4.2]( https://github.com/srijs/rust-crc32fast )
-- [serde_spanned 0.6.7]( https://github.com/toml-rs/toml )
-- [toml 0.8.19]( https://github.com/toml-rs/toml )
-- [toml_datetime 0.6.8]( https://github.com/toml-rs/toml )
-- [toml_edit 0.22.20]( https://github.com/toml-rs/toml )
+- [crc32fast 1.4.2](https://github.com/srijs/rust-crc32fast)
+- [serde_spanned 0.6.7](https://github.com/toml-rs/toml)
+- [toml 0.8.19](https://github.com/toml-rs/toml)
+- [toml_datetime 0.6.8](https://github.com/toml-rs/toml)
+- [toml_edit 0.22.20](https://github.com/toml-rs/toml)
 
                                  Apache License
                            Version 2.0, January 2004
@@ -2061,8 +2061,8 @@ This page lists the licenses of the open source projects used in SokoWorld. The 
 
 ### Apache License 2.0
 #### Used by:
-- [directories 5.0.1]( https://github.com/soc/directories-rs )
-- [dirs-sys 0.4.1]( https://github.com/dirs-dev/dirs-sys-rs )
+- [directories 5.0.1](https://github.com/soc/directories-rs)
+- [dirs-sys 0.4.1](https://github.com/dirs-dev/dirs-sys-rs)
 
                               Apache License
                         Version 2.0, January 2004
@@ -2241,17 +2241,17 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
 ### Apache License 2.0
 #### Used by:
-- [libc 0.2.155]( https://github.com/rust-lang/libc )
-- [mach2 0.4.2]( https://github.com/JohnTitor/mach2 )
-- [proc-macro2 1.0.86]( https://github.com/dtolnay/proc-macro2 )
-- [quote 1.0.36]( https://github.com/dtolnay/quote )
-- [serde 1.0.207]( https://github.com/serde-rs/serde )
-- [serde_derive 1.0.207]( https://github.com/serde-rs/serde )
-- [syn 2.0.74]( https://github.com/dtolnay/syn )
-- [thiserror-impl 1.0.63]( https://github.com/dtolnay/thiserror )
-- [thiserror 1.0.63]( https://github.com/dtolnay/thiserror )
-- [unicode-ident 1.0.12]( https://github.com/dtolnay/unicode-ident )
-- [zerocopy 0.7.35]( https://github.com/google/zerocopy )
+- [libc 0.2.155](https://github.com/rust-lang/libc)
+- [mach2 0.4.2](https://github.com/JohnTitor/mach2)
+- [proc-macro2 1.0.86](https://github.com/dtolnay/proc-macro2)
+- [quote 1.0.36](https://github.com/dtolnay/quote)
+- [serde 1.0.207](https://github.com/serde-rs/serde)
+- [serde_derive 1.0.207](https://github.com/serde-rs/serde)
+- [syn 2.0.74](https://github.com/dtolnay/syn)
+- [thiserror-impl 1.0.63](https://github.com/dtolnay/thiserror)
+- [thiserror 1.0.63](https://github.com/dtolnay/thiserror)
+- [unicode-ident 1.0.12](https://github.com/dtolnay/unicode-ident)
+- [zerocopy 0.7.35](https://github.com/google/zerocopy)
 
                               Apache License
                         Version 2.0, January 2004
@@ -2432,7 +2432,7 @@ END OF TERMS AND CONDITIONS
 
 ### Apache License 2.0
 #### Used by:
-- [glam 0.27.0]( https://github.com/bitshifter/glam-rs )
+- [glam 0.27.0](https://github.com/bitshifter/glam-rs)
 
                               Apache License
                         Version 2.0, January 2004
@@ -2638,46 +2638,46 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [ahash 0.8.11]( https://github.com/tkaitchuck/ahash )
-- [autocfg 1.3.0]( https://github.com/cuviper/autocfg )
-- [base64 0.21.7]( https://github.com/marshallpierce/rust-base64 )
-- [bitflags 1.3.2]( https://github.com/bitflags/bitflags )
-- [bitflags 2.6.0]( https://github.com/bitflags/bitflags )
-- [bumpalo 3.16.0]( https://github.com/fitzgen/bumpalo )
-- [cfg-if 1.0.0]( https://github.com/alexcrichton/cfg-if )
-- [core-foundation-sys 0.8.7]( https://github.com/servo/core-foundation-rs )
-- [core-foundation 0.9.4]( https://github.com/servo/core-foundation-rs )
-- [equivalent 1.0.1]( https://github.com/cuviper/equivalent )
-- [flate2 1.0.31]( https://github.com/rust-lang/flate2-rs )
-- [fnv 1.0.7]( https://github.com/servo/rust-fnv )
-- [gamepads 0.1.6]( https://github.com/fornwall/gamepads )
-- [hashbrown 0.13.2]( https://github.com/rust-lang/hashbrown )
-- [hashbrown 0.14.5]( https://github.com/rust-lang/hashbrown )
-- [indexmap 2.3.0]( https://github.com/indexmap-rs/indexmap )
-- [js-sys 0.3.69]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/js-sys )
-- [lazy_static 1.5.0]( https://github.com/rust-lang-nursery/lazy-static.rs )
-- [log 0.4.22]( https://github.com/rust-lang/log )
-- [macroquad 0.4.12]( https://github.com/not-fl3/macroquad )
-- [macroquad_macro 0.1.8]( https://github.com/not-fl3/macroquad )
-- [maybe-uninit 2.0.0]( https://github.com/est31/maybe-uninit )
-- [miniquad 0.4.5]( https://github.com/not-fl3/miniquad )
-- [num-traits 0.2.19]( https://github.com/rust-num/num-traits )
-- [once_cell 1.19.0]( https://github.com/matklad/once_cell )
-- [pkg-config 0.3.30]( https://github.com/rust-lang/pkg-config-rs )
-- [png 0.17.13]( https://github.com/image-rs/image-png )
-- [quad-storage 0.1.3]( https://github.com/optozorax/quad-storage )
-- [ron 0.8.1]( https://github.com/ron-rs/ron )
-- [smallvec 0.6.14]( https://github.com/servo/rust-smallvec )
-- [ttf-parser 0.15.2]( https://github.com/RazrFalcon/ttf-parser )
-- [uuid 1.10.0]( https://github.com/uuid-rs/uuid )
-- [version_check 0.9.5]( https://github.com/SergioBenitez/version_check )
-- [wasi 0.11.0+wasi-snapshot-preview1]( https://github.com/bytecodealliance/wasi )
-- [wasm-bindgen-backend 0.2.92]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/backend )
-- [wasm-bindgen-macro-support 0.2.92]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support )
-- [wasm-bindgen-macro 0.2.92]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro )
-- [wasm-bindgen-shared 0.2.92]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared )
-- [wasm-bindgen 0.2.92]( https://github.com/rustwasm/wasm-bindgen )
-- [web-sys 0.3.69]( https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys )
+- [ahash 0.8.11](https://github.com/tkaitchuck/ahash)
+- [autocfg 1.3.0](https://github.com/cuviper/autocfg)
+- [base64 0.21.7](https://github.com/marshallpierce/rust-base64)
+- [bitflags 1.3.2](https://github.com/bitflags/bitflags)
+- [bitflags 2.6.0](https://github.com/bitflags/bitflags)
+- [bumpalo 3.16.0](https://github.com/fitzgen/bumpalo)
+- [cfg-if 1.0.0](https://github.com/alexcrichton/cfg-if)
+- [core-foundation-sys 0.8.7](https://github.com/servo/core-foundation-rs)
+- [core-foundation 0.9.4](https://github.com/servo/core-foundation-rs)
+- [equivalent 1.0.1](https://github.com/cuviper/equivalent)
+- [flate2 1.0.31](https://github.com/rust-lang/flate2-rs)
+- [fnv 1.0.7](https://github.com/servo/rust-fnv)
+- [gamepads 0.1.6](https://github.com/fornwall/gamepads)
+- [hashbrown 0.13.2](https://github.com/rust-lang/hashbrown)
+- [hashbrown 0.14.5](https://github.com/rust-lang/hashbrown)
+- [indexmap 2.3.0](https://github.com/indexmap-rs/indexmap)
+- [js-sys 0.3.69](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/js-sys)
+- [lazy_static 1.5.0](https://github.com/rust-lang-nursery/lazy-static.rs)
+- [log 0.4.22](https://github.com/rust-lang/log)
+- [macroquad 0.4.12](https://github.com/not-fl3/macroquad)
+- [macroquad_macro 0.1.8](https://github.com/not-fl3/macroquad)
+- [maybe-uninit 2.0.0](https://github.com/est31/maybe-uninit)
+- [miniquad 0.4.5](https://github.com/not-fl3/miniquad)
+- [num-traits 0.2.19](https://github.com/rust-num/num-traits)
+- [once_cell 1.19.0](https://github.com/matklad/once_cell)
+- [pkg-config 0.3.30](https://github.com/rust-lang/pkg-config-rs)
+- [png 0.17.13](https://github.com/image-rs/image-png)
+- [quad-storage 0.1.3](https://github.com/optozorax/quad-storage)
+- [ron 0.8.1](https://github.com/ron-rs/ron)
+- [smallvec 0.6.14](https://github.com/servo/rust-smallvec)
+- [ttf-parser 0.15.2](https://github.com/RazrFalcon/ttf-parser)
+- [uuid 1.10.0](https://github.com/uuid-rs/uuid)
+- [version_check 0.9.5](https://github.com/SergioBenitez/version_check)
+- [wasi 0.11.0+wasi-snapshot-preview1](https://github.com/bytecodealliance/wasi)
+- [wasm-bindgen-backend 0.2.92](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/backend)
+- [wasm-bindgen-macro-support 0.2.92](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support)
+- [wasm-bindgen-macro 0.2.92](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro)
+- [wasm-bindgen-shared 0.2.92](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared)
+- [wasm-bindgen 0.2.92](https://github.com/rustwasm/wasm-bindgen)
+- [web-sys 0.3.69](https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys)
 
                               Apache License
                         Version 2.0, January 2004
@@ -2883,7 +2883,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [vec_map 0.8.2]( https://github.com/contain-rs/vec-map )
+- [vec_map 0.8.2](https://github.com/contain-rs/vec-map)
 
                               Apache License
                         Version 2.0, January 2004
@@ -3089,7 +3089,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [getrandom 0.2.15]( https://github.com/rust-random/getrandom )
+- [getrandom 0.2.15](https://github.com/rust-random/getrandom)
 
                               Apache License
                         Version 2.0, January 2004
@@ -3295,7 +3295,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [adler 1.0.2]( https://github.com/jonas-schievink/adler.git )
+- [adler 1.0.2](https://github.com/jonas-schievink/adler.git)
 
                               Apache License
                         Version 2.0, January 2004
@@ -3501,7 +3501,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [winapi 0.3.9]( https://github.com/retep998/winapi-rs )
+- [winapi 0.3.9](https://github.com/retep998/winapi-rs)
 
 // Licensed under the Apache License, Version 2.0
 // &lt;LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license
@@ -3511,18 +3511,18 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [dasp_frame 0.11.0]( https://github.com/rustaudio/dasp.git )
-- [dasp_sample 0.11.0]( https://github.com/rustaudio/sample.git )
-- [gilrs-core 0.5.13]( https://gitlab.com/gilrs-project/gilrs )
-- [gilrs 0.10.9]( https://gitlab.com/gilrs-project/gilrs )
-- [lewton 0.9.4]( https://github.com/RustAudio/lewton )
-- [nanoserde 0.1.37]( https://github.com/not-fl3/nanoserde )
-- [ndk-sys 0.2.2]( https://github.com/rust-windowing/android-ndk-rs )
-- [quad-snd 0.2.8]( https://crates.io/crates/quad-snd )
-- [quad-storage-sys 0.1.0]( https://github.com/optozorax/quad-storage )
-- [sapp-jsutils 0.1.5]( https://github.com/not-fl3/sapp-jsutils )
-- [winapi-i686-pc-windows-gnu 0.4.0]( https://github.com/retep998/winapi-rs )
-- [winapi-x86_64-pc-windows-gnu 0.4.0]( https://github.com/retep998/winapi-rs )
+- [dasp_frame 0.11.0](https://github.com/rustaudio/dasp.git)
+- [dasp_sample 0.11.0](https://github.com/rustaudio/sample.git)
+- [gilrs-core 0.5.13](https://gitlab.com/gilrs-project/gilrs)
+- [gilrs 0.10.9](https://gitlab.com/gilrs-project/gilrs)
+- [lewton 0.9.4](https://github.com/RustAudio/lewton)
+- [nanoserde 0.1.37](https://github.com/not-fl3/nanoserde)
+- [ndk-sys 0.2.2](https://github.com/rust-windowing/android-ndk-rs)
+- [quad-snd 0.2.8]( https://crates.io/crates/quad-snd)
+- [quad-storage-sys 0.1.0](https://github.com/optozorax/quad-storage)
+- [sapp-jsutils 0.1.5](https://github.com/not-fl3/sapp-jsutils)
+- [winapi-i686-pc-windows-gnu 0.4.0](https://github.com/retep998/winapi-rs)
+- [winapi-x86_64-pc-windows-gnu 0.4.0](https://github.com/retep998/winapi-rs)
 
 Apache License
 Version 2.0, January 2004
@@ -3600,7 +3600,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [bytemuck 1.16.3]( https://github.com/Lokathor/bytemuck )
+- [bytemuck 1.16.3](https://github.com/Lokathor/bytemuck)
 
 Apache License
 Version 2.0, January 2004
@@ -3666,7 +3666,7 @@ limitations under the License.
 
 ### Apache License 2.0
 #### Used by:
-- [audrey 0.3.0]( https://github.com/RustAudio/audrey.git )
+- [audrey 0.3.0](https://github.com/RustAudio/audrey.git)
 
 Copyright 2016 RustAudio Developers
 
@@ -3684,7 +3684,7 @@ limitations under the License.
 
 ### BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
 #### Used by:
-- [ogg 0.7.1]( https://github.com/RustAudio/ogg )
+- [ogg 0.7.1](https://github.com/RustAudio/ogg)
 
 NOTE:
 The full list of contributors can be obtained by looking
@@ -3725,7 +3725,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### ISC License
 #### Used by:
-- [inotify-sys 0.1.5]( https://github.com/hannobraun/inotify-sys )
+- [inotify-sys 0.1.5](https://github.com/hannobraun/inotify-sys)
 
 Copyright (c) Hanno Braun and contributors
 
@@ -3742,7 +3742,7 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 ### ISC License
 #### Used by:
-- [inotify 0.10.2]( https://github.com/hannobraun/inotify )
+- [inotify 0.10.2](https://github.com/hannobraun/inotify)
 
 Copyright (c) Hanno Braun and contributors
 
@@ -3760,7 +3760,7 @@ THIS SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [libudev-sys 0.1.4]( https://github.com/dcuddeback/libudev-sys )
+- [libudev-sys 0.1.4](https://github.com/dcuddeback/libudev-sys)
 
 Copyright (c) 2015 David Cuddeback
 
@@ -3785,7 +3785,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [quad-alsa-sys 0.3.2]( https://github.com/not-fl3/alsa-sys )
+- [quad-alsa-sys 0.3.2](https://github.com/not-fl3/alsa-sys)
 
 MIT License
 
@@ -3811,7 +3811,7 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [cfg_aliases 0.2.1]( https://github.com/katharostech/cfg_aliases )
+- [cfg_aliases 0.2.1](https://github.com/katharostech/cfg_aliases)
 
 MIT License
 
@@ -3825,7 +3825,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 
 ### MIT License
 #### Used by:
-- [libredox 0.1.3]( https://gitlab.redox-os.org/redox-os/libredox.git )
+- [libredox 0.1.3](https://gitlab.redox-os.org/redox-os/libredox.git)
 
 MIT License
 
@@ -3851,9 +3851,9 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [malloc_buf 0.0.6]( https://github.com/SSheldon/malloc_buf )
-- [nanoserde-derive 0.1.22]( https://crates.io/crates/nanoserde-derive )
-- [quad-rand 0.2.1]( https://github.com/not-fl3/quad-rand )
+- [malloc_buf 0.0.6](https://github.com/SSheldon/malloc_buf)
+- [nanoserde-derive 0.1.22]( https://crates.io/crates/nanoserde-derive)
+- [quad-rand 0.2.1](https://github.com/not-fl3/quad-rand)
 
 MIT License
 
@@ -3867,7 +3867,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 
 ### MIT License
 #### Used by:
-- [objc 0.2.7]( http://github.com/SSheldon/rust-objc )
+- [objc 0.2.7](http://github.com/SSheldon/rust-objc)
 
 MIT License
 
@@ -3893,7 +3893,7 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [simd-adler32 0.3.7]( https://github.com/mcountryman/simd-adler32 )
+- [simd-adler32 0.3.7](https://github.com/mcountryman/simd-adler32)
 
 MIT License
 
@@ -3919,7 +3919,7 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [winnow 0.6.18]( https://github.com/winnow-rs/winnow )
+- [winnow 0.6.18](https://github.com/winnow-rs/winnow)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -3942,7 +3942,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [byteorder 1.5.0]( https://github.com/BurntSushi/byteorder )
+- [byteorder 1.5.0](https://github.com/BurntSushi/byteorder)
 
 The MIT License (MIT)
 
@@ -3968,7 +3968,7 @@ THE SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [nix 0.29.0]( https://github.com/nix-rust/nix )
+- [nix 0.29.0](https://github.com/nix-rust/nix)
 
 The MIT License (MIT)
 
@@ -3994,7 +3994,7 @@ THE SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [color_quant 1.1.0]( https://github.com/image-rs/color_quant.git )
+- [color_quant 1.1.0](https://github.com/image-rs/color_quant.git)
 
 The MIT License (MIT)
 
@@ -4020,7 +4020,7 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [redox_users 0.4.5]( https://gitlab.redox-os.org/redox-os/users )
+- [redox_users 0.4.5](https://gitlab.redox-os.org/redox-os/users)
 
 The MIT License (MIT)
 
@@ -4047,7 +4047,7 @@ SOFTWARE.
 
 ### MIT License
 #### Used by:
-- [byteorder 1.5.0]( https://github.com/BurntSushi/byteorder )
+- [byteorder 1.5.0](https://github.com/BurntSushi/byteorder)
 
 This project is dual-licensed under the Unlicense and MIT licenses.
 
@@ -4055,7 +4055,7 @@ You may use this code under the terms of either license.
 
 ### Mozilla Public License 2.0
 #### Used by:
-- [option-ext 0.2.0]( https://github.com/soc/option-ext.git )
+- [option-ext 0.2.0](https://github.com/soc/option-ext.git)
 
 Mozilla Public License Version 2.0
 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
@@ -4433,7 +4433,7 @@ Exhibit B - &quot;Incompatible With Secondary Licenses&quot; Notice
 
 ### Unicode License Agreement - Data Files and Software (2016)
 #### Used by:
-- [unicode-ident 1.0.12]( https://github.com/dtolnay/unicode-ident )
+- [unicode-ident 1.0.12](https://github.com/dtolnay/unicode-ident)
 
 UNICODE, INC. LICENSE AGREEMENT - DATA FILES AND SOFTWARE
 
@@ -4460,7 +4460,15 @@ Except as contained in this notice, the name of a copyright holder shall not be 
 
 ### The Unlicense
 #### Used by:
-- [sokoworld 0.2.0-dev]( https://crates.io/crates/sokoworld )
+- [sokoworld 0.2.0-dev]( https://crates.io/crates/sokoworld)
+
+The project&#x27;s code is licensed under The Unlicense. It does not apply to all
+assets (levels, art, sfx) included in the game. They&#x27;re licensed under varying
+terms.
+
+See licenses.md for the full list of software licenses used in the project.
+
+## The Unlicense
 
 This is free and unencumbered software released into the public domain.
 
@@ -4489,7 +4497,7 @@ For more information, please refer to &lt;https://unlicense.org&gt;
 
 ### zlib License
 #### Used by:
-- [slotmap 1.0.7]( https://github.com/orlp/slotmap )
+- [slotmap 1.0.7](https://github.com/orlp/slotmap)
 
 Copyright (c) 2021 Orson Peters &lt;orsonpeters@gmail.com&gt;
 
