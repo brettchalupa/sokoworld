@@ -19,24 +19,41 @@ pub const ASSETS_DIR: &str = "assets";
 /// Panics if it cannot determine a valid assets dir
 #[cfg(not(target_family = "wasm"))]
 pub fn determine_asset_path() -> PathBuf {
+    let args: Vec<String> = std::env::args().collect();
+    let verbose = args.iter().any(|a| a == &"--verbose".to_string());
+
     // try to find assets dir in cargo project root
     match std::env::var("CARGO_MANIFEST_DIR") {
         Ok(cargo_manifest_dir) => {
+            if verbose {
+                println!("CARGO_MANIFEST_DIR: {}", cargo_manifest_dir);
+            }
             let mut cargo_path = PathBuf::new();
             cargo_path.push(cargo_manifest_dir);
             cargo_path.push(ASSETS_DIR);
             return cargo_path;
         }
-        Err(_e) => (), // proceed to attempt next way
+        Err(_e) => {
+            if verbose {
+                println!("CARGO_MANIFEST_DIR not set");
+            }
+        } // proceed to attempt next way
     }
 
     match current_exe() {
         Ok(exe_path) => {
+            if verbose {
+                println!("current_exe(): {:#?}", exe_path);
+            }
+
             // try to find assets dir located next to the executable
             let mut sibling_path = exe_path.clone();
             sibling_path.pop();
             sibling_path.push(ASSETS_DIR);
             if sibling_path.is_dir() {
+                if verbose {
+                    println!("found assets next to executable: {:#?}", sibling_path);
+                }
                 return sibling_path;
             } else {
                 // try to find assets dir in MacOS bundle (Some.app/Contents/Resources/assets)
@@ -46,11 +63,21 @@ pub fn determine_asset_path() -> PathBuf {
                 macos_app_path.push("Resources");
                 macos_app_path.push(ASSETS_DIR);
                 if macos_app_path.is_dir() {
+                    if verbose {
+                        println!("macOS app bundle detected, found assets in Resources dir");
+                        println!("macos bundle asset path: {:#?}", macos_app_path);
+                    }
                     return macos_app_path;
+                } else if verbose {
+                    println!("couldn't find assets as sibbling or in macOS app bundle");
                 }
             }
         }
-        Err(_e) => (),
+        Err(_e) => {
+            if verbose {
+                println!("couldn't determine current_exe() path");
+            }
+        }
     }
     panic!("asset path cannot be determined")
 }
