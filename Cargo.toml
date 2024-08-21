@@ -6,6 +6,9 @@ description = "Classic box pushing puzzler Sokoban"
 license = "Unlicense"
 keywords = ["games", "sokoban", "puzzle"]
 categories = ["games"]
+homepage = "https://brettchalupa.itch.io/sokoworld"
+repository = "https://github.com/brettchalupa/sokoworld"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
