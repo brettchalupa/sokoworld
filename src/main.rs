@@ -92,10 +92,6 @@ async fn main() {
             },
         );
 
-        if ctx.request_quit {
-            break;
-        }
-
         // reloads the the pack from disk, useful for designing levels
         // this happens in main with a flag on Context because loading the file is async, and
         // making all update functions async becomes a hassle
@@ -127,6 +123,10 @@ async fn main() {
             ctx.switch_scene_to = None;
         }
 
-        next_frame().await
+        next_frame().await;
+
+        if ctx.request_quit {
+            break;
+        }
     }
 }
