@@ -1,10 +1,11 @@
 use macroquad::color::{RED, WHITE};
+use macroquad::time::get_frame_time;
 
 use super::Scene;
 use crate::audio::play_sfx;
-use crate::consts::X_INSET;
-use crate::input::action_pressed;
+use crate::consts::{MOVE_HELD_DELAY, X_INSET};
 use crate::input::Action;
+use crate::input::{action_down, action_pressed};
 use crate::text::Size;
 use crate::{context::Context, text::draw_text};
 
@@ -13,6 +14,7 @@ pub struct Settings {
     pub active: bool,
     menu_options: Vec<MenuOption>,
     menu_index: usize,
+    move_held_delay: f32,
 }
 
 enum MenuOption {
@@ -34,6 +36,7 @@ impl Settings {
         Self {
             menu_options,
             menu_index: 0,
+            move_held_delay: 0.,
             active,
         }
     }
@@ -58,13 +61,20 @@ impl Settings {
 
 impl Scene for Settings {
     fn update(&mut self, ctx: &mut Context) {
+        if self.move_held_delay > 0.0 {
+            self.move_held_delay -= get_frame_time();
+        }
+
         if action_pressed(Action::Cancel, &ctx.gamepads) {
             self.active = false;
             play_sfx(ctx, &ctx.audio.sfx.menu_cancel);
             return;
         }
 
-        if action_pressed(Action::Up, &ctx.gamepads) {
+        if action_pressed(Action::Up, &ctx.gamepads)
+            || (action_down(Action::Up, &ctx.gamepads) && self.move_held_delay <= 0.)
+        {
+            self.move_held_delay = MOVE_HELD_DELAY;
             play_sfx(ctx, &ctx.audio.sfx.menu_move);
 
             if self.menu_index == 0 {
@@ -73,7 +83,10 @@ impl Scene for Settings {
                 self.menu_index -= 1;
             }
         }
-        if action_pressed(Action::Down, &ctx.gamepads) {
+        if action_pressed(Action::Down, &ctx.gamepads)
+            || (action_down(Action::Down, &ctx.gamepads) && self.move_held_delay <= 0.)
+        {
+            self.move_held_delay = MOVE_HELD_DELAY;
             play_sfx(ctx, &ctx.audio.sfx.menu_move);
 
             if self.menu_index == self.menu_options.len() - 1 {

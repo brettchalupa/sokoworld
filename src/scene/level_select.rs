@@ -3,26 +3,38 @@ use crate::audio::play_sfx;
 use crate::color::BLUE;
 use crate::consts::*;
 use crate::context::Context;
-use crate::input::{action_pressed, Action};
+use crate::input::{action_down, action_pressed, Action};
 use crate::level::pack::Pack;
 use crate::text::{self, draw_text};
 use macroquad::color::{RED, WHITE};
+use macroquad::time::get_frame_time;
 
 pub struct LevelSelect {
     pack: Pack,
     focused_level_index: i32,
+    move_held_delay: f32,
 }
 
 impl Scene for LevelSelect {
     fn update(&mut self, ctx: &mut Context) {
-        if action_pressed(Action::Left, &ctx.gamepads) {
+        if self.move_held_delay > 0.0 {
+            self.move_held_delay -= get_frame_time();
+        }
+
+        if action_pressed(Action::Left, &ctx.gamepads)
+            || (action_down(Action::Left, &ctx.gamepads) && self.move_held_delay <= 0.)
+        {
+            self.move_held_delay = MOVE_HELD_DELAY;
             play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_level_index -= 1;
             if self.focused_level_index < 0 {
                 self.focused_level_index = (self.pack.levels.len() - 1) as i32;
             }
         }
-        if action_pressed(Action::Right, &ctx.gamepads) {
+        if action_pressed(Action::Right, &ctx.gamepads)
+            || (action_down(Action::Right, &ctx.gamepads) && self.move_held_delay <= 0.)
+        {
+            self.move_held_delay = MOVE_HELD_DELAY;
             play_sfx(ctx, &ctx.audio.sfx.menu_move);
             self.focused_level_index += 1;
             if self.focused_level_index > (self.pack.levels.len() - 1) as i32 {
@@ -118,6 +130,7 @@ impl LevelSelect {
         Self {
             pack,
             focused_level_index: 0,
+            move_held_delay: 0.,
         }
     }
 }
