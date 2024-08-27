@@ -19,6 +19,7 @@ pub struct MainMenu {
     settings_subscene: Settings,
     credits_subscene: Credits,
     move_held_delay: f32,
+    packs_complete_count: Vec<i32>,
 }
 
 enum MenuOption {
@@ -57,6 +58,22 @@ impl MainMenu {
             .await,
         ];
 
+        let mut packs_complete_count = vec![];
+        for pack in &packs {
+            packs_complete_count.push(
+                pack.levels
+                    .iter()
+                    .map(|l| {
+                        if ctx.save.is_level_complete(&pack.slug, &l.title.clone()) {
+                            1
+                        } else {
+                            0
+                        }
+                    })
+                    .sum(),
+            )
+        }
+
         Self {
             menu_options,
             menu_index: 0,
@@ -64,6 +81,7 @@ impl MainMenu {
             focused_pack_index: 0,
             settings_subscene: Settings::new(ctx, false),
             credits_subscene: Credits::new(ctx),
+            packs_complete_count,
             move_held_delay: 0.,
         }
     }
@@ -228,7 +246,12 @@ impl Scene for MainMenu {
             );
             draw_text(
                 ctx,
-                format!("{} levels", pack.levels.len()).as_str(),
+                format!(
+                    "{} levels ({} complete)",
+                    pack.levels.len(),
+                    self.packs_complete_count.get(i).unwrap(),
+                )
+                .as_str(),
                 title_x,
                 title_y + 48.,
                 text::Size::Small,
