@@ -126,10 +126,19 @@ impl Scene for LevelSelect {
 }
 
 impl LevelSelect {
-    pub async fn new(_ctx: &mut Context, pack: Pack) -> Self {
+    pub async fn new(ctx: &mut Context, pack: Pack) -> Self {
+        let mut focused_level_index: i32 = 0;
+
+        for (i, level) in pack.levels.iter().enumerate() {
+            if !ctx.save.is_level_complete(&pack.slug, &level.title.clone()) {
+                focused_level_index = i as i32;
+                break;
+            }
+        }
+
         Self {
             pack,
-            focused_level_index: 0,
+            focused_level_index,
             move_held_delay: 0.,
         }
     }
