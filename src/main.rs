@@ -9,6 +9,7 @@ use sokoworld::scene::gameplay::Gameplay;
 use sokoworld::scene::level_select::LevelSelect;
 use sokoworld::scene::EScene;
 use sokoworld::scene::{main_menu::MainMenu, Scene};
+use sokoworld::text::{draw_text, Size};
 
 fn window_conf() -> Conf {
     Conf {
@@ -91,6 +92,17 @@ async fn main() {
                 ..Default::default()
             },
         );
+
+        if ctx.settings.show_fps() {
+            draw_text(
+                &mut ctx,
+                format!("{}", (1. / get_frame_time()).round() as i32).as_str(),
+                24.,
+                36.,
+                Size::Small,
+                WHITE,
+            );
+        }
 
         // reloads the the pack from disk, useful for designing levels
         // this happens in main with a flag on Context because loading the file is async, and

@@ -18,12 +18,18 @@ pub struct Settings {
 enum MenuOption {
     Fullscreen,
     Mute,
+    ShowFPS,
     Back,
 }
 
 impl Settings {
     pub fn new(_ctx: &Context, active: bool) -> Self {
-        let menu_options = vec![MenuOption::Fullscreen, MenuOption::Mute, MenuOption::Back];
+        let menu_options = vec![
+            MenuOption::Fullscreen,
+            MenuOption::Mute,
+            MenuOption::ShowFPS,
+            MenuOption::Back,
+        ];
 
         Self {
             menu_options,
@@ -41,6 +47,9 @@ impl Settings {
             MenuOption::Back => "Back".to_string(),
             MenuOption::Fullscreen => {
                 format!("Fullscreen: {}", settings.is_fullscreen())
+            }
+            MenuOption::ShowFPS => {
+                format!("Show FPS: {}", settings.show_fps())
             }
             MenuOption::Mute => format!("Mute: {}", settings.is_muted()),
         }
@@ -90,6 +99,9 @@ impl Scene for Settings {
                 }
                 MenuOption::Mute => {
                     ctx.settings.toggle_mute();
+                }
+                MenuOption::ShowFPS => {
+                    ctx.settings.toggle_show_fps();
                 }
             }
         }
