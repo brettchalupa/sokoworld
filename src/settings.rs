@@ -1,5 +1,5 @@
 #[cfg(not(target_family = "wasm"))]
-use directories::ProjectDirs;
+use crate::fs;
 use macroquad::window::set_fullscreen;
 use serde::{Deserialize, Serialize};
 #[cfg(not(target_family = "wasm"))]
@@ -129,7 +129,7 @@ impl Settings {
 
     #[cfg(not(target_family = "wasm"))]
     fn determine_settings_path() -> PathBuf {
-        let project_dirs = ProjectDirs::from("com", "brettchalupa", "sokoworld").unwrap();
+        let project_dirs = fs::project_dirs();
         let settings_dir = project_dirs.config_local_dir();
         std::fs::create_dir_all(settings_dir).unwrap();
         let mut settings_path = PathBuf::from(settings_dir);

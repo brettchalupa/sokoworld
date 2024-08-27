@@ -1,5 +1,5 @@
 #[cfg(not(target_family = "wasm"))]
-use directories::ProjectDirs;
+use crate::fs;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 #[cfg(not(target_family = "wasm"))]
@@ -67,7 +67,7 @@ impl Save {
     #[cfg(not(target_family = "wasm"))]
     fn determine_save_path() -> PathBuf {
         // TODO: DRY THIS LINE UP w/ SETTINGS
-        let project_dirs = ProjectDirs::from("com", "brettchalupa", "sokoworld").unwrap();
+        let project_dirs = fs::project_dirs();
         let save_dir = project_dirs.data_local_dir();
         std::fs::create_dir_all(save_dir).unwrap();
         let mut save_path = PathBuf::from(save_dir);
