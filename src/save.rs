@@ -66,7 +66,6 @@ impl Save {
 
     #[cfg(not(target_family = "wasm"))]
     fn determine_save_path() -> PathBuf {
-        // TODO: DRY THIS LINE UP w/ SETTINGS
         let project_dirs = fs::project_dirs();
         let save_dir = project_dirs.data_local_dir();
         std::fs::create_dir_all(save_dir).unwrap();
