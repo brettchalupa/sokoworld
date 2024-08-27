@@ -11,7 +11,7 @@ use crate::consts::VERSION;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Save {
     game_version: String,
-    // string key is PACKSLUG:LEVELNAME
+    /// string key is PACKSLUG:LEVELNAME
     level_completions: HashMap<String, LevelCompletion>,
 }
 
