@@ -103,6 +103,7 @@ impl PlayableLevel {
         }
         self.steps = 0;
         self.pushes = 0;
+        self.moves.clear();
         self.complete = false;
     }
 
