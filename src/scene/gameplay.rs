@@ -61,7 +61,6 @@ impl Scene for Gameplay {
 }
 
 impl Gameplay {
-    // TODO: determine level_index dynamically based on where level is in the pack
     pub async fn new(ctx: &mut Context, level: PackLevel, level_index: usize, pack: Pack) -> Self {
         let level = PlayableLevel::new(pack.slug.clone(), &level);
         let pause_subscene = Pause::new(ctx, pack.clone());

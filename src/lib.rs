@@ -5,6 +5,7 @@ pub mod consts;
 pub mod context;
 pub mod entity;
 pub mod font;
+pub mod fs;
 pub mod input;
 pub mod level;
 pub mod save;

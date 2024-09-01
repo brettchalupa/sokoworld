@@ -9,3 +9,5 @@ pub const TITLE_Y_INSET: f32 = 120.0;
 pub const X_INSET: f32 = 200.;
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
+/// delay in seconds between movement when held down
+pub const MOVE_HELD_DELAY: f32 = 0.2;

@@ -1,5 +1,5 @@
 #[cfg(not(target_family = "wasm"))]
-use directories::ProjectDirs;
+use crate::fs;
 use macroquad::window::set_fullscreen;
 use serde::{Deserialize, Serialize};
 #[cfg(not(target_family = "wasm"))]
@@ -9,23 +9,28 @@ use std::path::PathBuf;
 #[derive(Deserialize, Serialize)]
 pub struct Settings {
     /// whether or not audio should play
-    mute: bool,
+    mute: Option<bool>,
     /// whether or not the window should take up the entire screen
-    fullscreen: bool,
+    fullscreen: Option<bool>,
+    /// whether or not to show the frames per second in the upper left area of the screen
+    show_fps: Option<bool>,
 }
 
 #[cfg(target_family = "wasm")]
 const FULLSCREEN: &str = "fullscreen";
 #[cfg(target_family = "wasm")]
 const MUTE: &str = "mute";
+#[cfg(target_family = "wasm")]
+const SHOW_FPS: &str = "show_fps";
 #[cfg(not(target_family = "wasm"))]
 const SETTINGS_FILE: &str = "settings.toml";
 
 impl Settings {
     fn default() -> Self {
         Settings {
-            fullscreen: false,
-            mute: false,
+            fullscreen: Some(false),
+            mute: Some(false),
+            show_fps: Some(false),
         }
     }
 
@@ -36,8 +41,8 @@ impl Settings {
         #[cfg(not(target_family = "wasm"))]
         let settings = Self::load_desktop();
 
-        if settings.fullscreen {
-            set_fullscreen(settings.fullscreen);
+        if settings.is_fullscreen() {
+            set_fullscreen(settings.is_fullscreen());
         }
 
         settings
@@ -48,10 +53,13 @@ impl Settings {
         let mut settings = Self::default();
         let storage = &mut quad_storage::STORAGE.lock().unwrap();
         if let Some(storage_fullscreen) = storage.get(FULLSCREEN) {
-            settings.fullscreen = storage_fullscreen == "true";
+            settings.fullscreen = Some(storage_fullscreen == "true");
         }
         if let Some(storage_mute) = storage.get(MUTE) {
-            settings.mute = storage_mute == "true";
+            settings.mute = Some(storage_mute == "true");
+        }
+        if let Some(storage_show_fps) = storage.get(SHOW_FPS) {
+            settings.mute = Some(storage_show_fps == "true");
         }
         settings
     }
@@ -72,31 +80,44 @@ impl Settings {
 
     pub fn is_fullscreen(&self) -> bool {
         self.fullscreen
+            .unwrap_or(Self::default().fullscreen.unwrap())
     }
 
     pub fn is_muted(&self) -> bool {
-        self.mute
+        self.mute.unwrap_or(Self::default().mute.unwrap())
+    }
+
+    pub fn show_fps(&self) -> bool {
+        self.show_fps.unwrap_or(Self::default().show_fps.unwrap())
     }
 
     pub fn toggle_mute(&mut self) -> bool {
-        self.mute = !self.mute;
+        self.mute = Some(!self.is_muted());
 
         self.save_settings();
-        self.mute
+        self.mute.unwrap()
     }
 
     pub fn toggle_fullscreen(&mut self) -> bool {
-        self.fullscreen = !self.fullscreen;
-        set_fullscreen(self.fullscreen);
+        self.fullscreen = Some(!self.is_fullscreen());
+        set_fullscreen(self.is_fullscreen());
         self.save_settings();
-        self.fullscreen
+        self.is_fullscreen()
+    }
+
+    pub fn toggle_show_fps(&mut self) -> bool {
+        self.show_fps = Some(!self.show_fps());
+
+        self.save_settings();
+        self.show_fps()
     }
 
     #[cfg(target_family = "wasm")]
     fn save_settings(&self) {
         let storage = &mut quad_storage::STORAGE.lock().unwrap();
-        storage.set(MUTE, self.mute.to_string().as_str());
-        storage.set(FULLSCREEN, self.fullscreen.to_string().as_str());
+        storage.set(MUTE, self.is_muted().to_string().as_str());
+        storage.set(FULLSCREEN, self.is_fullscreen().to_string().as_str());
+        storage.set(SHOW_FPS, self.show_fps().to_string().as_str());
     }
 
     #[cfg(not(target_family = "wasm"))]
@@ -108,7 +129,7 @@ impl Settings {
 
     #[cfg(not(target_family = "wasm"))]
     fn determine_settings_path() -> PathBuf {
-        let project_dirs = ProjectDirs::from("com", "brettchalupa", "sokoworld").unwrap();
+        let project_dirs = fs::project_dirs();
         let settings_dir = project_dirs.config_local_dir();
         std::fs::create_dir_all(settings_dir).unwrap();
         let mut settings_path = PathBuf::from(settings_dir);
