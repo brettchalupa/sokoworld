@@ -20,6 +20,10 @@ fn window_conf() -> Conf {
             medium: include_bytes!("../icons/32x32.rgba").to_owned(),
             big: include_bytes!("../icons/64x64.rgba").to_owned(),
         }),
+        platform: miniquad::conf::Platform {
+            linux_backend: miniquad::conf::LinuxBackend::WaylandWithX11Fallback,
+            ..Default::default()
+        },
         window_height: 720,
         window_resizable: true,
         window_title: String::from("SokoWorld"),
