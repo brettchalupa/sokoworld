@@ -40,6 +40,14 @@ where `-p=` is the path to the level pack and `-l=` is the number of level in th
 
 Press the <kbd>9</kbd> key to reload the current level from disk. This is useful for iterating on the design of a level.
 
+## Developing
+
+1. Install Rust (version 1.80.1 used for initial development)
+2. Install ancillary dependencies to assist with development: `./deps.sh`
+3. Run the project: `cargo run`
+
+There's also `./serve_wasm.sh` to boot up a simple web server to test WASM builds, which can be rebuilt with `./build_wasm.sh`
+
 ## Dev Notes
 
 - the JS shims in web are explicitly checked in in case they disappear & to have versions match

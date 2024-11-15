@@ -16,8 +16,6 @@ use macroquad::time::get_frame_time;
 use crate::consts::*;
 use crate::entity::{Crate, Entity};
 
-/// delay in seconds between movement when held down
-const MOVE_HELD_DELAY: f32 = 0.2;
 /// delay in seconds between rewind steps when held down
 const REWIND_HELD_DELAY: f32 = 0.1;
 
@@ -105,6 +103,7 @@ impl PlayableLevel {
         }
         self.steps = 0;
         self.pushes = 0;
+        self.moves.clear();
         self.complete = false;
     }
 

@@ -9,6 +9,7 @@ use sokoworld::scene::gameplay::Gameplay;
 use sokoworld::scene::level_select::LevelSelect;
 use sokoworld::scene::EScene;
 use sokoworld::scene::{main_menu::MainMenu, Scene};
+use sokoworld::text::{draw_text, Size};
 
 fn window_conf() -> Conf {
     Conf {
@@ -19,6 +20,10 @@ fn window_conf() -> Conf {
             medium: include_bytes!("../icons/32x32.rgba").to_owned(),
             big: include_bytes!("../icons/64x64.rgba").to_owned(),
         }),
+        platform: miniquad::conf::Platform {
+            linux_backend: miniquad::conf::LinuxBackend::WaylandWithX11Fallback,
+            ..Default::default()
+        },
         window_height: 720,
         window_resizable: true,
         window_title: String::from("SokoWorld"),
@@ -92,8 +97,15 @@ async fn main() {
             },
         );
 
-        if ctx.request_quit {
-            break;
+        if ctx.settings.show_fps() {
+            draw_text(
+                &mut ctx,
+                format!("{}", (1. / get_frame_time()).round() as i32).as_str(),
+                24.,
+                36.,
+                Size::Small,
+                WHITE,
+            );
         }
 
         // reloads the the pack from disk, useful for designing levels
@@ -127,6 +139,10 @@ async fn main() {
             ctx.switch_scene_to = None;
         }
 
-        next_frame().await
+        next_frame().await;
+
+        if ctx.request_quit {
+            break;
+        }
     }
 }
