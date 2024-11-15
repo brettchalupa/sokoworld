@@ -8,6 +8,15 @@ Alternate install instructions:
 
 - [Download the latest release from GitHub](https://github.com/brettchalupa/sokoworld/releases)
 
+## OS Notes
+
+If you're playing the game on Linux, it defaults to Wayland and falls back to X11.
+
+If you want to have the game's assets live separately from the binary, you can specify either of the following:
+
+- `--assets` arg: `./sokoworld --assets /some/path/assets`
+- set the `SOKOWORLD_ASSETS` environment variable: `SOKOWORLD_ASSETS=/some/path/assets ./sokoworld`
+
 ## Defining Levels
 
 Levels are collected in Packs, which are
