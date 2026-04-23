@@ -337,10 +337,15 @@ impl PlayableLevel {
         crate_moved_index: Option<usize>,
         reverse_move: Vec2,
     ) {
-        if crate_moved_index.is_some() {
-            let c = self.crates.get_mut(crate_moved_index.unwrap()).unwrap();
-            c.pos.add(reverse_move);
-            Self::check_for_crate_on_storage_location(ctx, c, self.level.storage_locations.clone())
+        if let Some(idx) = crate_moved_index {
+            if let Some(c) = self.crates.get_mut(idx) {
+                c.pos.add(reverse_move);
+                Self::check_for_crate_on_storage_location(
+                    ctx,
+                    c,
+                    self.level.storage_locations.clone(),
+                )
+            }
         }
     }
 
