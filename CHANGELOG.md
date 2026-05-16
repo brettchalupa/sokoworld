@@ -2,6 +2,10 @@
 
 Player-facing changes in each release of the game.
 
+## UNRELEASED (v0.3.0)
+
+- port to Usagi Engine + Lua
+
 ## v0.2.0 - 2024-08-21
 
 - rewind moves

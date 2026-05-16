@@ -1,0 +1,17 @@
+[
+  {
+    "label": "dev",
+    "command": "just",
+    "args": ["dev"],
+  },
+  {
+    "label": "run",
+    "command": "just",
+    "args": ["run"],
+  },
+  {
+    "label": "tools",
+    "command": "just",
+    "args": ["tools"],
+  },
+]
