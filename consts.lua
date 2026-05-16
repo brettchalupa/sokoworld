@@ -38,6 +38,6 @@ consts.SFX = {
   MENU_CANCEL = "menuCancel",
 }
 
-consts.VERSION = "0.3-dev"
+consts.VERSION = "0.3"
 
 return consts
