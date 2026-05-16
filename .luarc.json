@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.5",
+  "runtime.nonstandardSymbol": ["+=", "-=", "*=", "/=", "%="],
+  "workspace.library": ["./meta"],
+  "format.defaultConfig": {
+    "indent_style": "space",
+    "indent_size": "2"
+  }
+}
