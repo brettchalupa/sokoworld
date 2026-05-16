@@ -57,6 +57,7 @@ function playable_level.new(pack_slug, pack_level)
     steps = 0,
     pushes = 0,
     move_held_delay = 0,
+    rewind_held_delay = 0,
     moves = {},
     complete = false,
     request_next_level = false,
@@ -195,6 +196,7 @@ local function handle_rewind(pl)
     sfx.play(consts.SFX.CANT_MOVE)
     return
   end
+  pl.rewind_held_delay = consts.REWIND_HELD_DELAY
   local m = table.remove(pl.moves)
   sfx.play(consts.SFX.FOOTSTEP)
   pl.steps -= 1
@@ -255,8 +257,14 @@ function playable_level.update(pl, dt)
   if pl.move_held_delay > 0 then
     pl.move_held_delay -= dt
   end
+  if pl.rewind_held_delay > 0 then
+    pl.rewind_held_delay -= dt
+  end
 
-  if input.pressed(input.BTN2) then
+  local rewind = input.pressed(input.BTN2)
+      or (input.held(input.BTN2) and pl.rewind_held_delay <= 0)
+
+  if rewind then
     handle_rewind(pl)
   else
     handle_movement(pl)

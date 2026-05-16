@@ -6,6 +6,10 @@ consts.TILE_SIZE = usagi.SPRITE_SIZE
 
 consts.MOVE_HELD_DELAY = 0.2
 
+-- Rewind (undo) auto-repeat delay. Intentionally slower than
+-- MOVE_HELD_DELAY so it's harder to overshoot when holding the button.
+consts.REWIND_HELD_DELAY = 0.35
+
 -- Seconds for the player / crates to slide between adjacent tiles.
 -- Should stay below MOVE_HELD_DELAY so an auto-repeat never starts a
 -- new slide while the previous one is still finishing.
