@@ -5,7 +5,6 @@ function _config()
     name = "SokoWorld",
     game_id = "com.brettmakesgames.sokoworld",
     icon = 4,
-    pixel_perfect = true,
   }
 end
 

@@ -97,6 +97,8 @@ function main_menu.draw(_dt)
   gfx.clear(gfx.COLOR_DARK_GREEN)
 
   gfx.text_ex("SokoWorld", 8, 6, 2, 0, gfx.COLOR_WHITE)
+  gfx.spr(1, 120, 12)
+  gfx.spr(4, 140, 12)
 
   local current = m.options[m.menu_index]
   local pack = focused_pack(m)
