@@ -6,3 +6,6 @@ run:
 
 tools:
     usagi tools
+
+deploy:
+    ./push.rb

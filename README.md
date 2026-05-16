@@ -11,12 +11,7 @@ Alternate install instructions:
 
 ## Defining Levels
 
-Levels are collected in Packs, which are Lua files [TOML](https://toml.io/en/)
-files that describe the pack and the data for each level within it.
-
-The benefit of using TOML is that it's much more human readable than XML but
-provides a bit of structure and mark-up. It strikes a nice balance of easy to
-map to data structures while also being human editable.
+Levels are collected in Packs, which are Lua files in ./packs dir.
 
 See [level-format.txt](./level-format.txt) for the meaning of characters in the
 level files.
@@ -33,6 +28,13 @@ In debug builds, <kbd>Shift</kbd> + <kbd>Esc</kbd> quits quickly.
 ## Deployment
 
 The game is currently hosted on itch at https://brettchalupa.itch.io/sokoworld
+
+Deploy it with `just deploy`
+
+## Rust Version
+
+SokoWorld was originally written in Rust. If you want to view the Rust code,
+[browse at commit 9d34a04e5fd8d121ec820de1a0239c48c0886f61](https://github.com/brettchalupa/sokoworld/tree/9d34a04e5fd8d121ec820de1a0239c48c0886f61).
 
 ## Credits
 
