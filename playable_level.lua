@@ -32,11 +32,14 @@ end
 
 function playable_level.new(pack_slug, pack_level)
   local lvl = level.parse(pack_level)
+  local ts = consts.TILE_SIZE
   local crates = {}
   for _, pos in ipairs(lvl.crates) do
     table.insert(crates, {
       x = pos.x,
       y = pos.y,
+      vx = pos.x * ts,
+      vy = pos.y * ts,
       on_storage = is_on_any_storage(lvl.storage_locations, pos),
     })
   end
@@ -44,7 +47,12 @@ function playable_level.new(pack_slug, pack_level)
   return {
     pack_slug = pack_slug,
     level = lvl,
-    player = { x = lvl.player.x, y = lvl.player.y },
+    player = {
+      x = lvl.player.x,
+      y = lvl.player.y,
+      vx = lvl.player.x * ts,
+      vy = lvl.player.y * ts,
+    },
     crates = crates,
     steps = 0,
     pushes = 0,
@@ -56,12 +64,17 @@ function playable_level.new(pack_slug, pack_level)
 end
 
 function playable_level.reset(pl)
+  local ts = consts.TILE_SIZE
   pl.player.x = pl.level.player.x
   pl.player.y = pl.level.player.y
+  pl.player.vx = pl.player.x * ts
+  pl.player.vy = pl.player.y * ts
   for i, c in ipairs(pl.crates) do
     local src = pl.level.crates[i]
     c.x = src.x
     c.y = src.y
+    c.vx = c.x * ts
+    c.vy = c.y * ts
     c.on_storage = is_on_any_storage(pl.level.storage_locations, c)
   end
   pl.steps = 0
@@ -211,7 +224,21 @@ local function handle_rewind(pl)
   end
 end
 
+local function animate_visuals(pl, dt)
+  local ts = consts.TILE_SIZE
+  local step = ts / consts.MOVE_ANIM_DURATION * dt
+  local p = pl.player
+  p.vx = util.approach(p.vx, p.x * ts, step)
+  p.vy = util.approach(p.vy, p.y * ts, step)
+  for _, c in ipairs(pl.crates) do
+    c.vx = util.approach(c.vx, c.x * ts, step)
+    c.vy = util.approach(c.vy, c.y * ts, step)
+  end
+end
+
 function playable_level.update(pl, dt)
+  animate_visuals(pl, dt)
+
   if input.pressed(input.BTN3) then
     playable_level.reset(pl)
     sfx.play(consts.SFX.RESET)
@@ -246,10 +273,10 @@ function playable_level.draw(pl)
   offset.y = math.max(offset.y, usagi.SPRITE_SIZE)
 
   level.draw(pl.level, offset)
-  gfx.spr(consts.SPR.PLAYER, pl.player.x * ts + offset.x, pl.player.y * ts + offset.y)
+  gfx.spr(consts.SPR.PLAYER, pl.player.vx + offset.x, pl.player.vy + offset.y)
   for _, c in ipairs(pl.crates) do
     local idx = c.on_storage and consts.SPR.CRATE_ON_STORAGE or consts.SPR.CRATE
-    gfx.spr(idx, c.x * ts + offset.x, c.y * ts + offset.y)
+    gfx.spr(idx, c.vx + offset.x, c.vy + offset.y)
   end
 
   gfx.text(pl.level.title, 4, 2, gfx.COLOR_WHITE)
