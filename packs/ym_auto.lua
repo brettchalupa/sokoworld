@@ -1,10 +1,8 @@
--- Auto-generated from yoshio-murase-automatic.toml
--- Edit this Lua file directly; live reload picks up changes.
-
 return {
   title = "YM Auto",
   slug = "ym-auto",
-  description = "These sokoban screens were made automatically by computer. Yosio Murase wrote the program that created these levels and then made the levels available on his sokoban web pages.",
+  description =
+  "These sokoban screens were made automatically by computer. Yosio Murase wrote the program that created these levels and then made the levels available on his sokoban web pages.",
   author = "Yoshio Murase",
   license = "Copyright Yoshio Murase",
   source = "http://sneezingtiger.com/sokoban/levels/yoshioText.html",

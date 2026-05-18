@@ -1,6 +1,3 @@
--- Auto-generated from pack-a.toml
--- Edit this Lua file directly; live reload picks up changes.
-
 return {
   title = "Pack A: Starting Out",
   slug = "pack-a",
