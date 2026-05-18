@@ -30,9 +30,6 @@ In debug builds, <kbd>Shift</kbd> + <kbd>Esc</kbd> quits quickly.
 In `./packs` are Lua tables of levels. Add new levels. Press <kbd>9</kbd> to
 reload the current level tiles from the pack after updating them.
 
-Combined with the level reset functionality (BTN3 - <kbd>C</kbd> or
-<kbd>L</kbd>), levels can be quickly designed, tested, and refined.
-
 ## Deployment
 
 The game is currently hosted on itch at https://brettchalupa.itch.io/sokoworld
