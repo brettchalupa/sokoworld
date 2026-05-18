@@ -7,5 +7,8 @@ run:
 tools:
     usagi tools
 
-deploy:
+push:
     ./push.rb
+
+alias release := push
+alias deploy := push
