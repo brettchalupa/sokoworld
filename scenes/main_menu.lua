@@ -22,13 +22,17 @@ local function build_options()
 end
 
 function main_menu.enter()
-  if not State.menu then State.menu = {} end
+  if not State.menu then
+    State.menu = {}
+  end
   local m = State.menu
   m.options = build_options()
   m.menu_index = m.menu_index or 1
   m.focused_pack_index = m.focused_pack_index or 1
   -- Guard against index drift if pack list was edited between sessions.
-  if m.focused_pack_index > #Packs.order then m.focused_pack_index = 1 end
+  if m.focused_pack_index > #Packs.order then
+    m.focused_pack_index = 1
+  end
   m.move_held_delay = 0
 end
 
@@ -55,26 +59,22 @@ function main_menu.update(dt)
   local current = m.options[m.menu_index]
 
   if current == OPT_PACK_SELECT then
-    if input.pressed(input.LEFT) or
-        (input.held(input.LEFT) and m.move_held_delay <= 0) then
+    if input.pressed(input.LEFT) or (input.held(input.LEFT) and m.move_held_delay <= 0) then
       m.move_held_delay = consts.MOVE_HELD_DELAY
       sfx.play(consts.SFX.MENU_MOVE)
       step_pack(m, -1)
-    elseif input.pressed(input.RIGHT) or
-        (input.held(input.RIGHT) and m.move_held_delay <= 0) then
+    elseif input.pressed(input.RIGHT) or (input.held(input.RIGHT) and m.move_held_delay <= 0) then
       m.move_held_delay = consts.MOVE_HELD_DELAY
       sfx.play(consts.SFX.MENU_MOVE)
       step_pack(m, 1)
     end
   end
 
-  if input.pressed(input.UP) or
-      (input.held(input.UP) and m.move_held_delay <= 0) then
+  if input.pressed(input.UP) or (input.held(input.UP) and m.move_held_delay <= 0) then
     m.move_held_delay = consts.MOVE_HELD_DELAY
     sfx.play(consts.SFX.MENU_MOVE)
     step_menu(m, -1)
-  elseif input.pressed(input.DOWN) or
-      (input.held(input.DOWN) and m.move_held_delay <= 0) then
+  elseif input.pressed(input.DOWN) or (input.held(input.DOWN) and m.move_held_delay <= 0) then
     m.move_held_delay = consts.MOVE_HELD_DELAY
     sfx.play(consts.SFX.MENU_MOVE)
     step_menu(m, 1)
@@ -96,7 +96,7 @@ function main_menu.draw(_dt)
   local m = State.menu
   gfx.clear(gfx.COLOR_DARK_GREEN)
 
-  gfx.text_ex("SokoWorld", 8, 6, 2, 0, gfx.COLOR_WHITE)
+  gfx.text_ex("SokoWorld", 8, 6, 2, 0, gfx.COLOR_WHITE, 1.0)
   gfx.spr(1, 120, 12)
   gfx.spr(4, 140, 12)
 
@@ -115,8 +115,7 @@ function main_menu.draw(_dt)
   center_text(pack.title, cy, pack_color)
   center_text(pack.author .. " - " .. pack.difficulty, cy + 12, pack_color)
   local count = save.count_complete(State.save, pack)
-  center_text(#pack.levels .. " levels (" .. count .. " complete)",
-    cy + 24, pack_color)
+  center_text(#pack.levels .. " levels (" .. count .. " complete)", cy + 24, pack_color)
 
   if #Packs.order > 1 then
     local arrow_color = pack_focused and gfx.COLOR_PEACH or gfx.COLOR_WHITE
