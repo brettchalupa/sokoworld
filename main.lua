@@ -1,13 +1,5 @@
 -- SokoWorld - Sokoban built with Usagi.
 
-function _config()
-  return {
-    name = "SokoWorld",
-    game_id = "com.brettmakesgames.sokoworld",
-    icon = 4,
-  }
-end
-
 -- Modules to rebuild on every save. `main.lua`'s chunk re-runs whenever
 -- any project file changes, so clearing package.loaded here and then
 -- re-requiring gives us a fresh table each save. `_init` is NOT called
